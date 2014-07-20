@@ -1,0 +1,41 @@
+﻿@using BikeShare.Views
+
+@model BikeShare.ViewModels.PaginatedViewModel<BikeShare.Models.CheckOut>
+
+@{
+    ViewBag.Title = "Checkouts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+<h3 class="text-center"><span class="glyphicon glyphicon-check pull-left"></span> @ViewBag.Title</h3>
+<hr />
+<div class="row">
+@foreach (var checkout in Model.modelList)
+{
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Bike @checkout.bike.bikeNumber - @checkout.timeOut</h3></div>
+            <div class="panel-body">
+                @if (checkout.isResolved)
+                {
+                    <p>Checked in from @checkout.user.userName  at @checkout.timeIn by @checkout.checkOutPerson.userName</p>
+                }
+                else
+                {
+                    <p>Checked out to @checkout.user.userName at @checkout.timeOut by @checkout.checkOutPerson.userName</p>
+                }
+            </div>
+            <div class="text-right panel-footer">
+                <a class="btn btn-default" href="@Url.Action(actionName: "infoBike", controllerName: "Admin", routeValues: new { bikeId = checkout.bike.bikeId})"><span class="glyphicon glyphicon-flash"></span>  Bike</a>
+                <a class="btn btn-default" href="@Url.Action(actionName: "infoRack", controllerName: "Admin", routeValues: new { rackId = checkout.rackCheckedOut.bikeRackId})"><span class="glyphicon glyphicon-screenshot"></span>  Rack</a>
+                <a class="btn btn-default" href="@Url.Action(actionName: "userDetails", controllerName: "Admin", routeValues: new { userId = checkout.user.bikeUserId})"><span class="glyphicon glyphicon-user"></span>  User</a>
+                <a class="btn btn-default" href="@Url.Action(actionName: "userDetails", controllerName: "Admin", routeValues: new { userId = checkout.checkOutPerson.bikeUserId})"><span class="glyphicon glyphicon-user"></span>  Checkout Person</a>
+            </div>
+        </div>
+    </div>
+}
+    </div>
+<hr />
+<div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("bikeCheckouts", new { page = x }))</div>

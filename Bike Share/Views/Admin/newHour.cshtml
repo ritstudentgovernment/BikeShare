@@ -1,0 +1,79 @@
+﻿@model BikeShare.Models.Hour
+
+@{
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id="editModalLabel">New Hours</h4>
+</div>
+<script>
+    $(document.body).on('hidden.bs.modal', function () {
+        $('#siteModal').removeData('bs.modal')
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(model => model.dayStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dayStart)
+                    @Html.ValidationMessageFor(model => model.dayStart)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.dayEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dayEnd)
+                    @Html.ValidationMessageFor(model => model.dayEnd)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.hourStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.hourStart)
+                    @Html.ValidationMessageFor(model => model.hourStart)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.minuteStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.minuteStart)
+                    @Html.ValidationMessageFor(model => model.minuteStart)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.hourEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.hourEnd)
+                    @Html.ValidationMessageFor(model => model.hourEnd)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.minuteEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.minuteEnd)
+                    @Html.ValidationMessageFor(model => model.minuteEnd)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.comment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.comment)
+                    @Html.ValidationMessageFor(model => model.comment)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div role="navigation" class="modal-footer">
+        <button type="submit" value="Save" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
+    </div>
+}
+

@@ -1,0 +1,52 @@
+﻿@using BikeShare.Views
+@model BikeShare.ViewModels.PaginatedViewModel<BikeShare.Models.MaintenanceEvent>
+
+@{
+    ViewBag.Title = "Bike Maintenance History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_MechanicMenuPartial")
+}
+<h2><span class="glyphicon glyphicon-time"></span> @ViewBag.Title</h2>
+<hr />
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">History</h3>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Date</td>
+                <td>Title</td>
+                <td>Resolved</td>
+                <td>Details</td>
+            </tr>
+        </thead>
+
+        @foreach (var maint in Model.modelList)
+        {
+            if (maint.resolved)
+            {
+                <tr class="bg-success">
+                    <td>@maint.timeAdded.ToShortDateString()</td>
+                    <td>@maint.title</td>
+                    <td>@maint.timeResolved.ToShortDateString()</td>
+                    <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
+                </tr>
+            }
+            else
+            {
+                <tr class="bg-danger">
+                    <td>@maint.timeAdded.ToShortDateString()</td>
+                    <td>@maint.title</td>
+                    <td>Not yet. :(</td>
+                    <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
+                </tr>
+            }
+        }
+    </table>
+    <div class="panel-footer">
+        <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("bikeMaintenance", new { page = x }))</div>
+    </div>        
+</div>

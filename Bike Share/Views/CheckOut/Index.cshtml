@@ -1,0 +1,123 @@
+﻿@model BikeShare.ViewModels.CheckoutViewModel
+
+@{
+    ViewBag.Title = "Checkout Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2><span class="glyphicon glyphicon-check"></span> @ViewBag.Title</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-log-out"></span> Check Out</div>
+            @using (Html.BeginForm("checkOutBike", "Checkout", new { rackId = Model.currentRack.bikeRackId}, FormMethod.Post, new { }))
+            {
+                @Html.HiddenFor(model => model.currentRack.bikeRackId)
+                <div class="panel-body text-right">
+                    <div class="input-group pull-right">
+
+                        <input class="form-control pull-right" id="userToCheckIn" name="userToCheckIn" type="text" value="">
+                        <span class="input-group-btn">
+                            <button type="submit" value="checkOutBike" class="btn btn-primary"> Checkout</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+
+                <table class="table table-hover">
+                    <thead class="active text-info">
+                        <tr><td>#</td><td>Name</td><td></td></tr>
+                    </thead>
+                    @foreach (var bike in Model.availableBikes)
+                    {
+                        <tr>
+                            <td>@bike.bikeNumber</td>
+                            <td>@bike.bikeName</td>
+                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-log-in"></span> Check In</div>
+            @using (Html.BeginForm("checkInBike", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
+            {
+
+                <div class="panel-body"><button type="submit" value="Check In Bike" class="btn btn-primary pull-right"> Check In</button></div>
+    @Html.HiddenFor(model => model.currentRack.bikeRackId)
+                <table class="table table-hover">
+                    <thead class="active text-info">
+                        <tr><td>#</td><td>Name</td><td></td></tr>
+                    </thead>
+                    @foreach (var bike in Model.checkedOutBikes)
+                    {
+                        <tr>
+                            <td>@bike.bikeNumber</td>
+                            <td>@bike.bikeName</td>
+                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Issues</div>
+            @using (Html.BeginForm("submitCharge", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
+            {
+
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class = "control-label col-md-2">Subject</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="chargeTitle" name="chargeTitle" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Description</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="chargeDetails" name="chargeDetails" type="text" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.HiddenFor(model => model.currentRack.bikeRackId)
+                <table class="table table-hover">
+                    <thead class="active text-info">
+                        <tr><td>#</td><td>Name</td><td></td></tr>
+                    </thead>
+                    @foreach (var bike in Model.checkedOutBikes)
+                    {
+                        <tr>
+                            <td>@bike.bikeNumber</td>
+                            <td>@bike.bikeName</td>
+                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
+                        </tr>
+                    }
+                    @foreach (var bike in Model.availableBikes)
+                    {
+                        <tr>
+                            <td>@bike.bikeNumber</td>
+                            <td>@bike.bikeName</td>
+                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
+                        </tr>
+                    }
+                </table>
+            
+            <div class="panel-footer">
+                <div class="input-group text-right">
+                    <input class="form-control pull-right" id="userName" name="userName" type="text" value="">
+                    <span class="input-group-btn">
+                        <button type="submit" value="submitCharge" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> submit</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div>}
+        </div>
+    </div>
+</div>

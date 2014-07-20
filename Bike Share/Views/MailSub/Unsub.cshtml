@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Unsubscribe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2><span class="glyphicon glyphicon-envelope"></span> @ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <span class="control-label col-md-2">Verify your email.</span>
+        <div class="col-md-10">
+            @Html.Editor("email")
+        </div>
+    </div>
+    <hr />
+    <div>
+        <input type="submit" value="Unsubscribe" class="btn btn-primary" />
+    </div>
+}
+

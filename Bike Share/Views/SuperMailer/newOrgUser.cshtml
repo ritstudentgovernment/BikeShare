@@ -1,0 +1,19 @@
+@using BikeShare.Models.ViewModel
+@model BikeShare.Models.ViewModel.Mail.NewOrgUserViewModel
+<h1>New User Added</h1>
+<p>@Model.user.name has been added as an admin for @Model.org.name</p>
+<h2>Permissions</h2>
+<p>@Model.user.name has been given the following privileges:</p>
+<ul>
+    <li>Read data</li>
+    @if (Model.user.DataWritePrivs)
+    {
+        <li>Write/Change Organization Data (points, smiles, etc.)</li>
+    }
+    @if (Model.user.SettingsWritePrivs)
+    {
+        <li>Write/Change Organization Settings (users, website, email, etc.)</li>
+    }
+    
+</ul>
+

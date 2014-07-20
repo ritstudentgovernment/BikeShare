@@ -1,0 +1,57 @@
+﻿@using BikeShare.Views
+@model BikeShare.ViewModels.rackListingViewModel
+
+@{
+    ViewBag.Title = "Bike Racks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+<h3 class="text-center"><span class="glyphicon glyphicon-list pull-left"></span> @ViewBag.Title <a class="btn btn-primary pull-right" href="@Url.Action(actionName: "newRack", controllerName: "Admin")"><span class="glyphicon glyphicon-asterisk"></span>  New</a></h3>
+<hr />
+@section filterSection{
+<div class="panel panel-primary">
+    <div class="panel-heading"><h3>Filters</h3></div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <h4>Time</h4>
+        </div>
+
+        <div class="col-md-12">
+            <h4>Properties</h4>
+            <div class="form-group form-inline"><label class="control-label col-md-10">Has Bikes </label><input type="checkbox" class="col-md-2" /></div>
+            <div class="form-group form-inline"><label class="control-label col-md-10">Missing Bikes </label><input type="checkbox" class="col-md-2" /></div>
+        </div>
+        <div class="col-md-12">
+            <h4>Type</h4>
+            <div class="form-group form-inline"><label class="control-label col-md-10">Include Archived </label><input type="checkbox" class="col-md-2" /></div>
+            <div class="form-group form-inline"><label class="control-label col-md-10">Include Current </label><input type="checkbox" class="col-md-2" /></div>
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span> Clear All</a>
+        <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-filter"></span> Go</a>
+    </div>
+</div>
+    }
+<div class="row">
+@foreach (var rack in Model.bikeRacks)
+{
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>@rack.name</h3></div>
+            <div class="panel-body"><p>Bikes: @rack.bikes.Count()</p> <p>Check Outs: @rack.checkOuts.Count()</p></div>
+            <div class="text-right panel-footer">
+                <a class="btn btn-default" href="@Url.Action(actionName: "bikeCheckouts", controllerName: "Admin", routeValues: new { rackId = rack.bikeRackId})"><span class="glyphicon glyphicon-list"></span>  Checkouts</a>
+                <a class="btn btn-default" href="@Url.Action(actionName: "bikeList", controllerName: "Admin", routeValues: new { rackId = rack.bikeRackId })"><span class="glyphicon glyphicon-list"></span>  Bikes</a>
+                <a class="btn btn-default" href="@Url.Action(actionName: "editRack", controllerName: "Admin", routeValues: new { rackId = rack.bikeRackId })"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
+                <a class="btn btn-danger" href="@Url.Action(actionName: "ArchiveRack", controllerName: "Admin", routeValues: new { rackId = rack.bikeRackId })"><span class="glyphicon glyphicon-trash"></span>  Archive</a>
+            </div>
+        </div>
+    </div>
+
+}
+    </div>
+<hr />
+<div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("bikeList", new { page = x }))</div>

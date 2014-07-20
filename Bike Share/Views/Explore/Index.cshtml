@@ -1,0 +1,47 @@
+﻿@using BikeShare.Views
+@model BikeShare.ViewModels.profileViewModel
+
+@{
+    ViewBag.Title = "My Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_ExploreMenuPartial")
+}
+<h2><span class="glyphicon glyphicon-search"></span> @ViewBag.Title</h2>
+<hr />
+
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4><span class="glyphicon glyphicon-user"></span> My Details</h4></div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Name</label>
+                        <div class="col-md-10">@Model.user.userName</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Email</label>
+                        <div class="col-md-10">@Model.user.email</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Phone</label>
+                        <div class="col-md-10">@Model.user.phoneNumber</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-right">
+                <a class="btn btn-warning" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = Model.user.bikeUserId})"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
+            </div>
+        </div>
+
+        @foreach (var card in Model.cards)
+        {
+            <div class="panel panel-@card.status.ToString()">
+                <div class="panel-heading">@card.title</div>
+                <div class="panel-body">
+                    @card.date
+                    @card.type.ToString()
+                </div>
+            </div>
+        }
+        <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("Index", new { page = x }))</div>

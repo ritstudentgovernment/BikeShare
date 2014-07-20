@@ -1,0 +1,90 @@
+﻿@model BikeShare.Models.Inspection
+
+@{
+    ViewBag.Title = "Inspection Details";
+    Layout = null;
+}
+<script>
+    $(document.body).on('hidden.bs.modal', function () {
+        $('#siteModal').removeData('bs.modal')
+    });
+</script>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id="siteModalLabel"><span class="glyphicon glyphicon-search"></span> @ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Details</h3>
+        </div>
+        <div class="panel-body">
+            @if (Model.isPassed)
+            {
+                <div class="alert alert-success">Inspection Passed on @Model.datePerformed.ToShortDateString() by @Model.inspector.userName</div>
+            }
+            else
+            {
+                <div class="alert alert-danger">Inspection Failed on @Model.datePerformed.ToShortDateString() by @Model.inspector.userName</div>
+                <div class="alert alert-danger">Users can't use this bike until it passes inspection.</div>
+            }
+            <h2>Bike #@Model.bike.bikeNumber - @Model.bike.bikeName</h2>
+            <h4>Comment</h4>
+            <div class="well well-lg">@Model.comment</div>
+            <h4>Audit Details</h4>
+            <div>Inspection Performed by: @Model.inspector.userName</div>
+            <div>Inspection Performed at: @Model.placeInspected.name</div>
+        </div>
+        @if (!Model.isPassed)
+        {
+            <div class="panel-footer">
+                @using (Html.BeginForm("newInspection", "Mechanic", new { maintId = Model.bike.bikeId }, FormMethod.Post, new { }))
+                {
+                    <button type="submit" value="newInspection" class="btn btn-primary">Reinspect</button>}
+            </div>}
+    </div>
+
+    @if (Model.associatedMaintenance.Count() > 0)
+    {
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Linked Maintenance</h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>Title</td>
+                        <td>Resolved?</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                @foreach (var maint in Model.associatedMaintenance)
+                {
+                    if (maint.resolved)
+                    {
+                        <tr class="bg-success">
+                            <td>@maint.timeAdded.ToShortDateString()</td>
+                            <td>@maint.title</td>
+                            <td>@maint.staffPerson.userName</td>
+                            <td>@maint.timeResolved.ToShortDateString()</td>
+                            <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr class="bg-danger">
+                            <td>@maint.timeAdded.ToShortDateString()</td>
+                            <td>@maint.title</td>
+                            <td>Not yet. :(</td>
+                            <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-wrench"></span>  Work</a></td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    }
+
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>

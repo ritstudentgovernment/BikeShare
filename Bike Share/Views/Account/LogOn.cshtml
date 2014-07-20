@@ -1,0 +1,31 @@
+﻿@model BikeShare.Models.Login
+@{
+    ViewBag.Title = "Log In";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 role="heading"><span class="glyphicon glyphicon-log-in"></span> @ViewBag.Title</h2>
+<hr role="separator" />
+@Html.ValidationSummary(true)
+@using (Html.BeginForm(null, null, new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post))
+{
+    <div role="form" class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "control-label col-md-2" })
+            @Html.TextBoxFor(m => m.UserName)
+            @Html.ValidationMessageFor(m => m.UserName)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label col-md-2"})
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <div class="form-group">
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe, new { @class = "control-label col-md-2" })
+        </div>
+        <hr />
+        <input type="submit" value="Log In" role="button" class="btn btn-primary" />
+    </div>
+
+}

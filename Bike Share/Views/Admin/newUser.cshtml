@@ -1,0 +1,82 @@
+﻿@model BikeShare.ViewModels.bikeUserPermissionViewModel
+
+@{
+    ViewBag.Title = "Create New User";
+    Layout = null;
+}
+<script>
+    $(document.body).on('hidden.bs.modal', function () {
+        $('#siteModal').removeData('bs.modal')
+    });
+</script>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id="siteModalLabel"><span class="glyphicon glyphicon-user"></span> New User</h4>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="modal-body">
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            <div class="alert alert-warning"><span class="glyphicon glyphicon-warning-sign"></span> The username associated with this user MUST be a valid institutional username. </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.userName, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.userName)
+                    @Html.ValidationMessageFor(model => model.userName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.email)
+                    @Html.ValidationMessageFor(model => model.email)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.phone)
+                    @Html.ValidationMessageFor(model => model.phone)
+                </div>
+            </div>
+            <hr />
+            <h4><span class="glyphicon glyphicon-lock"></span> Permissions</h4>
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.canBorrowBikes, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.canBorrowBikes)
+                    @Html.ValidationMessageFor(model => model.canBorrowBikes)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.canCheckOutBikes, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.canCheckOutBikes)
+                    @Html.ValidationMessageFor(model => model.canCheckOutBikes)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.canMaintainBikes, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.canMaintainBikes)
+                    @Html.ValidationMessageFor(model => model.canMaintainBikes)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.canManageApp, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.canManageApp)
+                    @Html.ValidationMessageFor(model => model.canManageApp)
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div role="navigation" class="modal-footer">
+        <button type="submit" value="Save" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
+    </div>
+}

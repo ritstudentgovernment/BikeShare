@@ -1,0 +1,40 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Bike Share", "Index", "Home", null, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="@Url.Action(actionName:"Index", controllerName:"Home")"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li><a href="@Url.Action(actionName:"About", controllerName:"Home")"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+                <li><a href="@Url.Action(actionName:"rackListing", controllerName:"Explore")"><span class="glyphicon glyphicon-road"></span> Explore</a></li>
+
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" href="#">Advanced</a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li><a href="@Url.Action(actionName:"Index", controllerName:"Admin")"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+                            <li><a href="@Url.Action(actionName:"Index", controllerName:"Mechanic")"><span class="glyphicon glyphicon-wrench"></span> Mechanic</a></li>
+                            <li><a href="@Url.Action(actionName:"selectRack", controllerName:"Checkout")"><span class="glyphicon glyphicon-check"></span> Checkout</a></li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+
+    </div>
+</div>
+

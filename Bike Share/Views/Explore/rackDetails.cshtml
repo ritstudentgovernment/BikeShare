@@ -1,0 +1,137 @@
+﻿@model BikeShare.Models.BikeRack
+
+@{
+    ViewBag.Title = "Bike Rack: " + Model.name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @section mapsSection {
+        <style type="text/css">
+            #map-canvas {
+            }
+        </style>
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=@BikeShare.Code.Secrets.GMapsAPI.ToString()&sensor=false">
+        </script>
+        <script type="text/javascript">
+    function initialize() {
+        var mapOptions = {
+            center: new google.maps.LatLng(43.08441, -77.674949),
+            zoom: 15
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(@Model.GPSCoordX, @Model.GPSCoordY),
+            map: map,
+            draggable:true,
+            title:"Drag me!"
+        })
+
+
+
+        google.maps.event.addListener(marker, 'dragend', function(e) {
+            moveMarker(e.latLng, map)})
+        function moveMarker(position, map) {
+            oFormObject = document.forms[0];
+            oformElementLat= oFormObject.elements["GPSCoordX"];
+            oformElementLong = oFormObject.elements["GPSCoordY"];
+            oformElementLat.value = position.lat();
+            oformElementLong.value = position.lng();
+        }
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+
+    }
+    @section menuSection{
+    @Html.Partial("_ExploreMenuPartial")
+    }
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h2>Information for @Model.name</h2></div>
+            <img src="@Url.Content("~/Content/Images/Racks/" + Model.bikeRackId.ToString() + ".jpg")" class="img-responsive" />
+            <div class="panel-body" style="background-position-x:center; background-position-y: center">
+                <p>Description:</p>
+                <p>@Model.description</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Map</div>
+            <div id="map-canvas" style="height: 400px"></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"> <h4>Hours</h4></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Days</th>
+                        <th>Hours</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.hours != null)
+                    {
+                        foreach (var hour in Model.hours)
+                        {
+                            <tr>
+                                <td>
+                                    @if (hour.dayStart == hour.dayEnd)
+                                    {
+                                        @hour.dayStart.ToString()
+                                    }
+                                    else
+                                    {
+                                        <text>@hour.dayStart.ToString() - @hour.dayEnd.ToString()</text>
+                                    }
+                                </td>
+                                <td>@hour.hourStart.ToString():@hour.minuteStart.ToString() - @hour.hourEnd.ToString():@hour.minuteEnd.ToString()</td>
+                                <td>@hour.comment</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading"><h4>Available Bikes</h4></div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Bike #</th>
+                        <th>Bike Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var bike in Model.bikes)
+                    {
+                        <tr>
+                            <td>@bike.bikeNumber</td>
+                            <td>@bike.bikeName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Bike Rack Statistic</div>
+            <div class="panel-body">
+                <p>Total Checkouts: @Model.checkOuts.Count()</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+        

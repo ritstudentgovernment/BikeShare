@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    <div class="jumbotron">
+        <h1 role="heading">Bike Share</h1>
+        <p class="lead">Making it easy to get across campus.</p>
+        <a href="~/Explore/" class="btn btn-primary btn-large">See the Feedback &raquo;</a></p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2 role="heading">Learn More</h2>
+            <p>
+                The Bike Share makes it easy to get around campus quickly, easily and cheaply. Rentals starting at $0.
+            </p>
+            <p>@Html.ActionLink("Learn More", "About", new  {}, new {@class="btn btn-default"})</p>
+        </div>
+        <div class="col-md-4">
+            <h2 role="heading">Explore</h2>
+            <p>See information about Bike Share usage.</p>
+            <p>@Html.ActionLink("Explore Now", "Explore", new { }, new { @class = "btn btn-default" })</p>
+        </div>
+        <div class="col-md-4">
+            <h2 role="heading">Sign Up</h2>
+            <p>Sign up here to begin renting bikes.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Sign Up &raquo;</a></p>
+        </div>
+    </div>
+
+

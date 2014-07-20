@@ -1,0 +1,31 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <text>
+        <ul class="nav navbar-nav navbar-right" role="menu">
+            <li class="dropdown">
+                <a data-toggle="dropdown" href="#"><img src="@BikeShare.Views.Gravatar.url(User.Identity.Name + "@rit.edu")?s=20&d=mm" />
+                        @User.Identity.Name</a>
+
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a href="@Url.Action(actionName:"Index", controllerName:"Explore")"><span class="glyphicon glyphicon-wrench"></span> Account</a></li>
+                    <li><a href="@Url.Action(actionName:"LogOff", controllerName:"Account")"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </text>
+}
+else
+{
+    <text>
+        <ul class="nav navbar-nav navbar-right" role="menu">
+            <li class="navbar-text">
+                <span class="glyphicon glyphicon-user"></span> Hello!
+            </li>
+            <li class="nav navbar-nav" role="menuitem">
+                <a href="@Url.Action(actionName:"LogOn", controllerName:"Account")"><span class="glyphicon glyphicon-log-in"></span> Log in</a>
+
+            </li>
+        </ul>
+    </text>
+}

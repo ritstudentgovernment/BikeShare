@@ -1,0 +1,25 @@
+﻿@model BikeShare.Models.Bike
+@{
+    ViewBag.Title = "Archive a Bike";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+@using(Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.bikeId)
+<h2>Warning!</h2>
+<p>Archiving bike "@Model.bikeName" will have the following consequences:</p>
+<ul>
+    <li>Users will not be able to check out the bike.</li>
+    <li>Mechanics will not be able to repair the bike.</li>
+    <li>The bike will not show up in statistics involving active bikes.</li>
+    <li>Public users will not see the bike listed outside of archive sections.</li>
+</ul>
+<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> <em>Treat this action as if it were a deletion!</em></div><hr />
+    <div>
+    <a class="btn btn-default" href="@Url.Action(actionName: "Index", controllerName: "Admin")"><span class="glyphicon glyphicon-arrow-left"></span>  Back to Dashboard</a>
+    <button type="submit" value="Archive Bike" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
+</div>
+}

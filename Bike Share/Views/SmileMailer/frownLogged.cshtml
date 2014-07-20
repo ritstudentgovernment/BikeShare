@@ -1,0 +1,11 @@
+@model BikeShare.Models.Smile
+<h1>Frown Submitted</h1>
+<h2>Information</h2>
+<ul>
+    <li>Title: @Model.subject</li>
+    <li>Information: @Model.body</li>
+    <li>Email: @Model.contactEmail</li>
+    <li>Submitted: @Model.DateSubmitted</li>
+    <li>Location: @Model.point.name</li>
+</ul>
+<p>Unsubscribe @Html.ActionLink("Unsubscribe", "unsub", "MailSub", new { subId = ViewBag.subId })</p>

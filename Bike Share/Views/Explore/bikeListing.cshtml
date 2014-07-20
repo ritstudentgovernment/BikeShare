@@ -1,0 +1,26 @@
+﻿@using BikeShare.Views
+@model BikeShare.ViewModels.bikeListingViewModel
+
+@{
+    ViewBag.Title = "Bikes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_ExploreMenuPartial")
+}
+<h2><span class="glyphicon glyphicon-road"></span> @ViewBag.Title</h2>
+<hr />
+
+        @foreach (var bike in Model.allAvailableBikes)
+        {
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">#@bike.bikeNumber - @bike.bikeName</div>
+                <div class="panel-body">
+                    <div>Total Checkouts: @bike.checkOuts.Count()</div>
+                </div>
+            </div>
+            
+        }
+        <hr />
+        <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("bikeListing", new { page = x }))</div>

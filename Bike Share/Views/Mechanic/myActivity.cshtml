@@ -1,0 +1,65 @@
+﻿@using BikeShare.Views
+@model BikeShare.ViewModels.Maint.userActivityVM
+
+@{
+    ViewBag.Title = "My Activity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_MechanicMenuPartial")
+}
+<h2 class="text-center"><span class="glyphicon glyphicon-wrench pull-left"></span> @ViewBag.Title <a data-toggle="modal" data-target="#siteModal" href="@Url.Action("newHour")" class="btn btn-success pull-right"> Record hours</a></h2>
+<hr />
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3><span class="glyphicon glyphicon-usd"></span> Hours + Billing</h3>
+    </div>
+    <table class="table-hover table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Length</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hour in Model.hours)
+            {
+                <tr>
+                    <td>@hour.timeStart.ToShortDateString()</td>
+                    <td>@hour.timeStart.ToShortTimeString()</td>
+                    <td>@hour.timeEnd.ToShortTimeString()</td>
+                    <td>@hour.timeEnd.Subtract(hour.timeStart).ToString()</td>
+                    <td>@hour.comment</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="panel-footer">@Html.PageLinks(Model.activtyPage, x => Url.Action("myActivity", new { hourPage = x }))</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading"><h3><span class="glyphicon glyphicon-tasks"></span> Activity Stream</h3></div>
+    <div class="panel-body">
+        <div class="row">
+            @foreach (var card in Model.cards)
+            {
+                <div class="col-md-6">
+                    <div class="panel panel-@card.status.ToString()">
+                        <div class="panel-heading">@card.title</div>
+                        <div class="panel-body">
+                            @card.date
+                            @card.type.ToString()
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="panel-footer">
+        @Html.PageLinks(Model.activtyPage, x => Url.Action("myActivity", new { activityPage = x }))
+    </div>
+</div>
+<hr />

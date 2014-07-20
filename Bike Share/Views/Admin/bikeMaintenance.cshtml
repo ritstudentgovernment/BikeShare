@@ -1,0 +1,67 @@
+﻿@using BikeShare.Views
+@model BikeShare.ViewModels.PaginatedViewModel<BikeShare.Models.MaintenanceEvent>
+
+@{
+    ViewBag.Title = "Bike Maintenance History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+<h2 class="text-center"><span class="glyphicon glyphicon-time"></span> @ViewBag.Title</h2>
+<hr />
+<div class="row">
+    <div class="col-md-2">
+        <div class="list-group">
+            @Html.ActionLink("Dashboard", "Index", new { }, new { @class = "list-group-item" })
+            @Html.ActionLink("Bikes", "bikeListing", new { }, new { @class = "list-group-item" })
+            @Html.ActionLink("Bike Maintenance", "bikeMaintenance", new { }, new { @class = "list-group-item list-group-item-info" })
+            @Html.ActionLink("Racks", "rackListing", new { }, new { @class = "list-group-item list-group-item-info" })
+            @Html.ActionLink("Workshops", "workshopListing", new { }, new { @class = "list-group-item" })
+            @Html.ActionLink("Users", "myActivity", new { }, new { @class = "list-group-item" })
+            @Html.ActionLink("Settings", "myActivity", new { }, new { @class = "list-group-item" })
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">History</h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>Title</td>
+                        <td>Resolved</td>
+                        <td>Details</td>
+                    </tr>
+                </thead>
+
+                @foreach (var maint in Model.modelList)
+                {
+                    if (maint.resolved)
+                    {
+                        <tr class="bg-success">
+                            <td>@maint.timeAdded.ToShortDateString()</td>
+                            <td>@maint.title</td>
+                            <td>@maint.timeResolved.ToShortDateString()</td>
+                            <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr class="bg-danger">
+                            <td>@maint.timeAdded.ToShortDateString()</td>
+                            <td>@maint.title</td>
+                            <td>Not yet. :(</td>
+                            <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
+                        </tr>
+                    }
+                }
+            </table>
+            <div class="panel-footer">
+                <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("bikeMaintenance", new { page = x }))</div>
+            </div>
+        </div>
+    </div>
+</div>

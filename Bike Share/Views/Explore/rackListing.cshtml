@@ -1,0 +1,62 @@
+﻿@using BikeShare.Views
+@model BikeShare.ViewModels.PaginatedViewModel<BikeShare.Models.BikeRack>
+
+@{
+    ViewBag.Title = "Racks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_ExploreMenuPartial")
+}
+<h2><span class="glyphicon glyphicon-search"></span> @ViewBag.Title</h2>
+<hr />
+@foreach (var rack in Model.modelList)
+{
+    if(rack.bikes.Count() > 0)
+    {
+        <div class="panel panel-success">
+            <div class="panel-heading">@rack.name</div>
+            <img class="img-responsive" src="@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")" />
+            <div class="panel-body">
+                <div>@rack.description</div>
+                <div>@rack.bikes.Count() bikes available.</div>
+            </div>
+            <table class="table table-striped">
+                <thead class="">
+                    <tr>
+                        <th>Bike#</th>
+                        <th>Bike Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var bike in rack.bikes)
+                    {
+                        <tr>
+                            <td>@bike.bikeNumber</td>
+                            <td>@bike.bikeName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="panel-footer text-right">
+                <a class="btn btn-primary" href="@Url.Action(actionName: "rackDetails", controllerName: "Explore", routeValues: new { rackId = rack.bikeRackId})"><span class="glyphicon glyphicon-stats"></span>  Details</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="panel panel-danger">
+            <div class="panel-heading">@rack.name</div>
+            <img class="img-responsive" src="@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")" />
+            <div class="panel-body">
+                <div>@rack.description</div>
+                <div>@rack.bikes.Count() bikes available.</div>
+            </div>
+            <div class="panel-footer text-right">
+                <a class="btn btn-primary" href="@Url.Action(actionName: "rackDetails", controllerName: "Explore", routeValues: new { rackId = rack.bikeRackId})"><span class="glyphicon glyphicon-stats"></span>  Details</a>
+            </div>
+        </div>
+    }
+}
+<hr />
+<div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("rackListing", new { page = x }))</div>

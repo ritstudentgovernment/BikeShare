@@ -1,0 +1,189 @@
+﻿@model BikeShare.ViewModels.superBike
+
+@{
+    ViewBag.Title = "Info for Bike #" + Model.bike.bikeNumber.ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+<h3 class="text-center"><span class="glyphicon glyphicon-info-sign pull-left"></span> @ViewBag.Title</h3>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h4><span class="glyphicon glyphicon-info-sign"></span> Bike</h4></div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bike.bikeNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.bike.bikeNumber)
+                            @Html.ValidationMessageFor(model => model.bike.bikeNumber)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bike.bikeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DisplayFor(model => model.bike.bikeName)
+                            @Html.ValidationMessageFor(model => model.bike.bikeName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Total Checkouts: </label>
+                        <div class="col-md-10">
+                            @Model.bike.checkOuts.Count()
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-right">
+                <a class="btn btn-primary" href="@Url.Action(actionName: "editBike", controllerName: "Admin", routeValues: new { bikeId = Model.bike.bikeId })"><span class="glyphicon glyphicon-pencil"></span>  Edit Bike</a>
+                <a class="btn btn-danger" href="@Url.Action(actionName: "archiveBike", controllerName: "Admin", routeValues: new { bikeId = Model.bike.bikeId})"><span class="glyphicon glyphicon-trash"></span>  Archive</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4><span class="glyphicon glyphicon-stats"></span> Stats</h4></div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Total Checkouts: </label>
+                        <div class="col-md-8">
+                            @Model.bike.checkOuts.Count()
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Total Maintenance: </label>
+                        <div class="col-md-8">
+                            @Model.maintenance.Count()
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Total Inspections: </label>
+                        <div class="col-md-8">
+                            @Model.inspections.Count()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (Model.bike.checkOuts.Count() > 0)
+    {
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4><span class="glyphicon glyphicon-check"></span> Checkouts</h4></div>
+                <div class="panel-body">
+                    <div class="row">
+                        @foreach (var check in Model.bike.checkOuts.Take(12))
+                        {
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">@check.timeOut.ToShortDateString()</div>
+                                    <div class="panel-body">
+                                        <p>Checked out from: @check.rackCheckedOut.name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <a class="btn btn-default" href="@Url.Action(actionName: "bikeCheckouts", controllerName: "Admin", routeValues: new { bikeId = Model.bike.bikeId})"><span class="glyphicon glyphicon-th-list"></span>  See All</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model.maintenance.Count() > 0)
+    {
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4><span class="glyphicon glyphicon-wrench"></span> Maintenance</h4></div>
+                <div class="panel-body">
+                    <div class="row">
+                    @foreach (var maint in Model.maintenance)
+                    {
+                        <div class="col-md-4">
+                            @if (maint.resolved)
+                            {
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">@maint.title</div>
+                                    <div class="panel-body">
+                                        <p>Resolved on: @maint.timeResolved.ToShortDateString()</p>
+                                        <p>Opened on: @maint.timeAdded.ToShortDateString()</p>
+                                        <p>Description: @maint.details</p>
+                                    </div>
+                                    <div class="panel-footer text-right">
+                                        <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new { maintId = maint.MaintenanceEventId})"><span class="glyphicon glyphicon-list"></span> Details</a>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">@maint.title</div>
+                                    <div class="panel-body">
+                                        <p>Opened on: @maint.timeAdded.ToShortDateString()</p>
+                                        <p>@maint.updates.Count() updates</p>
+                                        <p>Description: @maint.details</p>
+                                    </div>
+                                    <div class="panel-footer text-right">
+                                        <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new { maintId = maint.MaintenanceEventId})"><span class="glyphicon glyphicon-list"></span> Details</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                        </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceList", controllerName: "Admin", routeValues: new { bikeId = Model.bike.bikeId})"><span class="glyphicon glyphicon-th-list"></span>  See All</a>
+                </div>
+            </div>
+        </div>
+    }
+    
+    @if (Model.inspections.Count() > 0)
+    {
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4><span class="glyphicon glyphicon-search"></span> Inspections</h4></div>
+                <div class="panel-body">
+                    <div class="row">
+                        @foreach (var spec in Model.inspections)
+                        {
+                            <div class="col-md-4">
+                            @if (spec.isPassed)
+                            {
+                                <div class="panel panel-success">
+                                    <div class="panel-body">
+                                        @spec.datePerformed.ToShortDateString()
+                                        <span class="pull-right">@spec.inspector.userName</span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="panel panel-danger">
+                                    <div class="panel-body">
+                                        @spec.datePerformed.ToShortDateString()
+                                        <span class="pull-right">@spec.inspector.userName</span>
+                                    </div>
+                                </div>
+                            }
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <a class="btn btn-default" href="@Url.Action(actionName: "inspectionList", controllerName: "Admin", routeValues: new { bikeId = Model.bike.bikeId})"><span class="glyphicon glyphicon-th-list"></span>  See All</a>
+                </div>
+            </div>
+        </div>
+    }
+    
+</div>
+

@@ -1,0 +1,76 @@
+﻿@using BikeShare.Views
+@using BikeShare.Models
+@model BikeShare.ViewModels.PaginatedViewModel<MaintenanceEvent>
+
+@{
+    ViewBag.Title = "Maintenance History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+<h2 class="text-center"><span class="glyphicon glyphicon-wrench pull-left"></span> Bike Maintenance</h2>
+<hr />
+@section filterSection{
+<div class="panel panel-primary">
+    <div class="panel-heading"><h3><span class="glyphicon glyphicon-filter"></span>Filters</h3></div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <h4>Status</h4>
+            <div class="form-group form-inline"><label class="control-label col-md-10">Finished </label><input type="checkbox" class="col-md-2" /></div>
+            <div class="form-group form-inline"><label class="control-label col-md-10">Open </label><input type="checkbox" class="col-md-2" /></div>
+        </div>
+
+        <div class="col-md-12">
+            <h4>People</h4>
+            <div class="form-group form-inline"><label class="control-label col-md-12">Performed By </label><input type="text" class="col-md-12" /></div>
+        </div>
+
+        <div class="col-md-12">
+            <h4>Date</h4>
+            <div class="form-group form-inline"><label class="control-label col-md-12">Starting After: </label><input type="date" class="col-md-12" /></div>
+            <div class="form-group form-inline"><label class="control-label col-md-12">Ending Before: </label><input type="date" class="col-md-12" /></div>
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span> Clear All</a>
+        <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-filter"></span> Go</a>
+    </div>
+</div>
+    }
+<div class="row">
+    @foreach (var maintenance in Model.modelList)
+    {<div class="col-md-6">
+        @if (maintenance.resolved)
+        {
+            <div class="panel panel-success">
+                <div class="panel panel-heading">Maintenance finished on @maintenance.timeResolved.ToShortDateString() on Bike @maintenance.bikeAffected.bikeNumber</div>
+                <div class="panel-body"><p>Opened by @maintenance.staffPerson.userName at @maintenance.workshop.name on @maintenance.timeAdded.ToShortDateString()</p></div>
+                <div class="panel-footer text-right">
+                    <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new { maintId = maintenance.MaintenanceEventId})"><span class="glyphicon glyphicon-list"></span> Details</a>
+                    <a class="btn btn-default" href="@Url.Action(actionName: "infoBike", controllerName: "Admin", routeValues: new { bikeId = maintenance.bikeAffected.bikeId})"><span class="glyphicon glyphicon-time"></span>  Bike</a>
+                    <a class="btn btn-default" href="@Url.Action(actionName: "userDetails", controllerName: "Admin", routeValues: new { userId = maintenance.staffPerson.bikeUserId})"><span class="glyphicon glyphicon-user"></span>  Mechanic</a>
+                    <a class="btn btn-default" href="@Url.Action(actionName: "workshopDetails", controllerName: "Admin", routeValues: new { workshopId = maintenance.workshop.workshopId})"><span class="glyphicon glyphicon-home"></span>  Workshop</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="panel panel-danger">
+                <div class="panel panel-heading">Maintenance started @maintenance.timeAdded on Bike @maintenance.bikeAffected.bikeNumber</div>
+                <div class="panel-body"><p>Opened by @maintenance.staffPerson.userName at @maintenance.workshop.name</p></div>
+                <div class="panel-footer text-right">
+                    <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new { maintId = maintenance.MaintenanceEventId})"><span class="glyphicon glyphicon-list"></span>  Details</a>
+                    <a class="btn btn-default" href="@Url.Action(actionName: "bikeDetails", controllerName: "Admin", routeValues: new { bikeId = maintenance.bikeAffected.bikeId})"><span class="glyphicon glyphicon-time"></span>  Bike</a>
+                    <a class="btn btn-default" href="@Url.Action(actionName: "userDetails", controllerName: "Admin", routeValues: new { userId = maintenance.staffPerson.bikeUserId})"><span class="glyphicon glyphicon-user"></span>  Mechanic</a>
+                    <a class="btn btn-default" href="@Url.Action(actionName: "workshopDetails", controllerName: "Admin", routeValues: new { workshopId = maintenance.workshop.workshopId})"><span class="glyphicon glyphicon-home"></span>  Workshop</a>
+                </div>
+            </div>
+        }
+        
+    </div>
+    }
+</div>
+<hr />
+<div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("maintenanceList", new { page = x }))</div>
+

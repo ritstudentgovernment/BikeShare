@@ -1,0 +1,51 @@
+﻿@model BikeShare.Models.appSetting
+
+@{
+    ViewBag.Title = "Application Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+@using (Html.BeginForm())
+{
+<h2 class="text-center"><span class="glyphicon glyphicon-cog pull-left"></span>@ViewBag.Title<input type="submit" value="Save Settings" class="btn btn-primary pull-right" role="button" /></h2>
+<hr />
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            <label class="control-label col-md-3">Name of the application. Changes to this setting will automatically affect all emails, pages, and content. This will not affect the URL.</label>
+            <div class="col-md-9">
+                @Html.EditorFor(Model => Model.appName)
+                @Html.ValidationMessageFor(model => model.appName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3">How many days can a bike be rented for?</label>
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.maxRentDays)
+                @Html.ValidationMessageFor(model => model.maxRentDays)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3">How many days can a bike go before being inspected?</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DaysBetweenInspections)
+                @Html.ValidationMessageFor(model => model.DaysBetweenInspections)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3">What is the default email ending?</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.expectedEmail)
+                @Html.ValidationMessageFor(model => model.expectedEmail)
+            </div>
+        </div>
+    </div>
+    <hr />
+}
