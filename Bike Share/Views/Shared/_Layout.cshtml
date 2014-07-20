@@ -9,7 +9,10 @@
     {
         @RenderSection("mapsSection");
     }
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/bootstrap-theme")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
 
 
@@ -17,7 +20,7 @@
 </head>
 <body>
     @Html.Partial("_HeaderPartial")
-    <div class="container body-content">
+    <div class="container body-content" style="padding-top: 60px">
         <div class="row">
             <div class="col-md-2">
                 @if (IsSectionDefined("menuSection"))
@@ -54,9 +57,6 @@
             
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
