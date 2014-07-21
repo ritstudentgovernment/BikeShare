@@ -24,13 +24,14 @@
             <div class="form-group">
                 <label class="control-label col-md-2">Time Start</label>
                 <div class="col-md-10">
-                    @Html.Editor("timeStart")
+                    <input type="text" id="timeStart" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-2">Time End</label>
                 <div class="col-md-10">
-                    @Html.Editor("timeEnd")
+                    <div data-provide="datepicker"></div>
+                    <input type="text" id="timeEnd" />
                 </div>
             </div>
             <div class="form-group">

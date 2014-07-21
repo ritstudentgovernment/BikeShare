@@ -12,8 +12,8 @@ namespace BikeShare.App_Start
 			// For Bootstrap theme add @Styles.Render("~/Content/bootstrap-theme") in the <head/> of your _Layout.cshtml view
 			// Add @Scripts.Render("~/bundles/bootstrap") after jQuery in your _Layout.cshtml view
 			// When <compilation debug="true" />, MVC4 will render the full readable version. When set to <compilation debug="false" />, the minified version will be rendered automatically
-			BundleTable.Bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Content/js/bootstrap.js"));
-			BundleTable.Bundles.Add(new StyleBundle("~/Content/bootstrap").Include("~/Content/bootstrap.css"));
+			BundleTable.Bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Content/js/bootstrap.js").Include("~/Scripts/bootstrap-datepicker.js"));
+			BundleTable.Bundles.Add(new StyleBundle("~/Content/bootstrap").Include("~/Content/bootstrap.css").Include("~/Content/bootstrap-datepicker3.css"));
 			BundleTable.Bundles.Add(new StyleBundle("~/Content/bootstrap-theme").Include("~/Content/bootstrap-theme.css"));
 		}
 	}

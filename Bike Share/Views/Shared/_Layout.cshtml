@@ -14,29 +14,36 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
-
-
-
 </head>
 <body>
     @Html.Partial("_HeaderPartial")
     <div class="container body-content" style="padding-top: 60px">
         <div class="row">
-            <div class="col-md-2">
-                @if (IsSectionDefined("menuSection"))
+            
+                @if (IsSectionDefined("menuSection") || IsSectionDefined("filterSection"))
                 {
-                    <h3></h3>
-                    @RenderSection("menuSection");
+                    <div class="col-md-2">
+                    @if (IsSectionDefined("menuSection"))
+                    {
+                        <h3></h3>
+                        @RenderSection("menuSection");
+                    }
+                    @if (IsSectionDefined("filterSection"))
+                    {
+                        <h3></h3>
+                        @RenderSection("filterSection");
+                    }
+                    </div>
+                    <div class="col-md-10">
+                        @RenderBody()
+                    </div>
                 }
-                @if (IsSectionDefined("filterSection"))
+                else
                 {
-                    <h3></h3>
-                    @RenderSection("filterSection");
+                    <div class="col-md-12">
+                        @RenderBody()
+                    </div>
                 }
-            </div>
-            <div class="col-md-10">
-                @RenderBody()
-            </div>
         </div>
         <div class="modal fade" id="siteModal" tabindex="-1" role="dialog" aria-labelledby="siteModalLabel" aria-hidden="true">
             <div class="modal-dialog">

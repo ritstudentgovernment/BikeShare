@@ -11,33 +11,6 @@
 }
 <h2 class="text-center"><span class="glyphicon glyphicon-wrench pull-left"></span> Bike Maintenance</h2>
 <hr />
-@section filterSection{
-<div class="panel panel-primary">
-    <div class="panel-heading"><h3><span class="glyphicon glyphicon-filter"></span>Filters</h3></div>
-    <div class="panel-body">
-        <div class="col-md-12">
-            <h4>Status</h4>
-            <div class="form-group form-inline"><label class="control-label col-md-10">Finished </label><input type="checkbox" class="col-md-2" /></div>
-            <div class="form-group form-inline"><label class="control-label col-md-10">Open </label><input type="checkbox" class="col-md-2" /></div>
-        </div>
-
-        <div class="col-md-12">
-            <h4>People</h4>
-            <div class="form-group form-inline"><label class="control-label col-md-12">Performed By </label><input type="text" class="col-md-12" /></div>
-        </div>
-
-        <div class="col-md-12">
-            <h4>Date</h4>
-            <div class="form-group form-inline"><label class="control-label col-md-12">Starting After: </label><input type="date" class="col-md-12" /></div>
-            <div class="form-group form-inline"><label class="control-label col-md-12">Ending Before: </label><input type="date" class="col-md-12" /></div>
-        </div>
-    </div>
-    <div class="panel-footer text-right">
-        <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span> Clear All</a>
-        <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-filter"></span> Go</a>
-    </div>
-</div>
-    }
 <div class="row">
     @foreach (var maintenance in Model.modelList)
     {<div class="col-md-6">
