@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using BikeShare.Interfaces;
@@ -178,7 +179,7 @@ namespace BikeShare.Repositories
 
         public IEnumerable<Inspection> getSomeInspections(int count, int skip)
         {
-            return db.Inspection.Include(b => b.bike).Include(m => m.associatedMaintenance)
+            return db.Inspection.Include(b => b.bike)
                 .Include(w => w.placeInspected).Include(u => u.inspector)
                 .OrderByDescending(i => i.datePerformed).Skip(skip).Take(count).ToList();
         }
@@ -365,9 +366,17 @@ namespace BikeShare.Repositories
 
         public bikeUser getUserById(int id)
         {
-            return db.BikeUser.Include(i => i.maintenanceEvents)
-                .Include(c => c.checkOuts).Include(c => c.charges).Include(z => z.bike)
-                .Where(i => i.bikeUserId == id).First();
+            var user = db.BikeUser.Find(id);
+            user.maintenanceEvents = db.MaintenanceEvent.Where(u => u.staffPerson.bikeUserId == id).ToList();
+            user.checkOuts = db.CheckOut.Where(u => u.user.bikeUserId == id).ToList();
+            //user.charges = db.Charge.Include(u => u.user).Where(u => u.user.bikeUserId == id).ToList();
+            return user;
+
+            //return db.BikeUser.Include(i => i.maintenanceEvents)
+            //.Include(c => c.checkOuts).Include(c => c.charges).Include(z => z.bike)
+            //.Where(i => i.bikeUserId == id).First();
+            
+            
         }
 
         public Workshop getWorkshopById(int id)
@@ -476,11 +485,11 @@ namespace BikeShare.Repositories
             {
                 return db.BikeUser.Where(u => u.userName.Contains(name)).ToList();
             }
-            var query = db.BikeUser.Include(c => c.checkOuts).Include(c => c.charges).Include(u => u.bike);
-            if (hasCharges)
+            var query = db.BikeUser.Include(u => u.bike);//Include(c => c.charges)
+            /*if (hasCharges)
             {
-                query = query.Where(c => c.checkOuts.Any(r => !r.isResolved));
-            }
+                query = query.Where(c => c.charges.Any(r => !r.isResolved));
+            }*/
             if (hasBike)
             {
                 query = query.Where(u => u.hasBike);
@@ -501,7 +510,16 @@ namespace BikeShare.Repositories
             {
                 query = query.Where(c => c.canBorrowBikes);
             }
-            return query.OrderByDescending(u => u.lastRegistered).Skip(skip).Take(count).ToList();
+            try
+            {
+                return query.OrderByDescending(u => u.lastRegistered).Skip(skip).Take(count).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException.ToString());
+            }
+            
         }
 
 

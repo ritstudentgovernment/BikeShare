@@ -256,7 +256,7 @@ namespace BikeShare.Repositories
         {
             using (var db = new BikesContext())
             {
-                return db.BikeUser.Include(b => b.bike).Include(c => c.charges).Include(c => c.checkOuts)
+                return db.BikeUser.Include(c => c.charges).Include(c => c.checkOuts)
                     .Include(m => m.maintenanceEvents).Where(i => i.userName == name).First();
             }
         }

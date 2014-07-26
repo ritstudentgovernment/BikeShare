@@ -1,16 +1,17 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models.Repositories;
+using BikeShare.Repositories;
 using Moq;
 using System.Web.Mvc;
-using SendASmile.Controllers;
+using BikeShare;
+using BikeShare.Interfaces;
 
-namespace SendASmile.Tests
+namespace BikeShare.Tests
 {
     [TestClass]
     public class DashboardIndexTests
     {
-        Mock<IDashboardRepository> dashRepo = new Mock<IDashboardRepository>();
+        Mock<BikeShare.Interfaces.IDashboardRepository> dashRepo = new Mock<IDashboardRepository>();
         Mock<IAuthorizationRepository> authRepo = new Mock<IAuthorizationRepository>();
         private readonly string user = "sgfresh";
         private readonly int orgid = 1;

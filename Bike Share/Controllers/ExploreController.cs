@@ -28,9 +28,18 @@ namespace BikeShare.Controllers
             userRepo = uParam;
         }
 
-        public ActionResult signUp()
+        [Authorize]
+        public ActionResult Register()
         {
             return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Register(string firstName, string lastName)
+        {
+            userRepo.registerUser(User.Identity.Name);
+            return RedirectToAction("Index");
         }
         /// <summary>
         /// Returns the Explore/Index page with no ViewModel.

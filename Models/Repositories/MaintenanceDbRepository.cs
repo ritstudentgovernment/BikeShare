@@ -62,13 +62,15 @@ namespace BikeShare.Repositories
             {
                 if (unResolvedOnly)
                 {
-                    return db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson).Include(u => u.updates)
-                        .Include(w => w.workshop).Where(r => !r.resolved).OrderByDescending(d => d.timeAdded).Skip(skip).Take(count).ToList();
+                    //return db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson).Include(u => u.updates)
+                    //    .Include(w => w.workshop).Where(r => !r.resolved).OrderByDescending(d => d.timeAdded).Skip(skip).Take(count).ToList();
+                    return db.MaintenanceEvent.Include(u => u.staffPerson).Include(b => b.bikeAffected).Include(w => w.workshop).Where(r => !r.resolved).OrderByDescending(d => d.timeAdded).Skip(skip).Take(count).ToList();
                 }
                 else
                 {
-                    return db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson).Include(u => u.updates)
-                        .Include(w => w.workshop).OrderByDescending(d => d.timeAdded).Skip(skip).Take(count).ToList();
+                    //return db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson)
+                    //    .OrderByDescending(d => d.timeAdded).Skip(skip).Take(count).ToList();
+                    return db.MaintenanceEvent.Include(u => u.staffPerson).Include(b => b.bikeAffected).Include(w => w.workshop).OrderByDescending(d => d.timeAdded).Skip(skip).Take(count).ToList();
  
                 }
 
@@ -178,33 +180,32 @@ namespace BikeShare.Repositories
         {
             using (var db = new BikesContext())
             {
-                var query = db.Inspection.Include(u => u.inspector).Include(p => p.placeInspected).Include(b => b.bike).Include(m => m.associatedMaintenance).OrderByDescending(d => d.datePerformed);
+                var query = db.Inspection.Include(p => p.placeInspected).Include(b => b.bike);
                 if (!includePassed)
                 {
-                    query = query.Where(p => !p.isPassed).OrderByDescending(d => d.datePerformed);
+                    query = query.Where(p => !p.isPassed);
                 }
                 if (!includeFailed)
                 {
-                    query = query.Where(p => p.isPassed).OrderByDescending(d => d.datePerformed);
+                    query = query.Where(p => p.isPassed);
                 }
-                return query.Skip(skip).Take(count).ToList();
+                return query.OrderByDescending(d => d.datePerformed).Skip(skip).Take(count).ToList();
             }
         }
 
-        public IEnumerable<Inspection> getInspectionsForBike(int bikeId, int skip, int count, bool includePassed, bool includeFailed)
+        public IEnumerable<Inspection> getInspectionsForBike(int bikeId, int skip, int count, bool includePassed = true, bool includeFailed = true)
         {
             using (var db = new BikesContext())
             {
-                var query = db.Inspection.Include(u => u.inspector).Include(p => p.placeInspected).Include(b => b.bike).Include(m => m.associatedMaintenance).Where(b => b.bike.bikeId == bikeId).OrderByDescending(d => d.datePerformed);
                 if (!includePassed)
                 {
-                    query = query.Where(p => !p.isPassed).OrderByDescending(d => d.datePerformed);
+                    return db.Inspection.Include(u => u.inspector).Include(p => p.placeInspected).Include(b => b.bike).OrderByDescending(d => d.datePerformed).Where(b => b.bike.bikeId == bikeId).Where(p => !p.isPassed).Skip(skip).Take(count).ToList();
                 }
                 if (!includeFailed)
                 {
-                    query = query.Where(p => p.isPassed).OrderByDescending(d => d.datePerformed);
+                    return db.Inspection.Include(u => u.inspector).Include(p => p.placeInspected).Include(b => b.bike).OrderByDescending(d => d.datePerformed).Where(b => b.bike.bikeId == bikeId).Where(p => !p.isPassed).Skip(skip).Take(count).ToList();
                 }
-                return query.Skip(skip).Take(count).ToList();
+                return db.Inspection.Include(u => u.inspector).Include(p => p.placeInspected).Include(b => b.bike).OrderByDescending(d => d.datePerformed).Where(b => b.bike.bikeId == bikeId).Skip(skip).Take(count).ToList();
             }
         }
 
@@ -214,13 +215,13 @@ namespace BikeShare.Repositories
             {
                 if (unResolvedOnly)
                 {
-                    return db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson).Include(u => u.updates)
-                        .Include(w => w.workshop).Where(i => i.bikeAffected.bikeId == bikeId).Where(r => !r.resolved).OrderByDescending(d => d.timeAdded).Skip(skip).Take(count).ToList();
+                    return db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson)
+                        .Include(w => w.workshop).Where(i => i.bikeAffected.bikeId == bikeId).OrderByDescending(d => d.timeAdded).Where(r => !r.resolved).Skip(skip).Take(count).ToList();
                 }
                 else
                 {
-                    return db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson).Include(u => u.updates)
-                        .Include(w => w.workshop).Where(i => i.bikeAffected.bikeId == bikeId).OrderByDescending(d => d.timeAdded).Skip(skip).Take(count).ToList();
+                    return db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson)
+                        .Include(w => w.workshop).OrderByDescending(d => d.timeAdded).Where(i => i.bikeAffected.bikeId == bikeId).Skip(skip).Take(count).ToList();
 
                 }
 
@@ -249,7 +250,8 @@ namespace BikeShare.Repositories
         {
             using (var db = new BikesContext())
             {
-                return db.Bike.Include(b => b.bikeRack).Include(c => c.checkOuts).OrderByDescending(l => l.lastCheckedOut).Skip(skip).Take(count).ToList();
+                //return db.Bike.Include(b => b.bikeRack).Include(c => c.checkOuts).OrderByDescending(l => l.lastCheckedOut).Skip(skip).Take(count).ToList();
+                return db.Bike.Include(b => b.bikeRack).OrderByDescending(l => l.lastCheckedOut).Skip(skip).Take(count).ToList();
             }
         }
 

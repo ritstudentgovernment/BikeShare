@@ -88,13 +88,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Models\Models.csproj">
+    <ProjectReference Include="..\Models\BikeShare.Models.csproj">
       <Project>{f7ea2ef6-c9f2-40f4-a5c3-49bdf5f60e97}</Project>
-      <Name>Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SendASmile\SendASmile.csproj">
-      <Project>{4a6def92-7454-4b2e-99bc-6d36bec6ff1f}</Project>
-      <Name>SendASmile</Name>
+      <Name>BikeShare.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

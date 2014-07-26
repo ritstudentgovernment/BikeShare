@@ -198,7 +198,6 @@
     <Content Include="bin\Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="bin\nJupiter.DataAccess.Ldap.config" />
     <Content Include="bin\NLog.config" />
-    <Content Include="bin\SendASmile.dll.config" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -318,12 +317,13 @@
     <Content Include="Views\Admin\newComment.cshtml" />
     <Content Include="Views\Admin\uploadImage.cshtml" />
     <Content Include="Views\Mechanic\newHour.cshtml" />
-    <Content Include="Views\Admin\newQuiz.cshtml" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Views\Explore\Register.cshtml" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -337,78 +337,45 @@
       <DependentUpon>aspnet-Bikes.mdf</DependentUpon>
     </Content>
     <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="bin\Content\Site.css" />
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.PostgreSql.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
-    <Content Include="bin\EntityFramework.SqlServer.xml" />
-    <Content Include="bin\EntityFramework.xml" />
     <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
-    <Content Include="bin\Microsoft.AspNet.Identity.Core.xml" />
     <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
-    <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.xml" />
     <Content Include="bin\Microsoft.AspNet.Identity.Owin.dll" />
-    <Content Include="bin\Microsoft.AspNet.Identity.Owin.xml" />
     <Content Include="bin\Microsoft.Owin.dll" />
     <Content Include="bin\Microsoft.Owin.Host.SystemWeb.dll" />
-    <Content Include="bin\Microsoft.Owin.Host.SystemWeb.xml" />
     <Content Include="bin\Microsoft.Owin.Security.Cookies.dll" />
-    <Content Include="bin\Microsoft.Owin.Security.Cookies.xml" />
     <Content Include="bin\Microsoft.Owin.Security.dll" />
     <Content Include="bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
-    <Content Include="bin\Microsoft.Owin.Security.MicrosoftAccount.xml" />
     <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
-    <Content Include="bin\Microsoft.Owin.Security.OAuth.xml" />
-    <Content Include="bin\Microsoft.Owin.Security.xml" />
-    <Content Include="bin\Microsoft.Owin.xml" />
     <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Models.dll" />
     <Content Include="bin\Models.pdb" />
     <Content Include="bin\Mono.Security.dll" />
     <Content Include="bin\Mono.Security.Protocol.Tls.dll" />
     <Content Include="bin\Mvc.Mailer.dll" />
-    <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\Newtonsoft.Json.xml" />
     <Content Include="bin\Ninject.dll" />
     <Content Include="bin\Ninject.Web.Common.dll" />
-    <Content Include="bin\Ninject.Web.Common.xml" />
     <Content Include="bin\Ninject.Web.Mvc.dll" />
     <Content Include="bin\Ninject.Web.Mvc.xml" />
-    <Content Include="bin\Ninject.xml" />
     <Content Include="bin\nJupiter.Abstraction.Logging.dll" />
-    <Content Include="bin\nJupiter.Configuration.dll" />
     <Content Include="bin\nJupiter.DataAccess.Ldap.dll" />
     <Content Include="bin\Npgsql.dll" />
     <Content Include="bin\Npgsql.EntityFramework.dll" />
-    <Content Include="bin\Npgsql.EntityFramework.xml" />
-    <Content Include="bin\Npgsql.pdb" />
-    <Content Include="bin\Npgsql.xml" />
     <Content Include="bin\Owin.dll" />
-    <Content Include="bin\SendASmile.dll" />
-    <Content Include="bin\SendASmile.pdb" />
-    <Content Include="bin\SendASmile.XML" />
     <Content Include="bin\System.Net.Http.Formatting.dll" />
-    <Content Include="bin\System.Net.Http.Formatting.xml" />
     <Content Include="bin\System.Web.Helpers.dll" />
-    <Content Include="bin\System.Web.Helpers.xml" />
     <Content Include="bin\System.Web.Http.dll" />
     <Content Include="bin\System.Web.Http.WebHost.dll" />
-    <Content Include="bin\System.Web.Http.WebHost.xml" />
-    <Content Include="bin\System.Web.Http.xml" />
     <Content Include="bin\System.Web.Mvc.dll" />
-    <Content Include="bin\System.Web.Mvc.xml" />
     <Content Include="bin\System.Web.Optimization.dll" />
-    <Content Include="bin\System.Web.Optimization.xml" />
     <Content Include="bin\System.Web.Razor.dll" />
-    <Content Include="bin\System.Web.Razor.xml" />
     <Content Include="bin\System.Web.WebPages.Deployment.dll" />
-    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
     <Content Include="bin\System.Web.WebPages.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\System.Web.WebPages.Razor.xml" />
-    <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\WebActivatorEx.dll" />
     <Content Include="bin\WebDriver.dll" />
     <Content Include="bin\WebDriver.Support.dll" />
@@ -447,7 +414,6 @@
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="BikeShare.csproj" />
-    <Content Include="BikeShare.user" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -528,9 +494,9 @@
     <Compile Include="ViewModels\superBike.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Models\Models.csproj">
+    <ProjectReference Include="..\Models\BikeShare.Models.csproj">
       <Project>{f7ea2ef6-c9f2-40f4-a5c3-49bdf5f60e97}</Project>
-      <Name>Models</Name>
+      <Name>BikeShare.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

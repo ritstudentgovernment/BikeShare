@@ -11,15 +11,15 @@ namespace BikeShare.Models
         public int subId { get; set; }
 
         [Required]
-        public bikeUser subscriber { get; set; }
+        public virtual bikeUser subscriber { get; set; }
 
         [EmailAddress]
         public string email { get; set; }
 
-        public Bike bike { get; set; }
+        public virtual Bike bike { get; set; }
 
-        public BikeRack rack { get; set; }
+        public virtual BikeRack rack { get; set; }
 
-        public Workshop workshop { get; set; }
+        public virtual Workshop workshop { get; set; }
     }
 }

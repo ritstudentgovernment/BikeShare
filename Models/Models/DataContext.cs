@@ -31,19 +31,14 @@ namespace BikeShare.Models
             base.OnModelCreating(modelBuilder);
 
         }
-        public class SettingsInitializer : DropCreateDatabaseIfModelChanges<BikesContext>
-        {
-            protected override void Seed(BikesContext context)
-            {
-                base.Seed(context);
-                var setting = new appSetting();
-                setting.appName = "Bike Share";
-                setting.DaysBetweenInspections = 7;
-                setting.expectedEmail = "@rit.edu";
-                setting.maxRentDays = 1;
-                context.settings.Add(setting);
-                context.SaveChanges();
-            }
-        }
+                //base.Seed(context);
+                //var setting = new appSetting();
+                //setting.appName = "Bike Share";
+                //setting.DaysBetweenInspections = 7;
+                //setting.expectedEmail = "@rit.edu";
+                //setting.maxRentDays = 1;
+                //context.settings.Add(setting);
+                //context.SaveChanges();
+
     }
 }

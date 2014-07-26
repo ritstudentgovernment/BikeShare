@@ -174,3 +174,4 @@ UpgradeLog*.htm
 FakesAssemblies/
 Bike Share/Code/Secrets.cs
 Bike Share/Code/Secrets.cs
+*.zip

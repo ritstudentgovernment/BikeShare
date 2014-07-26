@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm())
+{
+    <h3>Terms</h3>
+    <p>The Bike Share program is administered according to the following guidelines.</p>
+    
+    <hr />
+    <div class="alert alert-danger">Entering your name and clicking "Register" constitutes a legally binding signature in acceptance of the above terms.</div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-3">First Name: </label>
+            <div class="col-md-9"><input type="text" id="firstName" /></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3">Last Name: </label>
+            <div class="col-md-9"><input type="text" id="lastName" /></div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3"></div>
+            <div class="col-md-9"><input class="btn btn-primary" type="submit" value="Register" /></div>
+        </div>
+    </div>
+}

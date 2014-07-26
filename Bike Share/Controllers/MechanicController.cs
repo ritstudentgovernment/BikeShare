@@ -131,7 +131,6 @@ namespace BikeShare.Controllers
                 card.bikeNumber = bike.bikeNumber;
                 card.rackId = bike.bikeRack.bikeRackId;
                 card.rackName = bike.bikeRack.name;
-                card.totalCheckouts = bike.checkOuts.Count();
                 card.totalInspections = repo.totalInspectionsForBike(bike.bikeId);
                 card.totalMaintenance = repo.totalMaintForBike(bike.bikeId);
                 card.status = ViewModels.cardStatus.defaults;

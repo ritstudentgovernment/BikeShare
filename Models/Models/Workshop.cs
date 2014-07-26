@@ -25,7 +25,7 @@ namespace BikeShare.Models
         [Required]
         public float GPSCoordY { get; set; }
 
-        public List<MaintenanceEvent> maintenanceEvents { get; set; }
+        public virtual ICollection<MaintenanceEvent> maintenanceEvents { get; set; }
 
         [Required]
         public bool isArchived { get; set; }

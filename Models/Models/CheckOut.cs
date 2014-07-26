@@ -18,15 +18,15 @@ namespace BikeShare.Models
 
         public DateTime timeIn { get; set; }
         
-        public bikeUser checkOutPerson { get; set; }
+        public virtual bikeUser checkOutPerson { get; set; }
         
-        public bikeUser user { get; set; }
+        public virtual bikeUser user { get; set; }
         
-        public Bike bike { get; set; }
+        public virtual Bike bike { get; set; }
 
-        public BikeRack rackCheckedOut { get; set;}
+        public virtual BikeRack rackCheckedOut { get; set;}
 
-        public BikeRack rackCheckedIn { get; set; }
+        public virtual BikeRack rackCheckedIn { get; set; }
 
         [Required]
         public bool isResolved { get; set; }
