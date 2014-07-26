@@ -468,7 +468,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailSubController.cs" />
     <Compile Include="Controllers\MechanicController.cs" />
-    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
