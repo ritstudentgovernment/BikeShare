@@ -103,7 +103,6 @@
             <tr>
                 <td>Number</td>
                 <td>Name</td>
-                <td>Checkouts</td>
                 <td>Details?</td>
             </tr>
         </thead>
@@ -112,7 +111,6 @@
             <tr>
                 <td>@bike.bikeNumber</td>
                 <td>@bike.bikeName</td>
-                <td>@bike.checkOuts.Count</td>
                 <td><a class="btn btn-primary pull-right" href="@Url.Action(actionName: "bikeDetails", controllerName: "Mechanic", routeValues: new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-list-alt"></span>  Details</a></td>
             </tr>
         }

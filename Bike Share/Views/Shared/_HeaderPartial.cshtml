@@ -12,26 +12,20 @@
             <ul class="nav navbar-nav">
                 <li><a href="@Url.Action(actionName:"Index", controllerName:"Home")"><span class="glyphicon glyphicon-home"></span> Home</a></li>
                 <li><a href="@Url.Action(actionName:"About", controllerName:"Home")"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-                <li><a href="@Url.Action(actionName:"rackListing", controllerName:"Explore")"><span class="glyphicon glyphicon-road"></span> Explore</a></li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#">Explore<span class="caret"></span></a>
 
-
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" href="#">Advanced</a>
-
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <li><a href="@Url.Action(actionName:"Index", controllerName:"Admin")"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
-                            <li><a href="@Url.Action(actionName:"Index", controllerName:"Mechanic")"><span class="glyphicon glyphicon-wrench"></span> Mechanic</a></li>
-                            <li><a href="@Url.Action(actionName:"selectRack", controllerName:"Checkout")"><span class="glyphicon glyphicon-check"></span> Checkout</a></li>
-                        </ul>
-                    </li>
-                }
-                else
-                {
-
-                }
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li><a href="@Url.Action(actionName:"bikeListing", controllerName:"Explore")"><span class="glyphicon glyphicon-list-alt"></span> Bikes</a></li>
+                        <li><a href="@Url.Action(actionName:"rackListing", controllerName:"Explore")"><span class="glyphicon glyphicon-list"></span> Bike Racks</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a href="@Url.Action(actionName:"Index", controllerName:"Explore")"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+                        }
+                    </ul>
+                </li>
             </ul>
+            
             @Html.Partial("_LoginPartial")
         </div>
 
