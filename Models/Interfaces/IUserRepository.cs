@@ -25,5 +25,8 @@ namespace BikeShare.Interfaces
         int totalMechanics(bool includeArchived = false, bool includeCurrent = true);
         int totalUsers(bool includeArchived = false, bool includeCurrent = true);
         bool canUserManageApp(string name);
+        bool isUserRegistrationValid(string name);
+        bool isUserRegistrationValid(int id);
+        bool doesUserExist(string name);
     }
 }

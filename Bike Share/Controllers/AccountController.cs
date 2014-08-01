@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Security;
+using BikeShare.Interfaces;
 
 namespace BikeShare.Controllers
 {
@@ -9,6 +10,14 @@ namespace BikeShare.Controllers
     /// </summary>
     public class AccountController : Controller
     {
+        private IUserRepository userRepo;
+        private ISettingRepository settingsRepo;
+
+        public AccountController(IUserRepository uRepo, ISettingRepository sRepo)
+        {
+            userRepo = uRepo;
+            settingsRepo = sRepo;
+        }
         /// <summary>
         /// Displays the logon form. Logs the current user off if someone is logged in.
         /// </summary>
@@ -38,12 +47,24 @@ namespace BikeShare.Controllers
         {
             //If in debug mode, bypasses authentication and logs in as the provided userName
 #if DEBUG
+            if (!userRepo.doesUserExist(model.UserName))
+            {
+                userRepo.createuser(model.UserName, model.UserName + settingsRepo.getexpectedEmail(), null, false, true);
+                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                return RedirectToAction("Register", "Explore");
+            }
             FormsAuthentication.RedirectFromLoginPage(model.UserName, model.RememberMe);
 #endif
             if (ModelState.IsValid)
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
+                    if(!userRepo.doesUserExist(model.UserName))
+                    {
+                        userRepo.createuser(model.UserName, model.UserName + settingsRepo.getexpectedEmail(), null, false, true);
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        return RedirectToAction("Register", "Explore");
+                    }
                     FormsAuthentication.RedirectFromLoginPage(model.UserName, model.RememberMe);
                 }
                 ModelState.AddModelError("", "Incorrect username and/or password");

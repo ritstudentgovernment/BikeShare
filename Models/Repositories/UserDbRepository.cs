@@ -125,7 +125,7 @@ namespace BikeShare.Repositories
 
         }
 
-        public void createuser(string name, string email, string phone, bool canCheckOut = false, bool canBorrow = false, bool canMaintain = false, bool canManageApp = false)
+        public void createuser(string name, string email, string phone = null, bool canCheckOut = false, bool canBorrow = false, bool canMaintain = false, bool canManageApp = false)
         {
             using (var db = new BikesContext())
             {
@@ -269,6 +269,51 @@ namespace BikeShare.Repositories
                 var user = db.BikeUser.Where(u => u.userName == userName).First();
                 user.lastRegistered = DateTime.Now;
                 db.SaveChanges();
+            }
+        }
+
+
+        public bool isUserRegistrationValid(string name)
+        {
+            using (var db = new BikesContext())
+            {
+                var user = db.BikeUser.Where(n => n.userName == name).First();
+                var setting = db.settings.First();
+                if (user.lastRegistered.AddDays(setting.daysBetweenRegistrations) < DateTime.Now)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public bool isUserRegistrationValid(int id)
+        {
+            using (var db = new BikesContext())
+            {
+                var user = db.BikeUser.Find(id);
+                var setting = db.settings.First();
+                if (user.lastRegistered.AddDays(setting.daysBetweenRegistrations) < DateTime.Now)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+
+        public bool doesUserExist(string name)
+        {
+            using (var db = new BikesContext())
+            {
+                if (db.BikeUser.Where(u => u.userName == name).Count() < 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
     }

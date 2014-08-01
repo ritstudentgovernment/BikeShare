@@ -49,6 +49,10 @@ namespace BikeShare.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                if (!userRepo.isUserRegistrationValid(User.Identity.Name))
+                {
+                    return RedirectToAction("Register");
+                }
                 var model = new BikeShare.ViewModels.profileViewModel();
                 model.user = userRepo.getUserByName(User.Identity.Name);
                 model.cards = new List<ActivityCard>();
@@ -114,7 +118,7 @@ namespace BikeShare.Controllers
             }
             else
             {
-                return RedirectToAction("signUp");
+                return RedirectToAction("logIn", "Account");
             }
         }
         
