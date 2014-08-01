@@ -54,10 +54,7 @@
                         <img class="media-object" src="@BikeShare.Views.Gravatar.url(comment.postedBy.email)">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading">@comment.title</h4>
-                        <div class="text-right">
-                            Posted by @comment.postedBy.userName at @comment.timePosted.ToShortTimeString() on @comment.timePosted.ToShortDateString()
-                        </div>
+                        <h4 class="media-heading">@comment.title<span class="pull-right">Posted by @comment.postedBy.userName at @comment.timePosted.ToShortTimeString() on @comment.timePosted.ToShortDateString()</span></h4>
                         <div class="bg-info">
                             <p class="well well-sm">@comment.body</p>
                         </div>

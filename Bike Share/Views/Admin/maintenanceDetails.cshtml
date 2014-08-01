@@ -44,16 +44,22 @@
 </div>
 <hr />
 <h3><span class="glyphicon glyphicon-comment"></span> Comments <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newComment", new { maintId = Model.MaintenanceEventId})"><span class="glyphicon glyphicon-plus-sign"></span>  Comment</a></h3>
-<div class="row">
-    <hr />
-    @foreach (var comment in Model.updates)
-    {<div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">@comment.title <span class="pull-right">Posted by @comment.postedBy.userName at @comment.timePosted.ToShortTimeString() on @comment.timePosted.ToShortDateString()</span></div>
-            <div class="panel-body">
-                <div>@comment.body</div>
-            </div>
-        </div>
-    </div>
-    }
+<hr />
+<div class="panel-body">
+    <ul class="media-list">
+        @foreach (var comment in Model.updates)
+        {
+            <li class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object" src="@BikeShare.Views.Gravatar.url(comment.postedBy.email)">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">@comment.title<span class="pull-right">Posted by @comment.postedBy.userName at @comment.timePosted.ToShortTimeString() on @comment.timePosted.ToShortDateString()</span></h4>
+                    <div class="bg-info">
+                        <p class="well well-sm">@comment.body</p>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
 </div>

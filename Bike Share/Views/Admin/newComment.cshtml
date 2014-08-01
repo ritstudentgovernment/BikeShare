@@ -15,7 +15,7 @@
 </div>
 @using (Html.BeginForm("newComment", "Mechanic", new { maintenanceId = Model.associatedEvent.MaintenanceEventId }, FormMethod.Post, new { }))
 {
-    <div class="model-body">
+    <div class="modal-body">
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
