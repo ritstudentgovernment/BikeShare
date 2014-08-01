@@ -21,17 +21,24 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
             <div class="form-group">
-                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.email)
-                    @Html.ValidationMessageFor(model => model.email)
+                <label class="control-label col-md-3">User Name:</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <input class="form-control" disabled value="@Model.userName" />
+                        <div class="input-group-addon"><abbr title="Your username is set by your institution, and can't be changed."><span class="glyphicon glyphicon-lock"></span></abbr></div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.phoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.phoneNumber)
-                    @Html.ValidationMessageFor(model => model.phoneNumber)
+                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <input class="form-control" type="text" id="email" value="@Model.email" name="email"/>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.phoneNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <input class="form-control" type="tel" id="phoneNumber" value="@Model.phoneNumber" name="phoneNumber" />
                 </div>
             </div>
         </div>
