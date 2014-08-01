@@ -3,7 +3,7 @@
     <text>
         <ul class="nav navbar-nav navbar-right" role="menu">
             <li class="dropdown">
-                <a data-toggle="dropdown" href="#"><img src="@BikeShare.Views.Gravatar.url(User.Identity.Name + "@rit.edu")?s=20&d=mm" />
+                <a data-toggle="dropdown" href="#"><img src="@BikeShare.Views.Gravatar.url(User.Identity.Name + "@rit.edu")?s=20&d=identicon" />
                         @User.Identity.Name <span class="caret"></span></a>
 
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -24,7 +24,7 @@ else
     <text>
         <ul class="nav navbar-nav navbar-right" role="menu">
             <li class="navbar-text">
-                <span class="glyphicon glyphicon-user"></span> Hello!
+                <span class="glyphicon glyphicon-user"></span> Hello, guest!
             </li>
             <li class="nav navbar-nav" role="menuitem">
                 <a href="@Url.Action(actionName:"LogOn", controllerName:"Account")"><span class="glyphicon glyphicon-log-in"></span> Log in</a>

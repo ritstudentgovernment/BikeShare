@@ -73,7 +73,14 @@ namespace BikeShare.Controllers
                     }
                     if (item.inspection != null)
                     {
-                        building.title = "Inspection: " + item.inspection.comment.ToString();
+                        if (item.inspection.comment != null)
+                        {
+                            building.title = "Inspection: " + item.inspection.comment.ToString();
+                        }
+                        else
+                        {
+                            building.title = "Inspection";
+                        }
                         if (item.inspection.isPassed) { building.status = cardStatus.success; } else { building.status = cardStatus.danger; }
                         building.type = activityType.inspection;
                     }
