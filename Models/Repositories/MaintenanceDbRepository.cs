@@ -51,8 +51,10 @@ namespace BikeShare.Repositories
         {
             using (var db =  new BikesContext())
             {
-                return (MaintenanceEvent) db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson).Include(u => u.updates)
+                var x = (MaintenanceEvent) db.MaintenanceEvent.Include(b => b.bikeAffected).Include(u => u.staffPerson).Include(u => u.updates)
                     .Include(w => w.workshop).Where(i => i.MaintenanceEventId == maintId).First();
+                x.updates = db.MaintenanceUpdate.Include(u => u.postedBy).Include(m => m.associatedEvent).Where(m => m.associatedEvent.MaintenanceEventId == maintId).ToList();
+                return x;
             }
         }
 
