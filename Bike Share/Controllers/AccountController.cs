@@ -44,7 +44,7 @@ namespace BikeShare.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    Redirect(returnUrl);
+                    FormsAuthentication.RedirectFromLoginPage(model.UserName, model.RememberMe);
                 }
                 ModelState.AddModelError("", "Incorrect username and/or password");
             }
