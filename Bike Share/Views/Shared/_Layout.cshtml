@@ -13,9 +13,6 @@
         @RenderSection("mapsSection");
     }
     @Styles.Render("~/Content/bootstrap")
-    <!--@Styles.Render("~/Content/bootstrap-theme")-->
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -25,7 +22,7 @@
             
                 @if (IsSectionDefined("menuSection") || IsSectionDefined("filterSection"))
                 {
-                    <div class="col-sm-2">
+                    <div class="col-sm-2 hidden-xs hidden-print">
                     @if (IsSectionDefined("menuSection"))
                     {
                         <h3></h3>
@@ -68,5 +65,7 @@
         </footer>
     </div>
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>
