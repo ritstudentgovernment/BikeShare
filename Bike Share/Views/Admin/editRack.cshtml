@@ -53,12 +53,12 @@
 <h3 class="text-center"><span class="glyphicon glyphicon-pencil pull-left"></span> Editing Rack @Model.name <button type="submit" value="Save Changes" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-save"></span> Save</button></h3>
 <hr />
     <div class="panel panel-default">
-        <div class="panel-heading"><h4>Map</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">Map</h4></div>
         <div id="map-canvas" style="height: 400px"></div>
         <div class="panel-footer text-right">Drag marker to move rack.</div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading"><h4>Details</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">Details</h4></div>
         <div class="panel-body">
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.bikeRackId)
@@ -88,14 +88,14 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading"><h4><span class="glyphicon glyphicon-picture"></span> Header Image</h4></div>
+        <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-picture"></span> Header Image</h4></div>
         <img class="img-responsive" src="@Url.Content("~/Content/Images/Racks/" + Model.bikeRackId.ToString() + ".jpg")" />
         <div class="panel-footer text-right">
             <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("uploadImage", new { rackID = Model.bikeRackId})"><span class="glyphicon glyphicon-upload"></span>  Upload</a>
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading"> <h4>Hours</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">Hours</h4></div>
         <table class="table table-striped">
             <thead>
                 <tr>

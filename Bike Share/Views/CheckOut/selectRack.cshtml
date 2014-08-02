@@ -10,7 +10,7 @@
 {
 
     <div class="panel panel-default">
-        <div class="panel-heading"><h4>@card.name</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">@card.name</h4></div>
         <div class="panel-body"></div>
         <div class="text-right panel-footer">
             <a class="btn btn-primary" href="@Url.Action(actionName: "Index", controllerName: "Checkout", routeValues: new { rackId = card.bikeRackId })"><span class="glyphicon glyphicon-circle-arrow-right"></span>  Go</a>

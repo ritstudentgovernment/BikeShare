@@ -17,7 +17,7 @@
     if(inspection.isPassed)
     {<div class="col-md-6">
         <div class="panel panel-success">
-            <div class="panel-heading"><h4>Inspection of @inspection.bike.bikeNumber on @inspection.datePerformed.ToShortDateString()</h4></div>
+            <div class="panel-heading"><h4 class="panel-title">Inspection of @inspection.bike.bikeNumber on @inspection.datePerformed.ToShortDateString()</h4></div>
             <div class="panel-body"><p>Performed by @inspection.inspector.userName at @inspection.placeInspected.name</p></div>
             <div class="text-right panel-footer">
                 <a class="btn btn-default" href="@Url.Action(actionName: "infoBike", controllerName: "Admin", routeValues: new { bikeId = inspection.bike.bikeId})"><span class="glyphicon glyphicon-time"></span> Bike</a>
@@ -30,7 +30,7 @@
     if (!inspection.isPassed)
     {<div class="col-md-6">
         <div class="panel panel-danger">
-            <div class="panel-heading"><h4>Inspection of @inspection.bike.bikeNumber on @inspection.datePerformed.ToShortDateString()</h4></div>
+            <div class="panel-heading"><h4 class="panel-title">Inspection of @inspection.bike.bikeNumber on @inspection.datePerformed.ToShortDateString()</h4></div>
             <div class="panel-body"><p>Performed by @inspection.inspector.userName at @inspection.placeInspected.name</p></div>
             <div class="text-right panel-footer">
                 <a class="btn btn-default" href="@Url.Action(actionName: "infoBike", controllerName: "Admin", routeValues: new { bikeId = inspection.bike.bikeId})"><span class="glyphicon glyphicon-time"></span>  Bike</a>

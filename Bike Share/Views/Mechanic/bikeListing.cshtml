@@ -15,7 +15,7 @@
 {
 	<div class="col-md-6">
 		<div class="panel panel-@card.getStatusStyle()">
-			<div class="panel-heading"><h4>Bike #@card.bikeNumber - @card.bikeName</h4></div>
+			<div class="panel-heading"><h4 class="panel-title">Bike #@card.bikeNumber - @card.bikeName</h4></div>
 			<div class="panel-body">Last Inspected: @card.dateLastInspected Last Maintained: @card.dateLastMaintenance</div>
 			<div class="text-right panel-footer">
 				<a class="btn btn-default" href="@Url.Action(actionName: "bikeDetails", controllerName: "Mechanic", routeValues: new { bikeId = card.bikeId })"><span class="glyphicon glyphicon-list"></span>  Details</a>

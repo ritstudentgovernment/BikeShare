@@ -54,12 +54,12 @@
 
     @Html.AntiForgeryToken()
     <div class="panel panel-default">
-        <div class="panel-heading"><h4>Map</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">Map</h4></div>
         <div id="map-canvas" style="height: 400px"></div>
         <div class="panel-footer text-right">Drag Marker to Move Rack</div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading">Details</div>
+        <div class="panel-heading"><h4 class="panel-title">Details</h4></div>
         <div class="panel-body">
             @Html.ValidationMessageFor(model => model.GPSCoordX)
             @Html.ValidationMessageFor(model => model.GPSCoordY)

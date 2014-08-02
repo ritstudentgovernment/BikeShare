@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="panel panel-primary">
-            <div class="panel-heading"><h4><span class="glyphicon glyphicon-info-sign"></span> Bike</h4></div>
+            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-info-sign"></span> Bike</h4></div>
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
@@ -46,7 +46,7 @@
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading"><h4><span class="glyphicon glyphicon-stats"></span> Stats</h4></div>
+            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-stats"></span> Stats</h4></div>
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
@@ -75,7 +75,7 @@
     {
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading"><h4><span class="glyphicon glyphicon-check"></span> Checkouts</h4></div>
+                <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-check"></span> Checkouts</h4></div>
                 <div class="panel-body">
                     <div class="row">
                         @foreach (var check in Model.bike.checkOuts.Take(12))
@@ -101,7 +101,7 @@
     {
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading"><h4><span class="glyphicon glyphicon-wrench"></span> Maintenance</h4></div>
+                <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Maintenance</h4></div>
                 <div class="panel-body">
                     <div class="row">
                     @foreach (var maint in Model.maintenance)
@@ -150,7 +150,7 @@
     {
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading"><h4><span class="glyphicon glyphicon-search"></span> Inspections</h4></div>
+                <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-search"></span> Inspections</h4></div>
                 <div class="panel-body">
                     <div class="row">
                         @foreach (var spec in Model.inspections)

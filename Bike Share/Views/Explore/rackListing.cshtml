@@ -15,10 +15,8 @@
     if(rack.bikes.Count() > 0)
     {
         <div class="panel panel-success">
-            <div class="panel-heading">@rack.name</div>
-            <div style="height:150px;overflow:hidden">
-                <img style="margin:-75px 0 0 -100px; height: 400px;" src="@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")" />
-            </div>
+            <div class="panel-heading"><h4 class="panel-title">@rack.name</h4></div>
+            <div style="height:150px; background-position-x:center; background-position-y:center; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>
             <div class="panel-body">
                 <div>@rack.description</div>
                 <div>@rack.bikes.Count() bikes available.</div>
@@ -48,10 +46,8 @@
     else
     {
         <div class="panel panel-danger">
-            <div class="panel-heading">@rack.name</div>
-            <div style="height:150px;overflow:hidden">
-                <img style="margin:-75px 0 0 -100px; height: 400px;" src="@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")" />
-            </div>            
+            <div class="panel-heading"><h4 class="panel-title">@rack.name</h4></div>
+            <div style="height:150px; background-position-x:center; background-position-y:center; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>  
             <div class="panel-body">
                 <div>@rack.description</div>
                 <div>@rack.bikes.Count() bikes available.</div>

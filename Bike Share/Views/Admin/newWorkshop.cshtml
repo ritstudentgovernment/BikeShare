@@ -41,18 +41,17 @@
     }
     google.maps.event.addDomListener(window, 'load', initialize);
         </script>
-
     }
 }
 @section menuSection{
     @Html.Partial("_AdminMenuPartial")
 }
-<h2><span class="glyphicon glyphicon-Home"></span> @ViewBag.Title</h2>
+<h2 class="text-center"><span class="glyphicon glyphicon-Home pull-left"></span>@ViewBag.Title<button type="submit" value="Save" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-floppy-save"></span> Save</button></h2>
 <hr />
 @using (Html.BeginForm())
 {
 <div class="panel panel-default">
-
+    <div class="panel-heading"><h4 class="panel-title">Map and Name</h4></div>
     <div id="map-canvas" style="height: 400px"></div>
     <div class="panel-body">
         @Html.ValidationMessageFor(model => model.GPSCoordX)
@@ -71,9 +70,7 @@
         </div>
     </div>
     <div class="panel-footer text-right">
-        <button type="submit" value="Save" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+        <span>Drag Marker to place workshop.</span>
     </div>
 </div>
 }
-<hr />
-<div role="navigation"><a class="btn btn-default" href="@Url.Action(actionName: "Index", controllerName: "Admin")"><span class="glyphicon glyphicon-arrow-left"></span>  Back to Dashboard</a></div>

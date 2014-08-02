@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading"><span class="glyphicon glyphicon-log-out"></span> Check Out</div>
+            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-log-out"></span> Check Out</h4></div>
             @using (Html.BeginForm("checkOutBike", "Checkout", new { rackId = Model.currentRack.bikeRackId}, FormMethod.Post, new { }))
             {
                 @Html.HiddenFor(model => model.currentRack.bikeRackId)
@@ -43,7 +43,7 @@
     
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading"><span class="glyphicon glyphicon-log-in"></span> Check In</div>
+            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-log-in"></span> Check In</h4></div>
             @using (Html.BeginForm("checkInBike", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
             {
 
@@ -67,7 +67,7 @@
     </div>
     <div class="col-md-12">
         <div class="panel panel-danger">
-            <div class="panel-heading"><span class="glyphicon glyphicon-warning-sign"></span> Issues</div>
+            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> Issues</h4></div>
             @using (Html.BeginForm("submitCharge", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
             {
 

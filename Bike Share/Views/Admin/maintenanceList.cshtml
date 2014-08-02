@@ -17,7 +17,7 @@
         @if (maintenance.resolved)
         {
             <div class="panel panel-success">
-                <div class="panel panel-heading">Maintenance finished on @maintenance.timeResolved.ToShortDateString() on Bike @maintenance.bikeAffected.bikeNumber</div>
+                <div class="panel panel-heading"><h4>Maintenance finished on @maintenance.timeResolved.ToShortDateString() on Bike @maintenance.bikeAffected.bikeNumber</h4></div>
                 <div class="panel-body"><p>Opened by @maintenance.staffPerson.userName at @maintenance.workshop.name on @maintenance.timeAdded.ToShortDateString()</p></div>
                 <div class="panel-footer text-right">
                     <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new { maintId = maintenance.MaintenanceEventId})"><span class="glyphicon glyphicon-list"></span> Details</a>
@@ -30,7 +30,7 @@
         else
         {
             <div class="panel panel-danger">
-                <div class="panel panel-heading">Maintenance started @maintenance.timeAdded on Bike @maintenance.bikeAffected.bikeNumber</div>
+                <div class="panel panel-heading"><h4>Maintenance started @maintenance.timeAdded on Bike @maintenance.bikeAffected.bikeNumber</h4></div>
                 <div class="panel-body"><p>Opened by @maintenance.staffPerson.userName at @maintenance.workshop.name</p></div>
                 <div class="panel-footer text-right">
                     <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new { maintId = maintenance.MaintenanceEventId})"><span class="glyphicon glyphicon-list"></span>  Details</a>

@@ -10,9 +10,7 @@
 <h2><span class="glyphicon glyphicon-wrench"></span> @ViewBag.Title</h2>
 <hr />
 <div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3>Details</h3>
-    </div>
+    <div class="panel-heading"><h4 class="panel-title">Details</h4></div>
     <div class="panel-body">
         @if (Model.resolved)
         {
@@ -43,7 +41,7 @@
     }
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><h3><span class="glyphicon glyphicon-comment"></span> Comments <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newComment", new { maintId = Model.MaintenanceEventId})"><span class="glyphicon glyphicon-plus-sign"></span>  Comment</a></h3>
+    <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Comments <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newComment", new { maintId = Model.MaintenanceEventId})"><span class="glyphicon glyphicon-plus-sign"></span>  Comment</a></h4>
 </div>
     <div class="panel-body">
         <ul class="media-list">
@@ -51,7 +49,7 @@
             {
                 <li class="media">
                     <a class="pull-left" href="#">
-                        <img class="media-object" src="@BikeShare.Views.Gravatar.url(comment.postedBy.email)">
+                        <img class="media-object" src="@BikeShare.Views.Gravatar.url(comment.postedBy.email)?d=identicon">
                     </a>
                     <div class="media-body">
                         <h4 class="media-heading">@comment.title<span class="pull-right">Posted by @comment.postedBy.userName at @comment.timePosted.ToShortTimeString() on @comment.timePosted.ToShortDateString()</span></h4>

@@ -12,12 +12,12 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading"> <h4>User Details</h4></div>
+            <div class="panel-heading"><h4 class="panel-title">User Details</h4></div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default">
-                            <div class="panel-heading"><h4><span><img src="@BikeShare.Views.Gravatar.url(Model.email)?s=28&d=mm" /></span> @Model.userName</h4></div>
+                            <div class="panel-heading"><h4 class="panel-title"><span><img src="@BikeShare.Views.Gravatar.url(Model.email)?s=28&d=identicon" /></span> @Model.userName</h4></div>
                             <div class="panel-body">
                                 <div class="form-horizontal">
                                     <div class="form-group">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="panel panel-danger">
-                            <div class="panel-heading"><h4><span class="glyphicon glyphicon-lock"></span> Permissions</h4></div>
+                            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-lock"></span> Permissions</h4></div>
                             <div class="panel-body">
                                 <div class="form-horizontal">
                                     <div class="form-group">
@@ -65,14 +65,11 @@
             </div>
         </div>
     </div>
-    
-    
-    
 </div>
 @if (Model.maintenanceEvents.Count() > 0)
             {
 <div class="panel panel-default">
-    <div class="panel-heading"><h3><span class="glyphicon glyphicon-wrench"></span> Maintenance</h3></div>
+    <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Maintenance</h4></div>
     <div class="panel-body">
         <div class="row">
                 @foreach (var maint in Model.maintenanceEvents)
@@ -108,7 +105,7 @@
 @if (Model.checkOuts.Count() > 0)
             {
 <div class="panel panel-default">
-    <div class="panel-heading"><h3><span class="glyphicon glyphicon-check"></span> Checkouts</h3></div>
+    <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-check"></span> Checkouts</h4></div>
     <div class="panel-body">
         <div class="row">
                 @foreach (var check in Model.checkOuts)

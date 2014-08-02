@@ -309,7 +309,6 @@
     <Content Include="Views\Mechanic\bikeMaintenance.cshtml" />
     <Content Include="Views\Mechanic\inspectionDetails.cshtml" />
     <Content Include="Views\CheckOut\selectRack.cshtml" />
-    <Content Include="Views\Admin\bikeMaintenance.cshtml" />
     <Content Include="Views\Admin\userDetails.cshtml" />
     <Content Include="Views\Admin\chargesList.cshtml" />
     <Content Include="Views\Admin\workshopDetails.cshtml" />
@@ -435,14 +434,6 @@
     <Content Include="Views\OrgMailer\_Layout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\SmileMailer\frownLogged.cshtml" />
-    <Content Include="Views\SmileMailer\smileLogged.cshtml" />
-    <Content Include="Views\SmileMailer\_Layout.cshtml" />
-    <Content Include="Views\SuperMailer\newOrg.cshtml" />
-    <Content Include="Views\SuperMailer\newOrgUser.cshtml" />
-    <Content Include="Views\SuperMailer\newSuper.cshtml" />
-    <Content Include="Views\SuperMailer\weeklyReport.cshtml" />
-    <Content Include="Views\SuperMailer\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>

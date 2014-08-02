@@ -10,17 +10,15 @@
 }
 <h2><span class="glyphicon glyphicon-road"></span> @ViewBag.Title</h2>
 <hr />
+@foreach (var bike in Model.allAvailableBikes)
+{
+    <div class="panel panel-success">
+        <div class="panel-heading"><h4 class="panel-title">#@bike.bikeNumber - @bike.bikeName</h4></div>
+        <div class="panel-body">
+            <div>Total Checkouts: @bike.checkOuts.Count()</div>
+        </div>
+    </div>
 
-        @foreach (var bike in Model.allAvailableBikes)
-        {
-
-            <div class="panel panel-danger">
-                <div class="panel-heading">#@bike.bikeNumber - @bike.bikeName</div>
-                <div class="panel-body">
-                    <div>Total Checkouts: @bike.checkOuts.Count()</div>
-                </div>
-            </div>
-            
-        }
-        <hr />
-        <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("bikeListing", new { page = x }))</div>
+}
+<hr />
+<div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("bikeListing", new { page = x }))</div>
