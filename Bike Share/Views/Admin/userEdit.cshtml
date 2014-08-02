@@ -21,53 +21,46 @@
         @Html.HiddenFor(model => model.bikeUserId)
         @Html.ValidationSummary(true)
         <div class="form-group">
-            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.email)
+            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(model => model.email, new {@class = "form-control" })
                 @Html.ValidationMessageFor(model => model.email)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.phoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.phoneNumber)
+            @Html.LabelFor(model => model.phoneNumber, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(model => model.phoneNumber, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.phoneNumber)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.userName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.userName)
-                @Html.ValidationMessageFor(model => model.userName)
             </div>
         </div>
         <hr />
         <h4><span class="glyphicon glyphicon-lock"></span> Permissions</h4>
         <div class="form-group">
-            @Html.LabelFor(model => model.canAdministerSite, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.canAdministerSite, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.canAdministerSite)
                 @Html.ValidationMessageFor(model => model.canAdministerSite)
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.canBorrowBikes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.canBorrowBikes, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.canBorrowBikes)
                 @Html.ValidationMessageFor(model => model.canBorrowBikes)
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.canCheckOutBikes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.canCheckOutBikes, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.canCheckOutBikes)
                 @Html.ValidationMessageFor(model => model.canCheckOutBikes)
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.canMaintainBikes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.canMaintainBikes, htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-md-8">
                 @Html.EditorFor(model => model.canMaintainBikes)
                 @Html.ValidationMessageFor(model => model.canMaintainBikes)
             </div>

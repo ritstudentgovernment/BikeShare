@@ -263,7 +263,6 @@ namespace BikeShare.Repositories
             oldUser.email = user.email;
             oldUser.isArchived = user.isArchived;
             oldUser.phoneNumber = user.phoneNumber;
-            oldUser.userName = user.userName;
             oldUser.canAdministerSite = user.canAdministerSite;
             oldUser.canBorrowBikes = user.canBorrowBikes;
             oldUser.canCheckOutBikes = user.canCheckOutBikes;
