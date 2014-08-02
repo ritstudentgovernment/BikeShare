@@ -15,30 +15,39 @@ namespace BikeShare.Models
         public int MaintenanceEventId { get; set; }
         
         [Required]
+        [Display(Name = "Bike")]
         public virtual Bike bikeAffected { get; set; }
         
         [Required]
+        [Display(Name = "Title")]
         public string title { get; set; }
-        
+
+        [Display(Name = "Description")]
         public string details { get; set; }
         
         [Required]
+        [Display(Name = "Maintained by")]
         public virtual bikeUser staffPerson { get; set; }
         
         [Required]
+        [Display(Name = "Date Opened")]
         public DateTime timeAdded { get; set; }
         
         [Required]
+        [Display(Name = "Workshop")]
         public virtual Workshop workshop { get; set; }
         
         public virtual ICollection<MaintenanceUpdate> updates { get; set; }
         
         [Required]
+        [Display(Name = "Open?")]
         public bool resolved { get; set; }
-        
+
+        [Display(Name = "Date Closed")]
         public DateTime timeResolved { get; set; }
 
         [Required]
+        [Display(Name = "Disable Bike?")]
         public bool disableBike { get; set; }
 
         [Required]

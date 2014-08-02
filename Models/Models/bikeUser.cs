@@ -17,6 +17,7 @@ namespace BikeShare.Models
         public DateTime lastRegistered { get; set; }
         
         [Required]
+        [Display(Name = "User Name")]
         public string userName { get; set; }
         
         [Required]
@@ -28,9 +29,11 @@ namespace BikeShare.Models
 
         [Required]
         [EmailAddress]
+        [Display(Name = "Email")]
         public string email { get; set; }
 
         [Phone]
+        [Display(Name = "Phone Number")]
         public string phoneNumber { get; set; }
 
         [Required]
@@ -43,15 +46,19 @@ namespace BikeShare.Models
         public virtual ICollection<Charge> charges { get; set; }
 
         [Required]
+        [Display(Name = "Mechanic Privileges")]
         public bool canMaintainBikes { get; set; }
 
         [Required]
+        [Display(Name = "Rider Privileges")]
         public bool canBorrowBikes { get; set; }
 
         [Required]
+        [Display(Name = "Admin Privileges")]
         public bool canAdministerSite { get; set; }
 
         [Required]
+        [Display(Name = "Cashier Privileges")]
         public bool canCheckOutBikes { get; set; }
 
         public virtual ICollection<Tracer> events { get; set; }

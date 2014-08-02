@@ -15,13 +15,17 @@ namespace BikeShare.Models
         public int MaintenanceUpdateId { get; set; }
         
         [Required]
+        [Display(Name = "Title")]
         public string title { get; set; }
 
+        [Display(Name = "Body")]
         public string body { get; set; }
 
+        [Display(Name = "Posted")]
         public DateTime timePosted { get; set; }
 
         [Required]
+        [Display(Name = "Poster")]
         public virtual bikeUser postedBy { get; set; }
 
         public virtual MaintenanceEvent associatedEvent { get; set; }

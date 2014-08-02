@@ -15,14 +15,18 @@ namespace BikeShare.Models
         public int chargeId { get; set; }
 
         [Required]
+        [Display(Name = "Charge Title")]
         public string title { get; set; }
 
         [Required]
+        [Display(Name = "Description")]
         public string description { get; set; }
 
         [Required]
+        [Display(Name = "Date Assessed")]
         public DateTime dateAssesed { get; set; }
 
+        [Display(Name = "Date Resolved")]
         public DateTime dateResolved { get; set; }
 
         [Required]
@@ -34,8 +38,10 @@ namespace BikeShare.Models
         public virtual bikeUser user { get; set; }
 
         [Required]
+        [Display(Name = "Amount")]
         public decimal amountCharged { get; set; }
 
+        [Display(Name = "Paid")]
         public decimal amountPaid { get; set; }
 
         public virtual ICollection<Tracer> events { get; set; }

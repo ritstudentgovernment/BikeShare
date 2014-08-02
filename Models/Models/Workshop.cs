@@ -15,6 +15,7 @@ namespace BikeShare.Models
         public int workshopId { get; set; }
         
         [Required]
+        [Display(Name = "Workshop Name")]
         public string name { get; set; }
 
         [Required]

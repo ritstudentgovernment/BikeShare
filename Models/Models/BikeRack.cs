@@ -15,6 +15,7 @@ namespace BikeShare.Models
         public int bikeRackId { get; set; }
         
         [Required]
+        [Display(Name = "Rack Name")]
         public string name { get; set; }
 
         [Range(-85.0, 85.0)]
@@ -26,6 +27,7 @@ namespace BikeShare.Models
         public float GPSCoordY { get; set; }
         
         [Required]
+        [Display(Name = "Description")]
         public string description { get; set; }
         
         public virtual ICollection<Bike> bikes { get; set; }
