@@ -21,16 +21,16 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
             <div class="form-group">
-                @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.Editor("commentTitle")
+                @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    @Html.TextBox("commentTitle", "", new { @class="form-control"})
                     @Html.ValidationMessageFor(model => model.title)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.body, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.Editor("commentBody")
+                @Html.LabelFor(model => model.body, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    @Html.TextArea("commentBody", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.body)
                 </div>
             </div>
@@ -38,7 +38,6 @@
     </div>
 
     <div class="modal-footer text-right">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" value="Save" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
     </div>
 }

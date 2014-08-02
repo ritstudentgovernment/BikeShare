@@ -8,7 +8,7 @@
 @section menuSection{
     @Html.Partial("_AdminMenuPartial")
 }
-<h3 class="text-center"><span class="glyphicon glyphicon-user pull-left"></span> Users <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newUser")"><span class="glyphicon glyphicon-user"></span>  New User</a></h3>
+<h2 class="text-center"><span class="glyphicon glyphicon-user pull-left"></span> Users <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newUser")"><span class="glyphicon glyphicon-user"></span>  New User</a></h2>
 <hr />
 @section filterSection{
 @using (Html.BeginForm(actionName: "userList", controllerName: "Admin"))

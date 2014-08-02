@@ -331,6 +331,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Explore\Register.cshtml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
+    <Content Include="Views\Admin\newCharge.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

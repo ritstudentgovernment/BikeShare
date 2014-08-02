@@ -24,22 +24,22 @@
                         <div class="form-horizontal">
                             @Html.ValidationSummary(true)
                             <div class="form-group">
-                                @Html.LabelFor(model => model.spec.comment, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.spec.comment)
+                                @Html.LabelFor(model => model.spec.comment, htmlAttributes: new { @class = "control-label col-sm-4" })
+                                <div class="col-sm-8">
+                                    @Html.TextAreaFor(model => model.spec.comment, new { @class="form-control"})
                                     @Html.ValidationMessageFor(model => model.spec.comment)
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.spec.isPassed, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                @Html.LabelFor(model => model.spec.isPassed, htmlAttributes: new { @class = "control-label col-sm-4" })
+                                <div class="col-sm-8">
                                     @Html.CheckBoxFor(model => model.spec.isPassed)
                                     @Html.ValidationMessageFor(model => model.spec.isPassed)
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">Workshop</label>
-                                <div class="col-md-10">
+                                <label class="control-label col-sm-4">Workshop</label>
+                                <div class="col-sm-8">
                                     @Html.DropDownListFor(m => m.spec.placeInspected.workshopId,
                                     new SelectList(ViewBag.query, "workshopId", "name"), new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.spec.placeInspected.workshopId)
@@ -56,22 +56,22 @@
                         <div class="form-horizontal">
                             @Html.ValidationSummary(true)
                             <div class="form-group">
-                                @Html.LabelFor(model => model.maint.title, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.maint.title)
+                                @Html.LabelFor(model => model.maint.title, htmlAttributes: new { @class = "control-label col-sm-4" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.maint.title, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.maint.title)
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.maint.details, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.maint.details)
+                                @Html.LabelFor(model => model.maint.details, htmlAttributes: new { @class = "control-label col-sm-4" })
+                                <div class="col-sm-8">
+                                    @Html.TextAreaFor(model => model.maint.details, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.maint.details)
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.maint.disableBike, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                @Html.LabelFor(model => model.maint.disableBike, htmlAttributes: new { @class = "control-label col-sm-4" })
+                                <div class="col-sm-8">
                                     @Html.CheckBoxFor(model => model.maint.disableBike)
                                     @Html.ValidationMessageFor(model => model.maint.disableBike)
                                 </div>
@@ -87,7 +87,6 @@
     </div>
 
     <div class="modal-footer text-right">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" value="Save" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
     </div>
 }

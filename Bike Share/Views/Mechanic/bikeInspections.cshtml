@@ -8,7 +8,7 @@
 @section menuSection{
     @Html.Partial("_MechanicMenuPartial")
 }
-<h2><span class="glyphicon glyphicon-time"></span> @ViewBag.Title</h2>
+<h2 class="text-center"><span class="glyphicon glyphicon-time pull-left"></span>@ViewBag.Title</h2>
 <hr />
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -49,8 +49,4 @@
     <div class="panel-footer">
         <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("bikeInspections", new { page = x }))</div>
     </div>
-</div>
-<hr />
-<div>
-    <a class="btn btn-default" href="@Url.Action(actionName: "Index", controllerName: "Mechanic")"><span class="glyphicon glyphicon-arrow-left"></span>  Back to Dashboard</a>
 </div>

@@ -437,7 +437,10 @@ namespace BikeShare.Controllers
             return RedirectToAction("chargeDetails", "Admin", new { chargeId = chargeId });
         }
 
-
+        public ActionResult newCharge()
+        {
+            return View(new Charge());
+        }
         [HttpPost]
         public ActionResult newCharge(decimal amountCharged, string chargeTitle, string chargeDescription, string chargeUser)
         {

@@ -8,7 +8,7 @@
 @section menuSection{
     @Html.Partial("_AdminMenuPartial")
 }
-<h3 class="text-center"><span class="glyphicon glyphicon-list pull-left"></span> @ViewBag.Title <a class="btn btn-primary pull-right" href="@Url.Action(actionName: "newRack", controllerName: "Admin")"><span class="glyphicon glyphicon-asterisk"></span>  New</a></h3>
+<h2 class="text-center"><span class="glyphicon glyphicon-list pull-left"></span> @ViewBag.Title <a class="btn btn-primary pull-right" href="@Url.Action(actionName: "newRack", controllerName: "Admin")"><span class="glyphicon glyphicon-asterisk"></span>  New</a></h2>
 <hr />
 <div class="row">
 @foreach (var rack in Model.bikeRacks)

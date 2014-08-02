@@ -8,14 +8,7 @@
 @section menuSection{
     @Html.Partial("_MechanicMenuPartial")
 }
-<div class="modal fade" id="secondaryModal" tabindex="-1" role="dialog" aria-labelledby="secondaryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">Loading</div>
-        </div>
-    </div>
-</div>
-<h2><span class="glyphicon glyphicon-info-sign"></span> @ViewBag.Title</h2>
+<h2 class="text-center"><span class="glyphicon glyphicon-info-sign pull-left"></span>@ViewBag.Title</h2>
 <hr />
 <div class="panel panel-default">
     <div class="panel-heading"><h4 class="panel-title">Last Ten Inspections</h4></div>
@@ -97,8 +90,4 @@
         @Html.ActionLink("All Maintenance", "bikeMaintenance", new { bikeId = Model.bikeId }, new { @class = "btn btn-primary" })
         <a class="btn btn-warning" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newMaintenance", new { bikeId = Model.bikeId})"><span class="glyphicon glyphicon-wrench"></span>  Maintain</a>
     </div>
-</div>
-<hr />
-<div>
-    <a class="btn btn-default" href="@Url.Action(actionName: "Index", controllerName: "Mechanic")"><span class="glyphicon glyphicon-arrow-left"></span>  Back to Dashboard</a>
 </div>
