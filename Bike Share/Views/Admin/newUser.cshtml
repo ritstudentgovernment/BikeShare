@@ -9,6 +9,42 @@
         $('#siteModal').removeData('bs.modal')
     });
 </script>
+<script type="text/javascript">
+    $('#userName').change( function () {
+        var serviceURL = "@Url.Action("doesUserExist")";
+        
+        $.ajax({
+            type: "GET",
+            url: serviceURL,
+            data: {userName : $('#userName').val()},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        });
+
+        function successFunc(data, status) {
+            if (data === true)
+            {
+                userWarningAlert.hidden = false;
+                $('#userNameFormGroup').addClass("has-error")
+                formSubmitBtn.hidden = true;
+            }
+            else
+            {
+                userWarningAlert.hidden = true;
+                $('#userNameFormGroup').removeClass('has-error')
+                $('#userNameFormGroup').addClass('has-success')
+                formSubmitBtn.hidden = false;
+            }
+        }
+
+        function errorFunc() {
+            alert('error');
+        }
+    });
+</script>
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     <h4 class="modal-title" id="siteModalLabel"><span class="glyphicon glyphicon-user"></span> New User</h4>
@@ -16,28 +52,29 @@
 @using (Html.BeginForm())
 {
     <div class="modal-body">
+        <div class="alert alert-danger" id="userWarningAlert" onchange="" hidden="hidden"><span class="glyphicon glyphicon-warning-sign"></span> A user with this name already exists. You may not create multiple users with the same name.</div> 
         @Html.AntiForgeryToken()
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
             <div class="alert alert-warning"><span class="glyphicon glyphicon-warning-sign"></span> The username associated with this user MUST be a valid institutional username. </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.userName, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.userName)
+            <div class="form-group" id="userNameFormGroup">
+                @Html.LabelFor(model => model.userName, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    <input type="text" id="userName" name="userName" class="form-control" />
                     @Html.ValidationMessageFor(model => model.userName)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.email)
+                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    <input type="text" id="email" name="email" class="form-control" />
                     @Html.ValidationMessageFor(model => model.email)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.phone)
+                @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    <input type="text" id="phone" name="phone" class="form-control" />
                     @Html.ValidationMessageFor(model => model.phone)
                 </div>
             </div>
@@ -45,38 +82,38 @@
             <h4><span class="glyphicon glyphicon-lock"></span> Permissions</h4>
             <hr />
             <div class="form-group">
-                @Html.LabelFor(model => model.canBorrowBikes, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.canBorrowBikes)
+                @Html.LabelFor(model => model.canBorrowBikes, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    @Html.CheckBoxFor(model => model.canBorrowBikes)
                     @Html.ValidationMessageFor(model => model.canBorrowBikes)
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.canCheckOutBikes, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.canCheckOutBikes)
+                @Html.LabelFor(model => model.canCheckOutBikes, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    @Html.CheckBoxFor(model => model.canCheckOutBikes)
                     @Html.ValidationMessageFor(model => model.canCheckOutBikes)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.canMaintainBikes, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.canMaintainBikes)
+                @Html.LabelFor(model => model.canMaintainBikes, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    @Html.CheckBoxFor(model => model.canMaintainBikes)
                     @Html.ValidationMessageFor(model => model.canMaintainBikes)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.canManageApp, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.canManageApp)
+                @Html.LabelFor(model => model.canManageApp, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-sm-8">
+                    @Html.CheckBoxFor(model => model.canManageApp)
                     @Html.ValidationMessageFor(model => model.canManageApp)
                 </div>
             </div>
 
         </div>
     </div>
-    <div role="navigation" class="modal-footer">
+    <div role="navigation" class="modal-footer" id="formSubmitBtn">
         <button type="submit" value="Save" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
     </div>
 }

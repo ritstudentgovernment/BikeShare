@@ -510,5 +510,12 @@ namespace BikeShare.Controllers
            file.SaveAs(Request.PhysicalApplicationPath.ToString() + "\\Content\\Images\\Racks\\" + rackId + ".jpg");
            return RedirectToAction("editRack", new { rackId = rackId });
        }
+
+       public ActionResult doesUserExist(string userName)
+       {
+           var x = Json(userRepo.doesUserExist(userName), JsonRequestBehavior.AllowGet);
+            return x;
+
+       }
     }
 }

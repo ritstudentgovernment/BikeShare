@@ -129,6 +129,10 @@ namespace BikeShare.Repositories
         {
             using (var db = new BikesContext())
             {
+                if (db.BikeUser.Where(u => u.userName == name).Count() > 0)
+                {
+                    throw new InvalidOperationException("User with same name already exists. :(");
+                }
                 var user = new bikeUser();
                 user.bike = null;
                 user.charges = new List<Charge>();
