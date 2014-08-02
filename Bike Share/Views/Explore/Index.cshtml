@@ -8,11 +8,21 @@
 @section menuSection{
     @Html.Partial("_ExploreMenuPartial")
 }
-<h2><span class="glyphicon glyphicon-search"></span> @ViewBag.Title</h2>
+<h2 class="text-center"><span class="glyphicon glyphicon-search pull-left"></span>
+    @if (!String.IsNullOrWhiteSpace(Model.user.firstName) && !String.IsNullOrWhiteSpace(Model.user.lastName))
+    {
+        <text>@Model.user.firstName @Model.user.lastName</text>
+    }
+    else
+    {
+        @Model.user.userName
+    }
+    <a class="btn btn-warning pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = Model.user.bikeUserId})"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
+    </h2>
 <hr />
 
         <div class="panel panel-info">
-            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-user"></span> My Details<a class="btn btn-warning pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = Model.user.bikeUserId})"><span class="glyphicon glyphicon-pencil"></span>  Edit</a></h4></div>
+            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-user"></span> My Details</h4></div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4">

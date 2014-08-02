@@ -19,7 +19,12 @@ namespace BikeShare.Models
         [Required]
         [Display(Name = "User Name")]
         public string userName { get; set; }
-        
+
+        [Display(Name = "First Name")]
+        public string firstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string lastName { get; set; }
         [Required]
         public Boolean hasBike { get; set; }
         

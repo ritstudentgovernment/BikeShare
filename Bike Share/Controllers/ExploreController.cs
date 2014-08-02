@@ -38,7 +38,7 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult Register(string firstName, string lastName)
         {
-            userRepo.registerUser(User.Identity.Name);
+            userRepo.registerUser(User.Identity.Name, firstName, lastName);
             return RedirectToAction("Index");
         }
         /// <summary>
@@ -168,10 +168,10 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
-        public ActionResult userEdit(int userId, [Bind(Include="phoneNumber,email")] bikeUser user)
+        public ActionResult userEdit(int userId, [Bind(Include="phoneNumber,email,firstName,lastName")] bikeUser user)
         {
             var old = userRepo.getUserById(userId);
-            userRepo.updateUser(userId, old.userName, user.email, user.phoneNumber);
+            userRepo.updateUser(userId, old.userName, user.email, user.phoneNumber, user.firstName, user.lastName);
             return RedirectToAction("Index", "Explore");
         }
 

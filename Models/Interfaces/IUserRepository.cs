@@ -14,10 +14,10 @@ namespace BikeShare.Interfaces
         IEnumerable<bikeUser> getUsersWithBalances(int count = 100000, int skip = 0);
         void archiveUser(int bikeUserId);
         void unArchiveUser(int bikeUserId);
-        void updateUser(int id, string name, string email, string phone);
+        void updateUser(int id, string name, string email, string phone, string firstName = null, string lastName = null);
         void promoteUser(int userId, bool canCheckOut, bool canBorrow, bool canMaintain, bool canManageApp);
-        void createuser(string name, string email, string phone, bool canCheckOut = false, bool canBorrow = false, bool canMaintain = false, bool canManageApp = false);
-        void registerUser(string userName);
+        void createuser(string name, string email, string phone, bool canCheckOut = false, bool canBorrow = false, bool canMaintain = false, bool canManageApp = false, string firstName = null, string lastName = null);
+        void registerUser(string userName, string firstName, string lastName);
         bikeUser getUserById(int id);
         bikeUser getUserByName(string name);
         int totalAppAdmins(bool includeArchived = false, bool includeCurrent = true);

@@ -87,13 +87,15 @@ namespace BikeShare.Repositories
             }
         }
 
-        public void updateUser(int id, string name, string email, string phone)
+        public void updateUser(int id, string name, string email, string phone, string firstName = null, string lastName = null)
         {
             using (var db = new BikesContext())
             {
                 var user = db.BikeUser.Include(b => b.bike).Include(c => c.charges).Include(c => c.checkOuts)
                    .Include(m => m.maintenanceEvents).Where(i => i.bikeUserId == id).First();
                 user.userName = name;
+                user.firstName = firstName;
+                user.lastName = lastName;
                 user.email = email;
                 user.phoneNumber = phone;
                 var trace = new Tracer();
@@ -125,7 +127,7 @@ namespace BikeShare.Repositories
 
         }
 
-        public void createuser(string name, string email, string phone = null, bool canCheckOut = false, bool canBorrow = false, bool canMaintain = false, bool canManageApp = false)
+        public void createuser(string name, string email, string phone = null, bool canCheckOut = false, bool canBorrow = false, bool canMaintain = false, bool canManageApp = false, string firstName = null, string lastName = null)
         {
             using (var db = new BikesContext())
             {
@@ -138,6 +140,8 @@ namespace BikeShare.Repositories
                 user.charges = new List<Charge>();
                 user.checkOuts = new List<CheckOut>();
                 user.email = email;
+                user.firstName = firstName;
+                user.lastName = lastName;
                 user.hasBike = false;
                 user.isArchived = false;
                 user.lastRegistered = new DateTime(2000, 1, 1);
@@ -266,11 +270,13 @@ namespace BikeShare.Repositories
         }
 
 
-        public void registerUser(string userName)
+        public void registerUser(string userName, string firstName, string lastName)
         {
             using (var db = new BikesContext())
             {
                 var user = db.BikeUser.Where(u => u.userName == userName).First();
+                user.firstName = firstName;
+                user.lastName = lastName;
                 user.lastRegistered = DateTime.Now;
                 db.SaveChanges();
             }
