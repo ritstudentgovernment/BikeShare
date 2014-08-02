@@ -84,6 +84,10 @@ namespace BikeShare.Repositories
                     db.tracer.Add(trace);
                     db.SaveChanges();
                 }
+                catch(System.InvalidOperationException)
+                {
+                    return "Checkout Failed - User Does Not Exist.";
+                }
                 catch (System.Data.Entity.Validation.DbEntityValidationException)
                 {
                     return "Checkout Failed - Validation Error";

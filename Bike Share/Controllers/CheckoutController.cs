@@ -43,7 +43,6 @@ namespace BikeShare.Controllers
             newModel.availableBikes = repo.getAvailableBikesForRack(model.currentRack.bikeRackId);
             newModel.checkedOutBikes = repo.getCheckedOutBikes();
             newModel.currentRack = repo.getRackById(model.currentRack.bikeRackId);
-            Response.RedirectToRoute(new { action = "Index", controller = "CheckOut", rackId = model.currentRack.bikeRackId });
             return View("Index", newModel);
         }
 

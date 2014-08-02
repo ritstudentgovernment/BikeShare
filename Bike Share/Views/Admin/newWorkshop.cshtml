@@ -46,10 +46,10 @@
 @section menuSection{
     @Html.Partial("_AdminMenuPartial")
 }
-<h2 class="text-center"><span class="glyphicon glyphicon-Home pull-left"></span>@ViewBag.Title<button type="submit" value="Save" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-floppy-save"></span> Save</button></h2>
-<hr />
 @using (Html.BeginForm())
 {
+<h2 class="text-center"><span class="glyphicon glyphicon-Home pull-left"></span>@ViewBag.Title<button type="submit" value="Save" class="btn btn-primary pull-right" role="button"><span class="glyphicon glyphicon-floppy-save"></span> Save</button></h2>
+<hr />
 <div class="panel panel-default">
     <div class="panel-heading"><h4 class="panel-title">Map and Name</h4></div>
     <div id="map-canvas" style="height: 400px"></div>
