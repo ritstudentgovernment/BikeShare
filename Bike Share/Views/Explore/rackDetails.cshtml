@@ -51,8 +51,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
-            <div class="panel-heading"><h2>Information for @Model.name</h2></div>
-            <img src="@Url.Content("~/Content/Images/Racks/" + Model.bikeRackId.ToString() + ".jpg")" class="img-responsive" />
+            <div class="panel-heading"><h4 class="panel-title">Information for @Model.name</h4></div>
+            <div style="height:150px; background-position-x:center; background-position-y:center; background-image: url('@Url.Content("~/Content/Images/Racks/" + Model.bikeRackId.ToString() + ".jpg")')"></div>
             <div class="panel-body" style="background-position-x:center; background-position-y: center">
                 <p>Description:</p>
                 <p>@Model.description</p>
@@ -61,13 +61,13 @@
     </div>
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">Map</div>
+            <div class="panel-heading"><h4 class="panel-title">Map</h4></div>
             <div id="map-canvas" style="height: 400px"></div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading"> <h4>Hours</h4></div>
+            <div class="panel-heading"><h4 class="panel-title">Hours</h4></div>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -103,7 +103,7 @@
     </div>
     <div class="col-md-6">
         <div class="panel panel-success">
-            <div class="panel-heading"><h4>Available Bikes</h4></div>
+            <div class="panel-heading"><h4 class="panel-title">Available Bikes</h4></div>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -126,7 +126,7 @@
 
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading">Bike Rack Statistic</div>
+            <div class="panel-heading"><h4 class="panel-title">Bike Rack Statistics</h4></div>
             <div class="panel-body">
                 <p>Total Checkouts: @Model.checkOuts.Count()</p>
             </div>
