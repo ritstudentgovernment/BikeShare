@@ -517,5 +517,22 @@ namespace BikeShare.Controllers
             return x;
 
        }
+       [HttpPost]
+       public ActionResult hourDelete(int? workshopId, int? rackId, int hourId)
+       {
+           if (workshopId != null)
+           {
+               var shop = workshopRepo.getWorkshopById((int)workshopId);
+               workshopRepo.deleteHourById(hourId);
+               return RedirectToAction("workshopDetails", "Admin", new { shopId = (int)workshopId });
+           }
+           if (rackId != null)
+           {
+               var rack = repo.getRackById((int)rackId);
+               repo.deleteHourById(hourId);
+               return RedirectToAction("editRack", "Admin", new { rackId = (int)rackId });
+           }
+           return RedirectToAction("Index");
+       }
     }
 }

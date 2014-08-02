@@ -94,6 +94,7 @@
             <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("uploadImage", new { rackID = Model.bikeRackId})"><span class="glyphicon glyphicon-upload"></span>  Upload</a>
         </div>
     </div>
+}
     <div class="panel panel-default">
         <div class="panel-heading"><h4 class="panel-title">Hours</h4></div>
         <table class="table table-striped">
@@ -101,6 +102,7 @@
                 <tr>
                     <th>Days</th>
                     <th>Hours</th>
+                    <th>Comment</th>
                     <th></th>
                 </tr>
             </thead>
@@ -122,7 +124,13 @@
                         </td>
                         <td>@hour.hourStart.ToString():@hour.minuteStart.ToString() - @hour.hourEnd.ToString():@hour.minuteEnd.ToString()</td>
                         <td>@hour.comment</td>
-                    </tr>
+                            <td class="text-right">
+                                @using (Html.BeginForm("hourDelete", "Admin", new { rackId = Model.bikeRackId, hourId = hour.hourId }, FormMethod.Post, new { id = hour.hourId.ToString() + "hourForm"}))
+                                {
+                                    <button type="submit" value="Delete" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-trash"></span></button>
+                                }
+                            </td>
+                        </tr>
                     }
                 }
             </tbody>
@@ -131,4 +139,4 @@
             <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newHour", new { rackId = Model.bikeRackId})"><span class="glyphicon glyphicon-asterisk"></span>  New</a>
         </div>
     </div>
-}
+
