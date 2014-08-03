@@ -332,6 +332,7 @@
     <Content Include="Views\Explore\Register.cshtml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <Content Include="Views\Admin\newCharge.cshtml" />
+    <Content Include="Views\Error\authError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

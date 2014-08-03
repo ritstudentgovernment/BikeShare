@@ -16,6 +16,16 @@ namespace BikeShare.Controllers
         private IExploreRepository exploreRepo;
         private ISettingRepository setRepo;
         private int pageSize = 25;
+
+        private bool authorize()
+        {
+            if (!userRepo.getUserByName(User.Identity.Name).canMaintainBikes)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public MechanicController(IMaintenanceRepository repo, IUserRepository uRepo, IExploreRepository eRepo, ISettingRepository sRepo)
         {
             this.repo = repo;
@@ -29,6 +39,7 @@ namespace BikeShare.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.Maint.dashboardVM();
             model.allBikes = repo.getSomeBikes(0, 100);
             model.latestInspections = repo.getSomeInspections(0, 10, true, true);
@@ -38,6 +49,7 @@ namespace BikeShare.Controllers
 
         public ActionResult bikeDetails(int bikeId, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.Maint.bikeDetailsVM();
             model.bikeId = bikeId;
             var bike = repo.getBikeById(bikeId);
@@ -53,11 +65,13 @@ namespace BikeShare.Controllers
 
         public ActionResult maintenanceDetails(int maintId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getMaintenanceById(maintId));
         }
 
         public ActionResult newMaintenance(int bikeId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new MaintenanceEvent();
             model.bikeAffected = repo.getBikeById(bikeId);
             ViewBag.query = repo.getAllWorkshops();
@@ -67,12 +81,14 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult newMaintenance([Bind] MaintenanceEvent maint)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.newMaintenance(maint.bikeAffected.bikeId, maint.title, maint.details, User.Identity.Name, maint.workshop.workshopId, maint.disableBike);
             return RedirectToAction("bikeDetails", new { bikeId = maint.bikeAffected.bikeId});
         }
 
         public ActionResult newInspection(int bikeId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new Inspection();
             model.bike = repo.getBikeById(bikeId);
             ViewBag.query = repo.getAllWorkshops();
@@ -85,6 +101,7 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult newInspection([Bind] ViewModels.specWithMaint inspection)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             int specId = repo.newInspection(inspection.spec.bike.bikeId, User.Identity.Name, inspection.spec.placeInspected.workshopId, inspection.spec.isPassed, inspection.spec.comment);
             if (!String.IsNullOrWhiteSpace(inspection.maint.title))
             {
@@ -98,12 +115,14 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult closeMaintenance(int maintId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.closeMaint(maintId);
             return RedirectToAction("maintenanceDetails", new { maintId = maintId});
         }
 
         public ActionResult bikeInspections(int bikeId, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.PaginatedViewModel<Inspection>();
             model.modelList = repo.getInspectionsForBike(bikeId, (page - 1) * pageSize, pageSize, true, true).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
@@ -113,6 +132,7 @@ namespace BikeShare.Controllers
         
         public ActionResult bikeMaintenance(int bikeId, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.PaginatedViewModel<MaintenanceEvent>();
             model.modelList = repo.getMaintenanceForBike(bikeId, (page - 1) * pageSize, pageSize, false).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
@@ -122,6 +142,7 @@ namespace BikeShare.Controllers
 
         public ActionResult bikeListing(int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<ViewModels.bikeCard>();
             foreach (var bike in repo.getSomeBikes((page - 1) * pageSize, pageSize))
             {
@@ -167,11 +188,13 @@ namespace BikeShare.Controllers
 
         public ActionResult inspectionDetails(int specId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getInspectionById(specId));
         }
 
         public ActionResult myActivity(int activityPage = 1, int hourPage = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.Maint.userActivityVM();
             model.cards = new List<ViewModels.ActivityCard>();
             int userId = userRepo.getUserByName(User.Identity.Name).bikeUserId;
@@ -207,6 +230,7 @@ namespace BikeShare.Controllers
 
         public ActionResult newComment(int maintId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new MaintenanceUpdate();
             model.associatedEvent = repo.getMaintenanceById(maintId);
             return View(model);
@@ -215,12 +239,14 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult newComment(int maintenanceId, string commentTitle, string commentBody)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.commentOnMaint(maintenanceId, commentTitle, commentBody, User.Identity.Name);
             return RedirectToAction("MaintenanceDetails", "Mechanic", new { maintId = maintenanceId});
         }
 
         public ActionResult newHour()
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new WorkHour();
             model.user = userRepo.getUserByName(User.Identity.Name);
             model.timeStart = DateTime.Now;
@@ -232,6 +258,7 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult newHour([Bind] WorkHour hour, int userId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.recordHours(userId, hour.timeStart, hour.timeEnd, hour.comment, null, null, null);
             return RedirectToAction("myActivity", "Mechanic");
         }

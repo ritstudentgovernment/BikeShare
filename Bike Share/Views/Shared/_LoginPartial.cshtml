@@ -7,11 +7,19 @@
                         @User.Identity.Name <span class="caret"></span></a>
 
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <li><a href="@Url.Action(actionName:"Index", controllerName:"Admin")"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
-                    <li><a href="@Url.Action(actionName:"Index", controllerName:"Mechanic")"><span class="glyphicon glyphicon-wrench"></span> Mechanic</a></li>
-                    <li><a href="@Url.Action(actionName:"selectRack", controllerName:"Checkout")"><span class="glyphicon glyphicon-check"></span> Checkout</a></li>
-                    <li class="divider"></li>
-                    <li><a href="@Url.Action(actionName:"Index", controllerName:"Explore")"><span class="glyphicon glyphicon-wrench"></span> Account</a></li>
+                    @if (BikeShare.Code.roleCheck.isUserAdmin(User.Identity.Name))
+                    {
+                        <li><a href="@Url.Action(actionName:"Index", controllerName:"Admin")"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+                    }
+                    @if (BikeShare.Code.roleCheck.isUserMechanic(User.Identity.Name))
+                    {
+                        <li><a href="@Url.Action(actionName:"Index", controllerName:"Mechanic")"><span class="glyphicon glyphicon-wrench"></span> Mechanic</a></li>
+                    }
+                    @if (BikeShare.Code.roleCheck.isUserCashier(User.Identity.Name))
+                    {
+                        <li><a href="@Url.Action(actionName:"selectRack", controllerName:"Checkout")"><span class="glyphicon glyphicon-check"></span> Checkout</a></li>
+                    }
+                    <li><a href="@Url.Action(actionName:"Index", controllerName:"Explore")"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
                     <li><a href="@Url.Action(actionName:"LogOff", controllerName:"Account")"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
                 </ul>
             </li>

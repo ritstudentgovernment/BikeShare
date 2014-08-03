@@ -22,7 +22,7 @@
             
                 @if (IsSectionDefined("menuSection") || IsSectionDefined("filterSection"))
                 {
-                    <div class="col-sm-2 hidden-xs hidden-print">
+                    <div class="col-sm-3 hidden-xs hidden-print">
                     @if (IsSectionDefined("menuSection"))
                     {
                         <h3></h3>
@@ -34,7 +34,7 @@
                         @RenderSection("filterSection");
                     }
                     </div>
-                    <div class="col-sm-10">
+                    <div class="col-sm-9">
                         @RenderBody()
                     </div>
                 }

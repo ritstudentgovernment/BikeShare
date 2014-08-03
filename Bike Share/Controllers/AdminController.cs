@@ -31,12 +31,23 @@ namespace BikeShare.Controllers
             maintRepo = mParam;
             settingRepo = sParam;
         }
+
+       private bool authorize()
+        {
+           if (!userRepo.canUserManageApp(User.Identity.Name))
+           {
+               return false;
+           }
+           return true;
+        }
         /// <summary>
         /// Displays the Application Administration home page
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult Index(string userName)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.dashViewModel();
             model.countAvailableBikes = repo.totalAvailableBikes();
             model.countBikes = repo.totalBikes();
@@ -54,8 +65,10 @@ namespace BikeShare.Controllers
         /// Displays the new bike form
         /// </summary>
         /// <returns></returns>
-        public ActionResult newBike()
+        [BikeShare.Code.UserNameFilter]
+       public ActionResult newBike(string userName)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             ViewBag.query = repo.getAllBikeRacks().ToList();
             return View();
         }
@@ -66,8 +79,10 @@ namespace BikeShare.Controllers
         /// <param name="bike">Bike to add.</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult newBike([Bind()] ViewModels.newBikeViewModel bikeModel)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult newBike(string userName, [Bind()] ViewModels.newBikeViewModel bikeModel)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var bike = new Bike();
             bike.bikeName = bikeModel.bikeName;
             bike.bikeNumber = bikeModel.bikeNumber;
@@ -82,8 +97,10 @@ namespace BikeShare.Controllers
         /// Displays the form for creating a new bike rack.
         /// </summary>
         /// <returns></returns>
-        public ActionResult newRack()
+        [BikeShare.Code.UserNameFilter]
+       public ActionResult newRack(string userName)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View();
         }
 
@@ -93,8 +110,10 @@ namespace BikeShare.Controllers
         /// <param name="rack"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult newRack(BikeRack rack)
+        [BikeShare.Code.UserNameFilter]
+       public ActionResult newRack(string userName, BikeRack rack)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             rack.isArchived = false;
             repo.addBikeRack(rack);
             return RedirectToAction("bikeRackList");
@@ -104,8 +123,10 @@ namespace BikeShare.Controllers
         /// Displays the warning page before archiving a bike.
         /// </summary>
         /// <returns></returns>
-        public ActionResult archiveBike(int bikeId)
+        [BikeShare.Code.UserNameFilter]
+       public ActionResult archiveBike(string userName, int bikeId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getBikeById(bikeId));
         }
 
@@ -115,19 +136,23 @@ namespace BikeShare.Controllers
         /// <param name="bike"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult archiveBike([Bind(Include="bikeId")]Bike bike)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult archiveBike(string userName, [Bind(Include="bikeId")]Bike bike)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.archiveBike(bike.bikeId);
             Response.RedirectToRoute(new { action = "Index", controller = "Admin"});
-            return Index();
+            return RedirectToAction("Index");
         }
 
         /// <summary>
         /// Displays the warning page before archiving a rack.
         /// </summary>
         /// <returns></returns>
-        public ActionResult archiveRack(int rackId)
+        [BikeShare.Code.UserNameFilter]
+       public ActionResult archiveRack(string userName, int rackId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getRackById(rackId));
         }
 
@@ -137,35 +162,44 @@ namespace BikeShare.Controllers
         /// <param name="rack"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult archiveRack([Bind(Include="bikeRackId")] BikeRack rack)
+        [BikeShare.Code.UserNameFilter]
+       public ActionResult archiveRack(string userName, [Bind(Include="bikeRackId")] BikeRack rack)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.archiveBikeRack(rack.bikeRackId);
-            return Index();
+            return Index(userName);
         }
 
-        public ActionResult archiveUser(int userId)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult archiveUser(string userName, int userId)
         {
-            
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(userRepo.getUserById(userId));
         }
 
         [HttpPost]
-        public ActionResult archiveUser([Bind(Include="bikeUserId")] bikeUser user)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult archiveUser(string userName, [Bind(Include="bikeUserId")] bikeUser user)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             userRepo.archiveUser(user.bikeUserId);
-            return Index();
+            return Index(userName);
         }
 
-        public ActionResult adminList(int page = 1)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult adminList(string userName, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<bikeUser>();
             model.modelList = userRepo.getSomeUsers(pageSize, (page - 1) * pageSize, false, false, false, true, false, true).ToList();
             model.pagingInfo = new ViewModels.PageInfo(repo.totalAppAdmins(), pageSize, page);
             return View(model);
         }
 
-        public ActionResult appSettings()
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult appSettings(string userName)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new appSetting();
             model.appName = settingRepo.getappName();
             model.DaysBetweenInspections = settingRepo.getDaysBetweenInspections();
@@ -175,8 +209,10 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
-        public ActionResult appSettings([Bind] appSetting settings)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult appSettings(string userName, [Bind] appSetting settings)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             settingRepo.setMaxRentDays(settings.maxRentDays);
             settingRepo.setExpectedEmail(settings.expectedEmail);
             settingRepo.setDaysBetweenInspections(settings.DaysBetweenInspections);
@@ -184,8 +220,10 @@ namespace BikeShare.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult bikeList(int? rackId, int page = 1, bool incMissing = true, bool incOverdue = true, bool incCheckedOut = true, bool incCheckedIn = true, bool incCurrent = true, bool incArchived = false)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult bikeList(string userName, int? rackId, int page = 1, bool incMissing = true, bool incOverdue = true, bool incCheckedOut = true, bool incCheckedIn = true, bool incCurrent = true, bool incArchived = false)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.FilteredBikeViewModel();
             var all = new List<Bike>();
             if (incCurrent)
@@ -221,8 +259,10 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
-        public ActionResult bikeRackList(int page = 1)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult bikeRackList(string userName, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.rackListingViewModel();
             model.bikeRacks = repo.getSomeBikeRacks(pageSize, (page - 1) * pageSize);
             model.countBikeRacks = model.bikeRacks.Count();
@@ -230,8 +270,10 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
-        public ActionResult inspectionList(int page = 1)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult inspectionList(string userName, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.inspectionListViewModel();
             model.inspections = repo.getSomeInspections(pageSize, (page - 1) * pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.inspections.Count(), pageSize, page);
@@ -244,32 +286,40 @@ namespace BikeShare.Controllers
         /// <param name="bikeId"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public ActionResult maintenanceList(int? bikeId, int page = 1)
+        [BikeShare.Code.UserNameFilter]
+       public ActionResult maintenanceList(string userName, int? bikeId, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<MaintenanceEvent>();
             model.modelList = repo.getSomeMaintenance(pageSize, (page - 1) * pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
             return View(model);
         }
 
-        public ActionResult mechanicList(int page = 1)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult mechanicList(string userName, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<bikeUser>();
             model.modelList = repo.getSomeUsers(pageSize, (page - 1) * pageSize, false, false, true, false).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
             return View(model);
         }
 
-        public ActionResult userList(string name = "", int page = 1, bool hasCharges = false, bool hasBike = false, bool canMaintain = true, bool canAdmin = true, bool canRide = true, bool canCheckout = true)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult userList(string userName, string name = "", int page = 1, bool hasCharges = false, bool hasBike = false, bool canMaintain = true, bool canAdmin = true, bool canRide = true, bool canCheckout = true)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<bikeUser>();
             model.modelList = repo.getFilteredUsers(pageSize, (page - 1) * pageSize, hasCharges, hasBike, canMaintain, canAdmin, canRide, canCheckout, name.ToString()).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
             return View(model);
         }
 
-        public ActionResult workshopList(int page = 1)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult workshopList(string userName, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<Workshop>();
             model.modelList = repo.getSomeWorkshops(pageSize, (page - 1) * pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
@@ -282,8 +332,10 @@ namespace BikeShare.Controllers
         /// <param name="bikeId"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public ActionResult bikeCheckouts(int? rackId, int? bikeID, int page = 1)
+        [BikeShare.Code.UserNameFilter]
+       public ActionResult bikeCheckouts(string userName, int? rackId, int? bikeID, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<CheckOut>();
             if(bikeID == null && rackId == null)
             {
@@ -302,20 +354,26 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
-        public ActionResult editBike(int bikeId)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult editBike(string userName, int bikeId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getBikeById(bikeId));
         }
 
         [HttpPost]
-        public ActionResult editBike([Bind] Bike bike)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult editBike(string userName, [Bind] Bike bike)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.updateBike(bike);
             return RedirectToAction("bikeList");
         }
 
-        public ActionResult infoBike(int bikeID)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult infoBike(string userName, int bikeID)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.superBike();
             model.bike = repo.getBikeById(bikeID);
             model.inspections = maintRepo.getInspectionsForBike(bikeID, 0, pageSize, true, true).ToList();
@@ -323,8 +381,10 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
-        public ActionResult editRack(int rackId)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult editRack(string userName, int rackId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getRackById(rackId));
         }
 
@@ -334,80 +394,106 @@ namespace BikeShare.Controllers
         /// <param name="rack"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult editRack([Bind] BikeRack rack)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult editRack(string userName, [Bind] BikeRack rack)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.updateBikeRack(rack);
             return RedirectToAction("editRack", new { rackId = rack.bikeRackId});
         }
 
-        public ActionResult newUser()
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult newUser(string userName)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(new BikeShare.ViewModels.bikeUserPermissionViewModel());
         }
 
         [HttpPost]
-        public ActionResult newUser([Bind] BikeShare.ViewModels.bikeUserPermissionViewModel user)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult newUser(string userName, [Bind] BikeShare.ViewModels.bikeUserPermissionViewModel user)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             userRepo.createuser(user.userName, user.email, user.phone, user.canCheckOutBikes, user.canBorrowBikes, user.canMaintainBikes, user.canManageApp);
             return RedirectToAction("userList", "Admin");
         }
 
-        public ActionResult newWorkshop()
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult newWorkshop(string userName)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(new Workshop());
         }
 
         [HttpPost]
-        public ActionResult newWorkshop([Bind] Workshop shop)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult newWorkshop(string userName, [Bind] Workshop shop)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             workshopRepo.createNewWorkshop(shop.name, shop.GPSCoordX, shop.GPSCoordY);
             return RedirectToAction("workshopList");
         }
 
-        public ActionResult archiveWorkshop(int workshopId)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult archiveWorkshop(string userName, int workshopId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(workshopRepo.getWorkshopById(workshopId));
         }
 
         [HttpPost]
-        public ActionResult archiveWorkshop([Bind] Workshop shop)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult archiveWorkshop(string userName, [Bind] Workshop shop)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             workshopRepo.archiveWorkshopById(shop.workshopId);
-            return Index();
+            return Index(userName);
         }
 
-        public ActionResult bikeMaintenance(int bikeId = 1, int page = 1)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult bikeMaintenance(string userName, int bikeId = 1, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<MaintenanceEvent>();
             model.modelList = repo.getMaintenanceForBike(pageSize, (page - 1) * pageSize, bikeId).ToList();
             model.pagingInfo = new ViewModels.PageInfo(500, pageSize, page);
             return View(model);
         }
 
-        public ActionResult userDetails(int userId)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult userDetails(string userName, int userId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getUserById(userId));
         }
 
-        public ActionResult userEdit(int userId)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult userEdit(string userName, int userId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getUserById(userId));
         }
 
         [HttpPost]
-        public ActionResult userEdit([Bind] bikeUser user)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult userEdit(string userName, [Bind] bikeUser user)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             repo.updateUser(user);
             return RedirectToAction("userDetails", new { userId = user.bikeUserId });
         }
 
-        public ActionResult workshopDetails(int workshopId)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult workshopDetails(string userName, int workshopId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getWorkshopById(workshopId));
         }
 
-        public ActionResult chargesList(int page = 1)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult chargesList(string userName, int page = 1)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<Charge>();
             model.modelList = financeRepo.getAllCharges(pageSize, (page - 1) * pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(financeRepo.countTotalCharges(), pageSize, page);
@@ -418,38 +504,51 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
-        public ActionResult chargeDetails(int chargeId)
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult chargeDetails(string userName, int chargeId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(repo.getChargeById(chargeId));
         }
 
         [HttpPost]
-        public ActionResult closeCharge(int chargeId, decimal amountPaid)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult closeCharge(string userName, int chargeId, decimal amountPaid)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             financeRepo.closeCharge(chargeId, amountPaid);
             return View("chargeDetails", repo.getChargeById(chargeId));
         }
 
         [HttpPost]
-        public ActionResult editCharge(int chargeId, decimal amountCharged, string chargeTitle, string chargeDescription)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult editCharge(string userName, int chargeId, decimal amountCharged, string chargeTitle, string chargeDescription)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             financeRepo.updateCharge(chargeId, amountCharged, chargeTitle, chargeDescription);
             return RedirectToAction("chargeDetails", "Admin", new { chargeId = chargeId });
         }
 
-        public ActionResult newCharge()
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult newCharge(string userName)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return View(new Charge());
         }
+
         [HttpPost]
-        public ActionResult newCharge(decimal amountCharged, string chargeTitle, string chargeDescription, string chargeUser)
+        [BikeShare.Code.UserNameFilter]
+        public ActionResult newCharge(string userName, decimal amountCharged, string chargeTitle, string chargeDescription, string chargeUser)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             financeRepo.addCharge(amountCharged, chargeUser, chargeTitle, chargeDescription);
             return RedirectToAction("chargesList", "Admin");
         }
-        
-        public ActionResult newHour(int? workshopId, int? rackId)
+
+       [BikeShare.Code.UserNameFilter]
+        public ActionResult newHour(string userName, int? workshopId, int? rackId)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             if (workshopId != null)
             {
                 var model = new BikeShare.Models.Hour();
@@ -466,8 +565,10 @@ namespace BikeShare.Controllers
         }
 
        [HttpPost]
-       public ActionResult newHour(int? workshopId, int? rackId, [Bind] Hour hour)
+       [BikeShare.Code.UserNameFilter]
+       public ActionResult newHour(string userName, int? workshopId, int? rackId, [Bind] Hour hour)
         {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
            if(workshopId != null)
            {
                hour.shop = workshopRepo.getWorkshopById((int)workshopId);
@@ -482,31 +583,43 @@ namespace BikeShare.Controllers
            }
            return RedirectToAction("Index");
         }
-       public ActionResult newComment(int maintId)
+
+       [BikeShare.Code.UserNameFilter]
+       public ActionResult newComment(string userName, int maintId)
        {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
            var model = new MaintenanceUpdate();
            model.associatedEvent = repo.getMaintenanceById(maintId);
            return View(model);
        }
        [HttpPost]
-       public ActionResult newComment(int maintenanceId, string commentTitle, string commentBody)
+       [BikeShare.Code.UserNameFilter]
+       public ActionResult newComment(string userName, int maintenanceId, string commentTitle, string commentBody)
        {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
            maintRepo.commentOnMaint(maintenanceId, commentTitle, commentBody, User.Identity.Name);
            return RedirectToAction("MaintenanceDetails", new { maintId = maintenanceId });
        }
-       public ActionResult maintenanceDetails(int maintId)
+
+       [BikeShare.Code.UserNameFilter]
+       public ActionResult maintenanceDetails(string userName, int maintId)
        {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
            return View(maintRepo.getMaintenanceById(maintId));
        }
 
-       public ActionResult uploadImage(int rackId)
+       [BikeShare.Code.UserNameFilter]
+       public ActionResult uploadImage(string userName, int rackId)
        {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
            return View(repo.getRackById(rackId));
        }
 
        [HttpPost]
-       public ActionResult uploadImage(int rackId, string image)
+       [BikeShare.Code.UserNameFilter]
+       public ActionResult uploadImage(string userName, int rackId, string image)
        {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
            HttpPostedFileBase file = Request.Files["image"];
            byte[] tempImage = new byte[file.ContentLength];
            file.InputStream.Read(tempImage, 0, file.ContentLength);
@@ -514,15 +627,19 @@ namespace BikeShare.Controllers
            return RedirectToAction("editRack", new { rackId = rackId });
        }
 
-       public ActionResult doesUserExist(string userName)
+       [BikeShare.Code.UserNameFilter]
+       public ActionResult doesUserExist(string userName, string validationName)
        {
-           var x = Json(userRepo.doesUserExist(userName), JsonRequestBehavior.AllowGet);
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
+           var x = Json(userRepo.doesUserExist(validationName), JsonRequestBehavior.AllowGet);
             return x;
 
        }
        [HttpPost]
-       public ActionResult hourDelete(int? workshopId, int? rackId, int hourId)
+       [BikeShare.Code.UserNameFilter]
+       public ActionResult hourDelete(string userName, int? workshopId, int? rackId, int hourId)
        {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
            if (workshopId != null)
            {
                var shop = workshopRepo.getWorkshopById((int)workshopId);

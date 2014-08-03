@@ -24,5 +24,10 @@ namespace BikeShare.Controllers
         {
             return View();
         }
+
+        public ActionResult authError()
+        {
+            return View();
+        }
     }
 }
