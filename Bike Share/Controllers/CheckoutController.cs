@@ -32,7 +32,6 @@ namespace BikeShare.Controllers
         }
 
         // GET: Checkout
-        [BikeShare.Code.UserNameFilter]
         public ActionResult Index(int rackId)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -44,7 +43,6 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
-        [BikeShare.Code.UserNameFilter]
         public ActionResult selectRack()
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -52,7 +50,6 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
-        [BikeShare.Code.UserNameFilter]
         public ActionResult checkOutBike(int rackId, [Bind]BikeShare.ViewModels.CheckoutViewModel model)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -65,7 +62,6 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
-        [BikeShare.Code.UserNameFilter]
         public ActionResult checkInBike(int rackId, [Bind] BikeShare.ViewModels.CheckoutViewModel model)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -78,7 +74,6 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
-        [BikeShare.Code.UserNameFilter]
         public ActionResult submitCharge(string userName, string chargeTitle, string chargeDetails, int rackId)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
