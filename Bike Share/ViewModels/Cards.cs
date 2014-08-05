@@ -30,6 +30,26 @@ namespace BikeShare.ViewModels
                 return 0;
             }
         }
+        public string getStatusStyle()
+        {
+            switch (this.status)
+            {
+                case cardStatus.defaults:
+                    return "default";
+                case cardStatus.disabled:
+                    return "disabled";
+                case cardStatus.danger:
+                    return "danger";
+                case cardStatus.primary:
+                    return "primary";
+                case cardStatus.success:
+                    return "success";
+                default:
+                    return "default";
+
+            }
+
+        }
     }
 
     public class bikeCard

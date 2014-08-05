@@ -61,7 +61,7 @@
 
         @foreach (var card in Model.cards)
         {
-            <div class="panel panel-@card.status.ToString()">
+            <div class="panel panel-@card.getStatusStyle()">
                 <div class="panel-heading"><h4 class="panel-title">@card.title</h4></div>
                 <div class="panel-body">
                     @card.date
