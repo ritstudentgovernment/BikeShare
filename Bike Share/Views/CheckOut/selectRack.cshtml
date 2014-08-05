@@ -5,13 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center"><span class="glyphicon glyphicon-check pull-left"></span> @ViewBag.Title</h2>
+<h2 class="text-center"><span class="glyphicon glyphicon-check pull-left"></span>@ViewBag.Title</h2>
+<hr />
 @foreach (var card in Model)
 {
 
     <div class="panel panel-default">
         <div class="panel-heading"><h4 class="panel-title">@card.name</h4></div>
-        <div class="panel-body"></div>
+        <div style="height:150px; background-position-x:center; background-position-y:center; background-image: url('@Url.Content("~/Content/Images/Racks/" + card.bikeRackId.ToString() + ".jpg")')"></div>
         <div class="text-right panel-footer">
             <a class="btn btn-primary" href="@Url.Action(actionName: "Index", controllerName: "Checkout", routeValues: new { rackId = card.bikeRackId })"><span class="glyphicon glyphicon-circle-arrow-right"></span>  Go</a>
         </div>
