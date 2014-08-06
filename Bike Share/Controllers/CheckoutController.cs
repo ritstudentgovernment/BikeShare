@@ -84,5 +84,13 @@ namespace BikeShare.Controllers
             newModel.currentRack = repo.getRackById(rackId);
             return View("Index", newModel);
         }
+
+        public ActionResult doesUserExist(string validationName)
+        {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            var x = Json(userRepo.doesUserExist(validationName), JsonRequestBehavior.AllowGet);
+            return x;
+
+        }
     }
 }

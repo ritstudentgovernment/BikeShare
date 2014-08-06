@@ -16,23 +16,23 @@
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.bike.bikeNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(model => model.bike.bikeNumber, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
                             @Html.DisplayFor(model => model.bike.bikeNumber)
                             @Html.ValidationMessageFor(model => model.bike.bikeNumber)
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.bike.bikeName, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.LabelFor(model => model.bike.bikeName, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
                             @Html.DisplayFor(model => model.bike.bikeName)
                             @Html.ValidationMessageFor(model => model.bike.bikeName)
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2">Total Checkouts: </label>
-                        <div class="col-md-10">
+                        <label class="control-label col-md-4">Total Checkouts: </label>
+                        <div class="col-md-8">
                             @Model.bike.checkOuts.Count()
                         </div>
                     </div>
@@ -127,7 +127,6 @@
                                     <div class="panel-heading">@maint.title</div>
                                     <div class="panel-body">
                                         <p>Opened on: @maint.timeAdded.ToShortDateString()</p>
-                                        <p>@maint.updates.Count() updates</p>
                                         <p>Description: @maint.details</p>
                                     </div>
                                     <div class="panel-footer text-right">

@@ -15,11 +15,14 @@ namespace BikeShare.Models
         public int bikeId { get; set; }
         
         [Required]
+        [Display(Name="Bike Number")]
         public int bikeNumber { get; set; }
         
         [Required]
+        [Display(Name = "Bike Name")]
         public string bikeName { get; set; }
-        
+
+        [Display(Name = "Last Checked Out")]
         public DateTime lastCheckedOut { get; set; }
         
         public virtual ICollection<CheckOut> checkOuts { get; set; }

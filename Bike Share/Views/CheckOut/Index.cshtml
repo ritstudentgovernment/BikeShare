@@ -11,6 +11,7 @@
 {
     <div class="alert alert-info alert-dismissable">@Model.errorMessage</div>
 }
+<div class="alert alert-danger hidden" id="userWarningAlert">User is not eligible to check out bikes.</div>
 <div class="row">
     <div class="col-md-6">
         <div class="panel panel-default">
@@ -18,16 +19,6 @@
             @using (Html.BeginForm("checkOutBike", "Checkout", new { rackId = Model.currentRack.bikeRackId}, FormMethod.Post, new { }))
             {
                 @Html.HiddenFor(model => model.currentRack.bikeRackId)
-                <div class="panel-body text-right">
-                    <div class="input-group pull-right">
-
-                        <input class="form-control pull-right" id="userToCheckIn" name="userToCheckIn" type="text" value="">
-                        <span class="input-group-btn">
-                            <button type="submit" value="checkOutBike" class="btn btn-primary"> Checkout</button>
-                        </span>
-                    </div><!-- /input-group -->
-                </div>
-
                 <table class="table table-hover">
                     <thead class="active text-info">
                         <tr><td>#</td><td>Name</td><td></td></tr>
@@ -41,6 +32,14 @@
                         </tr>
                     }
                 </table>
+                <div class="panel-footer">
+                        <div class="input-group" id="userNameFormGroup">
+                                <input class="form-control" id="userToCheckIn" name="userToCheckIn" type="text" value="">
+                                <span class="input-group-btn">
+                                    <button type="submit" value="checkOutBike" class="btn btn-primary disabled" id="btnCheckout"> Checkout</button>
+                                </span>
+                        </div>
+                </div>
             }
         </div>
     </div>
@@ -50,9 +49,7 @@
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-log-in"></span> Check In</h4></div>
             @using (Html.BeginForm("checkInBike", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
             {
-
-                <div class="panel-body"><button type="submit" value="Check In Bike" class="btn btn-primary pull-right"> Check In</button></div>
-    @Html.HiddenFor(model => model.currentRack.bikeRackId)
+                @Html.HiddenFor(model => model.currentRack.bikeRackId)
                 <table class="table table-hover">
                     <thead class="active text-info">
                         <tr><td>#</td><td>Name</td><td></td></tr>
@@ -66,6 +63,9 @@
                         </tr>
                     }
                 </table>
+                <div class="panel-footer text-right">
+                    <button type="submit" value="Check In Bike" class="btn btn-primary"> Check In</button>
+                </div>
             }
         </div>
     </div>
@@ -115,13 +115,104 @@
                 </table>
             
             <div class="panel-footer">
-                <div class="input-group text-right">
+                <div class="input-group text-right" id="chargeUserForm">
                     <input class="form-control pull-right" id="userName" name="userName" type="text" value="">
                     <span class="input-group-btn">
-                        <button type="submit" value="submitCharge" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> submit</button>
+                        <button type="submit" value="submitCharge" class="btn btn-primary disabled" id="btnCharge"><span class="glyphicon glyphicon-save"></span> submit</button>
                     </span>
                 </div><!-- /input-group -->
             </div>}
         </div>
     </div>
 </div>
+@section lateScripts{
+<script type="text/javascript">
+    $('#userToCheckIn').change(function () {
+        var serviceURL = "@Url.Action("doesUserExist")";
+
+        $.ajax({
+            type: "GET",
+            url: serviceURL,
+            data: { validationName: $('#userToCheckIn').val() },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        });
+
+        function successFunc(data, status) {
+            if (data === false) {
+                userWarningAlert.hidden = false;
+                $('#userNameFormGroup').addClass("has-error")
+                $('#btnCheckout').addClass('disabled')
+                 }
+            else {
+                userWarningAlert.hidden = true;
+                $('#userNameFormGroup').removeClass('has-error')
+                $('#btnCheckout').removeClass('disabled')
+                $('#userNameFormGroup').addClass('has-success')
+            }
+        }
+
+        function errorFunc() {
+            alert('error');
+        }
+    });
+    $('#userName').change(function () {
+        var serviceURL = "@Url.Action("doesUserExist")";
+
+        $.ajax({
+            type: "GET",
+            url: serviceURL,
+            data: { validationName: $('#userName').val() },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        });
+
+        function successFunc(data, status) {
+            if (data === false) {
+                userWarningAlert.hidden = false;
+                $('#chargeUserForm').addClass("has-error")
+                $('#btnCharge').addClass('disabled')
+            }
+            else {
+                userWarningAlert.hidden = true;
+                $('#chargeUserForm').removeClass('has-error')
+                $('#btnCharge').removeClass('disabled')
+                $('#chargeUserForm').addClass('has-success')
+            }
+        }
+
+        function errorFunc() {
+            alert('error');
+        }
+    });
+</script>
+    <script type="text/javascript">
+        $("#userToCheckIn").addClass("text-right")
+    .val("Institutional username")
+    .focus(function(){
+        if ($(this).val() == "Institutional username") {
+        $(this).removeClass("text-right").val("");
+    }
+    }).blur(function(){
+    if($(this).val() == ""){
+        $(this).val("Institutional username").addClass("text-right");
+    }
+    });
+        $("#userName").addClass("text-right")
+.val("Institutional username")
+.focus(function () {
+    if ($(this).val() == "Institutional username") {
+        $(this).removeClass("text-right").val("");
+    }
+}).blur(function () {
+    if ($(this).val() == "") {
+        $(this).val("Institutional username").addClass("text-right");
+    }
+});
+    </script>
+    }
+
