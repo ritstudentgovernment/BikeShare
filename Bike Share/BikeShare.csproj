@@ -206,6 +206,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Images\icon_79.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -333,6 +334,7 @@
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <Content Include="Views\Admin\newCharge.cshtml" />
     <Content Include="Views\Error\authError.cshtml" />
+    <Content Include="Views\CheckOut\helpPopup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

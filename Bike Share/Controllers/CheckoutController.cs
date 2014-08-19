@@ -92,5 +92,10 @@ namespace BikeShare.Controllers
             return x;
 
         }
+
+        public ActionResult helpPopup()
+        {
+            return View();
+        }
     }
 }
