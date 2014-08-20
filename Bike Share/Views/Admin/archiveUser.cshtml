@@ -12,6 +12,7 @@
 @using (Html.BeginForm())
     {
         <div class="modal-body">
+            @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.bikeUserId)
         <h3>Warning!</h3>
         <p>Archiving user "@Model.userName" will have the following consequences:</p>

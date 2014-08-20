@@ -43,6 +43,7 @@ namespace BikeShare.Controllers
         /// <returns>View with validation errors or redirects to return url.</returns>
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult LogOn(BikeShare.Models.Login model, String returnUrl = "")
         {
             //If in debug mode, bypasses authentication and logs in as the provided userName

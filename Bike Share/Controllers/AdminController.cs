@@ -77,6 +77,7 @@ namespace BikeShare.Controllers
         /// <param name="bike">Bike to add.</param>
         /// <returns></returns>
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult newBike( [Bind()] ViewModels.newBikeViewModel bikeModel)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -106,6 +107,7 @@ namespace BikeShare.Controllers
         /// <param name="rack"></param>
         /// <returns></returns>
         [HttpPost]
+       [ValidateAntiForgeryToken]
        public ActionResult newRack( BikeRack rack)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -130,6 +132,7 @@ namespace BikeShare.Controllers
         /// <param name="bike"></param>
         /// <returns></returns>
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult archiveBike( [Bind(Include="bikeId")]Bike bike)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -154,6 +157,7 @@ namespace BikeShare.Controllers
         /// <param name="rack"></param>
         /// <returns></returns>
         [HttpPost]
+       [ValidateAntiForgeryToken]
        public ActionResult archiveRack( [Bind(Include="bikeRackId")] BikeRack rack)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -168,6 +172,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult archiveUser( [Bind(Include="bikeUserId")] bikeUser user)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -196,6 +201,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult appSettings( [Bind] appSetting settings)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -339,6 +345,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult editBike( [Bind] Bike bike)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -368,6 +375,7 @@ namespace BikeShare.Controllers
         /// <param name="rack"></param>
         /// <returns></returns>
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult editRack( [Bind] BikeRack rack)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -382,6 +390,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult newUser( [Bind] BikeShare.ViewModels.bikeUserPermissionViewModel user)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -396,6 +405,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult newWorkshop( [Bind] Workshop shop)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -410,6 +420,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult archiveWorkshop( [Bind] Workshop shop)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -439,6 +450,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult userEdit( [Bind] bikeUser user)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -472,6 +484,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult closeCharge( int chargeId, decimal amountPaid)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -480,6 +493,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult editCharge( int chargeId, decimal amountCharged, string chargeTitle, string chargeDescription)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -494,6 +508,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult newCharge( decimal amountCharged, string chargeTitle, string chargeDescription, string chargeUser)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -520,6 +535,7 @@ namespace BikeShare.Controllers
         }
 
        [HttpPost]
+       [ValidateAntiForgeryToken]
        public ActionResult newHour( int? workshopId, int? rackId, [Bind] Hour hour)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -546,6 +562,7 @@ namespace BikeShare.Controllers
            return View(model);
        }
        [HttpPost]
+       [ValidateAntiForgeryToken]
        public ActionResult newComment( int maintenanceId, string commentTitle, string commentBody)
        {
            if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -566,6 +583,7 @@ namespace BikeShare.Controllers
        }
 
        [HttpPost]
+       [ValidateAntiForgeryToken]
        public ActionResult uploadImage( int rackId, string image)
        {
            if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -584,6 +602,7 @@ namespace BikeShare.Controllers
 
        }
        [HttpPost]
+       [ValidateAntiForgeryToken]
        public ActionResult hourDelete( int? workshopId, int? rackId, int hourId)
        {
            if (!authorize()) { return RedirectToAction("authError", "Error"); }

@@ -79,6 +79,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult newMaintenance([Bind] MaintenanceEvent maint)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -99,6 +100,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult newInspection([Bind] ViewModels.specWithMaint inspection)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -113,6 +115,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult closeMaintenance(int maintId)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -237,6 +240,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult newComment(int maintenanceId, string commentTitle, string commentBody)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -256,6 +260,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult newHour([Bind] WorkHour hour, int userId)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }

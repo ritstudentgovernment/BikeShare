@@ -35,6 +35,7 @@
     <div class="panel-footer text-right">
         @using (Html.BeginForm("closeMaintenance", "Mechanic", new { maintId = Model.MaintenanceEventId }, FormMethod.Post, new { }))
         {
+            @Html.AntiForgeryToken()
             <button type="submit" value="closeMaintenance" class="btn btn-primary">Close</button>
         }
     </div>

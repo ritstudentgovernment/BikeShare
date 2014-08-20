@@ -16,6 +16,7 @@
 @using (Html.BeginForm("uploadImage", "Admin", FormMethod.Post,
                             new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
     <input type="hidden" id="rackId" name="rackId" value="@Model.bikeRackId" />
     <div class="modal-body">
         <label for="file">Upload Image:</label>

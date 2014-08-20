@@ -127,6 +127,7 @@
                             <td class="text-right">
                                 @using (Html.BeginForm("hourDelete", "Admin", new { rackId = Model.bikeRackId, hourId = hour.hourId }, FormMethod.Post, new { id = hour.hourId.ToString() + "hourForm"}))
                                 {
+                                    @Html.AntiForgeryToken()
                                     <button type="submit" value="Delete" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-trash"></span></button>
                                 }
                             </td>

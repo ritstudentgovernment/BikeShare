@@ -11,6 +11,7 @@
 <hr />
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.workshopId)
     <h2>Warning!</h2>
     <p>Archiving bike "@Model.name" will have the following consequences:</p>

@@ -15,6 +15,7 @@
 </div>
 @using (Html.BeginForm("newInspection", "Mechanic", new { }, FormMethod.Post, new { }))
 {
+    @Html.AntiForgeryToken()
     <div class="modal-body">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">

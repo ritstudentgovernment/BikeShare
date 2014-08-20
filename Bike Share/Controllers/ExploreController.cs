@@ -36,6 +36,7 @@ namespace BikeShare.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(string firstName, string lastName)
         {
             userRepo.registerUser(User.Identity.Name, firstName, lastName);
@@ -168,6 +169,7 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult userEdit(int userId, [Bind(Include="phoneNumber,email,firstName,lastName")] bikeUser user)
         {
             var old = userRepo.getUserById(userId);

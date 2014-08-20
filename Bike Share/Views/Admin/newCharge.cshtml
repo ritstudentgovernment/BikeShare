@@ -47,6 +47,7 @@
 </div>
 @using (Html.BeginForm("newCharge", "Admin", new { }, FormMethod.Post, new { }))
 {
+    @Html.AntiForgeryToken()
     <div class="modal-body">
         <div class="alert alert-danger" hidden="hidden" id="userWarningAlert">User doesn't exist</div>
         <div class="form-horizontal">

@@ -9,6 +9,7 @@
 @Html.ValidationSummary(true)
 @using (Html.BeginForm(null, null, new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
     <div role="form" class="form-horizontal">
         <div class="form-group">
             @Html.LabelFor(m => m.UserName, new { @class = "control-label col-md-2" })

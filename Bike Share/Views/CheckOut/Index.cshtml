@@ -18,6 +18,7 @@
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-log-out"></span> Check Out</h4></div>
             @using (Html.BeginForm("checkOutBike", "Checkout", new { rackId = Model.currentRack.bikeRackId}, FormMethod.Post, new { }))
             {
+                @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.currentRack.bikeRackId)
                 <table class="table table-hover">
                     <thead class="active text-info">
@@ -49,6 +50,7 @@
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-log-in"></span> Check In</h4></div>
             @using (Html.BeginForm("checkInBike", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
             {
+                @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.currentRack.bikeRackId)
                 <table class="table table-hover">
                     <thead class="active text-info">
@@ -74,7 +76,7 @@
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> Issues</h4></div>
             @using (Html.BeginForm("submitCharge", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
             {
-
+                @Html.AntiForgeryToken()
                 <div class="panel-body">
                     <div class="form-horizontal">
                         <div class="form-group">

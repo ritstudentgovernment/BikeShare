@@ -32,7 +32,8 @@ else
 
     using (Html.BeginForm("logon", "account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post))
 {
-    <text>
+        @Html.AntiForgeryToken()
+       <text>
 
 <div role="form" class="navbar-form navbar-right">
     <div class="form-group">
@@ -45,5 +46,5 @@ else
 </div>
 
     </text>
-   }
+}
 }
