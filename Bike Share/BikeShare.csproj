@@ -430,12 +430,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\License.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\MailSub\Failure.cshtml" />
-    <Content Include="Views\MailSub\Success.cshtml" />
-    <Content Include="Views\MailSub\Unsub.cshtml" />
-    <Content Include="Views\OrgMailer\DailyReport.cshtml" />
-    <Content Include="Views\OrgMailer\WeeklyReport.cshtml" />
-    <Content Include="Views\OrgMailer\_Layout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Web.config" />
@@ -460,7 +454,6 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExploreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MailSubController.cs" />
     <Compile Include="Controllers\MechanicController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
