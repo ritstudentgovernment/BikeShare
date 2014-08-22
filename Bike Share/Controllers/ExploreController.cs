@@ -15,17 +15,18 @@ namespace BikeShare.Controllers
     {
         private IExploreRepository repo;
         private IUserRepository userRepo;
-        
+        private ICheckOutRepository cRepo;
         private int pageSize = 25;
 
         /// <summary>
         /// Initializes the controller with dependency injection.
         /// </summary>
         /// <param name="param">IExploreRepository implementation to use.</param>
-        public ExploreController(IExploreRepository param, IUserRepository uParam)
+        public ExploreController(IExploreRepository param, IUserRepository uParam, ICheckOutRepository cParam)
         {
             repo = param;
             userRepo = uParam;
+            cRepo = cParam;
         }
 
         [Authorize]
@@ -145,6 +146,10 @@ namespace BikeShare.Controllers
         {
             var model = new PaginatedViewModel<BikeRack>();
             model.modelList = repo.getAvailableRacks().ToList();
+            foreach(BikeRack rack in model.modelList)
+            {
+                rack.bikes = cRepo.getAvailableBikesForRack(rack.bikeRackId).ToList();
+            }
             model.pagingInfo = new PageInfo(model.modelList.Count(), model.modelList.Count(), page);
             var images = new Dictionary<int, string>();
             ViewBag.images = images;
@@ -179,7 +184,9 @@ namespace BikeShare.Controllers
 
         public ActionResult rackDetails(int rackId)
         {
-            return View(repo.getAvailableRacks().Where(i => i.bikeRackId == rackId).First());
+            var rack = repo.getAvailableRacks().Where(i => i.bikeRackId == rackId).First();
+            rack.bikes = cRepo.getAvailableBikesForRack(rackId).ToList();
+            return View(rack);
         }
 
         private string getUrlForRackImage(int rackId)
