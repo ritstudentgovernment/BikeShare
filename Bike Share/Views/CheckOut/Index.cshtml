@@ -130,7 +130,7 @@
 @section lateScripts{
 <script type="text/javascript">
     $('#userToCheckIn').change(function () {
-        var serviceURL = "@Url.Action("doesUserExist")";
+        var serviceURL = "@Url.Action("isUserValid")";
 
         $.ajax({
             type: "GET",

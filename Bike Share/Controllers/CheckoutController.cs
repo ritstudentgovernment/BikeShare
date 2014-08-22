@@ -91,9 +91,19 @@ namespace BikeShare.Controllers
         public ActionResult doesUserExist(string validationName)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            var x = Json(userRepo.doesUserExist(validationName), JsonRequestBehavior.AllowGet);
-            return x;
-
+            return Json(userRepo.doesUserExist(validationName), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult isUserValid(string validationName)
+        {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if(userRepo.doesUserExist(validationName))
+            {
+                return Json(userRepo.isUserRegistrationValid(userRepo.getUserByName(validationName).bikeUserId), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(userRepo.doesUserExist(validationName), JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult helpPopup()
