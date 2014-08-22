@@ -11,7 +11,7 @@
 {
     <div class="alert alert-info alert-dismissable">@Model.errorMessage</div>
 }
-<div class="alert alert-danger hidden" id="userWarningAlert">User is not eligible to check out bikes.</div>
+<div class="alert alert-danger hidden" id="userWarningAlert">User is not eligible to check out bikes. Please remind the user to update their registration.</div>
 <div class="row">
     <div class="col-md-6">
         <div class="panel panel-default">
@@ -146,12 +146,14 @@
             if (data === false) {
                 userWarningAlert.hidden = false;
                 $('#userNameFormGroup').addClass("has-error")
+                $('#userWarningAlert').removeClass("hidden")
                 $('#btnCheckout').addClass('disabled')
                  }
             else {
                 userWarningAlert.hidden = true;
                 $('#userNameFormGroup').removeClass('has-error')
                 $('#btnCheckout').removeClass('disabled')
+                $('#userWarningAlert').addClass("hidden")
                 $('#userNameFormGroup').addClass('has-success')
             }
         }
