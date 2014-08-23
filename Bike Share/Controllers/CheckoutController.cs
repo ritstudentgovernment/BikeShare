@@ -12,6 +12,7 @@ namespace BikeShare.Controllers
     public class CheckoutController : Controller
     {
         private ICheckOutRepository repo;
+        private IAdminRepository adminRepo;
         private IUserRepository userRepo;
         private IFinanceRepository financeRepo;
 
@@ -24,11 +25,12 @@ namespace BikeShare.Controllers
             return true;
         }
 
-        public CheckoutController(ICheckOutRepository checkParam, IFinanceRepository fParam, IUserRepository uRepo)
+        public CheckoutController(ICheckOutRepository checkParam, IFinanceRepository fParam, IUserRepository uRepo,IAdminRepository aRepo)
         {
             repo = checkParam;
             financeRepo = fParam;
             userRepo = uRepo;
+            adminRepo = aRepo;
         }
 
         // GET: Checkout
@@ -38,6 +40,14 @@ namespace BikeShare.Controllers
             var model = new BikeShare.ViewModels.CheckoutViewModel();
             model.availableBikes = repo.getAvailableBikesForRack(rackId);
             model.checkedOutBikes = repo.getCheckedOutBikes();
+            foreach(Bike bike in model.checkedOutBikes)
+            {
+                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+            }
+            foreach (Bike bike in model.availableBikes)
+            {
+                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+            }
             model.currentRack = repo.getRackById(rackId);
             model.checkOutPerson = User.Identity.Name;
             return View(model);
@@ -58,6 +68,14 @@ namespace BikeShare.Controllers
             newModel.errorMessage = repo.checkOutBike(model.selectedBikeForCheckout, model.userToCheckIn, User.Identity.Name, model.currentRack.bikeRackId);
             newModel.availableBikes = repo.getAvailableBikesForRack(model.currentRack.bikeRackId);
             newModel.checkedOutBikes = repo.getCheckedOutBikes();
+            foreach (Bike bike in newModel.checkedOutBikes)
+            {
+                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+            }
+            foreach (Bike bike in newModel.availableBikes)
+            {
+                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+            }
             newModel.currentRack = repo.getRackById(model.currentRack.bikeRackId);
             return View("Index", newModel);
         }
@@ -71,6 +89,14 @@ namespace BikeShare.Controllers
             newModel.errorMessage = repo.checkInBike(model.selectedBikeForCheckout, User.Identity.Name, model.currentRack.bikeRackId);
             newModel.availableBikes = repo.getAvailableBikesForRack(model.currentRack.bikeRackId);
             newModel.checkedOutBikes = repo.getCheckedOutBikes();
+            foreach (Bike bike in newModel.checkedOutBikes)
+            {
+                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+            }
+            foreach (Bike bike in newModel.availableBikes)
+            {
+                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+            }
             newModel.currentRack = repo.getRackById(model.currentRack.bikeRackId);
             return View("Index", newModel );
         }
@@ -84,6 +110,14 @@ namespace BikeShare.Controllers
             var newModel = new BikeShare.ViewModels.CheckoutViewModel();
             newModel.availableBikes = repo.getAvailableBikesForRack(rackId);
             newModel.checkedOutBikes = repo.getCheckedOutBikes();
+            foreach (Bike bike in newModel.checkedOutBikes)
+            {
+                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+            }
+            foreach (Bike bike in newModel.availableBikes)
+            {
+                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+            }
             newModel.currentRack = repo.getRackById(rackId);
             return View("Index", newModel);
         }

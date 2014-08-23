@@ -22,14 +22,15 @@
                 @Html.HiddenFor(model => model.currentRack.bikeRackId)
                 <table class="table table-hover">
                     <thead class="active text-info">
-                        <tr><td>#</td><td>Name</td><td></td></tr>
+                        <tr><td></td><td>Bike #</td><td>Name</td><td>Last User</td></tr>
                     </thead>
                     @foreach (var bike in Model.availableBikes)
                     {
                         <tr>
+                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
                             <td>@bike.bikeNumber</td>
                             <td>@bike.bikeName</td>
-                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
+                            <td>@bike.checkOuts.First().user.userName</td>
                         </tr>
                     }
                 </table>
@@ -54,14 +55,16 @@
                 @Html.HiddenFor(model => model.currentRack.bikeRackId)
                 <table class="table table-hover">
                     <thead class="active text-info">
-                        <tr><td>#</td><td>Name</td><td></td></tr>
+                        <tr><td></td><td>Bike #</td><td>Name</td><td>Checked Out</td><td>User</td></tr>
                     </thead>
                     @foreach (var bike in Model.checkedOutBikes)
                     {
                         <tr>
+                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
                             <td>@bike.bikeNumber</td>
                             <td>@bike.bikeName</td>
-                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
+                            <td>@bike.lastCheckedOut.ToString()</td>
+                            <td>@bike.checkOuts.First().user.userName</td>
                         </tr>
                     }
                 </table>
