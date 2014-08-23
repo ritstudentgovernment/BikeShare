@@ -103,10 +103,10 @@ namespace BikeShare.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult submitCharge(string userName, string chargeTitle, string chargeDetails, int rackId)
+        public ActionResult submitCharge(string userName, string chargeTitle, string chargeDetails, int rackId, decimal chargeAmount)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            financeRepo.addCharge((decimal)5, userName, chargeTitle, chargeDetails);
+            financeRepo.addCharge(chargeAmount, userName, chargeTitle, chargeDetails);
             var newModel = new BikeShare.ViewModels.CheckoutViewModel();
             newModel.availableBikes = repo.getAvailableBikesForRack(rackId);
             newModel.checkedOutBikes = repo.getCheckedOutBikes();

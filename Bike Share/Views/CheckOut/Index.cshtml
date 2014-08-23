@@ -94,6 +94,12 @@
                                 <input class="form-control" id="chargeDetails" name="chargeDetails" type="text" value="">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Charge Amount</label>
+                            <div class="col-md-10">
+                                <input class="form-control" id="chargeAmount" name="chargeAmount" type="number" value="0.00" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 @Html.HiddenFor(model => model.currentRack.bikeRackId)
