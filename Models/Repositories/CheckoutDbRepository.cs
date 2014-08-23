@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using BikeShare.Models;
 using System.Data.Entity;
 using BikeShare.Interfaces;
+using System.Net.Mail;
+using System.Configuration;
+
 
 namespace BikeShare.Repositories
 {
@@ -83,6 +86,26 @@ namespace BikeShare.Repositories
                     trace.comment = "User Checked out Bike";
                     db.tracer.Add(trace);
                     db.SaveChanges();
+                    string emailFrom = ConfigurationSettings.AppSettings["emailFrom"];
+                    string pass = ConfigurationSettings.AppSettings["emailPass"];
+                    string user = ConfigurationSettings.AppSettings["emailUser"];
+                    string server = ConfigurationSettings.AppSettings["emailServer"];
+                    int port = Convert.ToInt32(ConfigurationSettings.AppSettings["emailPort"]);
+                    MailMessage mail = new MailMessage();
+
+                   SmtpClient smtpServer = new SmtpClient(server);
+                   smtpServer.Credentials = new System.Net.NetworkCredential(user, pass);
+                   smtpServer.Port = port; // Gmail works on this port
+
+                   mail.From = new MailAddress(emailFrom);
+                   mail.To.Add(rider.email);
+                   mail.Subject = "Bike Checked Out";
+                   mail.Body = "Thank you for checking out a bike! You have the bike for 24 hours. Enjoy your ride and be safe!";
+                   if (DateTime.Now.ToString("ddd") == "Fri")
+                   {
+                       mail.Body = "Thank you for checking out a bike! You have the bike until Monday morning. Enjoy your ride and be safe!";
+                   }
+                   smtpServer.Send(mail);
                 }
                 catch(System.InvalidOperationException)
                 {
