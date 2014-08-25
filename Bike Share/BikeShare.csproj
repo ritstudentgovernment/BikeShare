@@ -206,7 +206,9 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Images\bike_logo_web.png" />
     <Content Include="Content\Images\icon_79.png" />
+    <Content Include="Content\Images\IMAG0060.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -216,6 +218,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Bike_Share_Waiver.pdf" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

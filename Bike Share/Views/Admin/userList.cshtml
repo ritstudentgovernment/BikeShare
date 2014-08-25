@@ -19,18 +19,21 @@
 
             <div class="col-md-12">
                 <h4>Status</h4>
-                <div class="form-inline">@Html.Label("hasCharges") @Html.CheckBox("hasCharges") </div>
-                <div class="form-inline">@Html.Label("hasBike") @Html.CheckBox("hasBike") </div>
+                <div class="form-inline">@Html.Label("Has Charged") @Html.CheckBox("hasCharges") </div>
+                <div class="form-inline">@Html.Label("Has a Bike") @Html.CheckBox("hasBike") </div>
             </div>
 
             <div class="col-md-12">
                 <h4>Privilege</h4>
-                <div class="form-inline">@Html.Label("canMaintain") @Html.CheckBox("canMaintain") </div>
-                <div class="form-inline">@Html.Label("canAdmin") @Html.CheckBox("canAdmin") </div>
-                <div class="form-inline">@Html.Label("canRide") @Html.CheckBox("canRide") </div>
-                <div class="form-inline">@Html.Label("canCheckout") @Html.CheckBox("canCheckout") </div>
+                <div class="form-inline">@Html.Label("Mechanic") @Html.CheckBox("canMaintain") </div>
+                <div class="form-inline">@Html.Label("Admin") @Html.CheckBox("canAdmin") </div>
+                <div class="form-inline">@Html.Label("Rider") @Html.CheckBox("canRide") </div>
+                <div class="form-inline">@Html.Label("Checkout") @Html.CheckBox("canCheckout") </div>
             </div>
-
+            <div class="col-md-12">
+                <h4>Name</h4>
+                <div class="form-inline">@Html.Label("Name") @Html.TextBox("name")</div>
+            </div>
         </div>
         <div class="panel-footer text-right">
             <input type="submit" value="Filter" class="btn btn-primary" role="button" />

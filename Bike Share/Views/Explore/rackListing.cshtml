@@ -16,7 +16,7 @@
     {
         <div class="panel panel-success">
             <div class="panel-heading"><h4 class="panel-title">@rack.name</h4></div>
-            <div style="height:150px; background-position-x:center; background-position-y:center; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>
+            <div style="height:150px; background-position: center; background-size: cover; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>
             <div class="panel-body">
                 <div>@rack.description</div>
                 <div>@rack.bikes.Count() bikes available.</div>
@@ -47,7 +47,7 @@
     {
         <div class="panel panel-danger">
             <div class="panel-heading"><h4 class="panel-title">@rack.name</h4></div>
-            <div style="height:150px; background-position-x:center; background-position-y:center; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>  
+            <div style="height:150px; background-position: center; background-size: cover; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>  
             <div class="panel-body">
                 <div>@rack.description</div>
                 <div>@rack.bikes.Count() bikes available.</div>

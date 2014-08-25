@@ -40,13 +40,28 @@ namespace BikeShare.Controllers
             var model = new BikeShare.ViewModels.CheckoutViewModel();
             model.availableBikes = repo.getAvailableBikesForRack(rackId);
             model.checkedOutBikes = repo.getCheckedOutBikes();
+
             foreach(Bike bike in model.checkedOutBikes)
             {
                 bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+                if (bike.checkOuts.Count < 1)
+                {
+                    CheckOut defaultCheckOut = new CheckOut();
+                    defaultCheckOut.user = new bikeUser();
+                    defaultCheckOut.user.userName = "none";
+                    bike.checkOuts.Add(defaultCheckOut);
+                }
             }
             foreach (Bike bike in model.availableBikes)
             {
                 bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+                if (bike.checkOuts.Count < 1)
+                {
+                    CheckOut defaultCheckOut = new CheckOut();
+                    defaultCheckOut.user = new bikeUser();
+                    defaultCheckOut.user.userName = "none";
+                    bike.checkOuts.Add(defaultCheckOut);
+                }
             }
             model.currentRack = repo.getRackById(rackId);
             model.checkOutPerson = User.Identity.Name;
@@ -71,10 +86,24 @@ namespace BikeShare.Controllers
             foreach (Bike bike in newModel.checkedOutBikes)
             {
                 bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+                if (bike.checkOuts.Count < 1)
+                {
+                    CheckOut defaultCheckOut = new CheckOut();
+                    defaultCheckOut.user = new bikeUser();
+                    defaultCheckOut.user.userName = "none";
+                    bike.checkOuts.Add(defaultCheckOut);
+                }
             }
             foreach (Bike bike in newModel.availableBikes)
             {
                 bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+                if (bike.checkOuts.Count < 1)
+                {
+                    CheckOut defaultCheckOut = new CheckOut();
+                    defaultCheckOut.user = new bikeUser();
+                    defaultCheckOut.user.userName = "none";
+                    bike.checkOuts.Add(defaultCheckOut);
+                }
             }
             newModel.currentRack = repo.getRackById(model.currentRack.bikeRackId);
             return View("Index", newModel);
@@ -92,10 +121,24 @@ namespace BikeShare.Controllers
             foreach (Bike bike in newModel.checkedOutBikes)
             {
                 bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+                if (bike.checkOuts.Count < 1)
+                {
+                    CheckOut defaultCheckOut = new CheckOut();
+                    defaultCheckOut.user = new bikeUser();
+                    defaultCheckOut.user.userName = "none";
+                    bike.checkOuts.Add(defaultCheckOut);
+                }
             }
             foreach (Bike bike in newModel.availableBikes)
             {
                 bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+                if (bike.checkOuts.Count < 1)
+                {
+                    CheckOut defaultCheckOut = new CheckOut();
+                    defaultCheckOut.user = new bikeUser();
+                    defaultCheckOut.user.userName = "none";
+                    bike.checkOuts.Add(defaultCheckOut);
+                }
             }
             newModel.currentRack = repo.getRackById(model.currentRack.bikeRackId);
             return View("Index", newModel );
@@ -113,10 +156,24 @@ namespace BikeShare.Controllers
             foreach (Bike bike in newModel.checkedOutBikes)
             {
                 bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+                if (bike.checkOuts.Count < 1)
+                {
+                    CheckOut defaultCheckOut = new CheckOut();
+                    defaultCheckOut.user = new bikeUser();
+                    defaultCheckOut.user.userName = "none";
+                    bike.checkOuts.Add(defaultCheckOut);
+                }
             }
             foreach (Bike bike in newModel.availableBikes)
             {
                 bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
+                if (bike.checkOuts.Count < 1)
+                {
+                    CheckOut defaultCheckOut = new CheckOut();
+                    defaultCheckOut.user = new bikeUser();
+                    defaultCheckOut.user.userName = "none";
+                    bike.checkOuts.Add(defaultCheckOut);
+                }
             }
             newModel.currentRack = repo.getRackById(rackId);
             return View("Index", newModel);

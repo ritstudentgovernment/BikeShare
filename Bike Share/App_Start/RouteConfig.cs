@@ -34,6 +34,7 @@ namespace BikeShare
             routes.MapRoute(name: "AdminSettings", url: "Manage/Settings", defaults: new { controller = "Admin", action = "appSettings" });
             routes.MapRoute(name: "AdminCheckouts", url: "Manage/Bikes/Rentals/{pageId}", defaults: new { controller = "Admin", action = "bikeCheckouts", pageId = 1 });
             routes.MapRoute(name: "AdminBikes", url: "Manage/Bikes/{pageId}", defaults: new { controller = "Admin", action = "bikeList", pageId = 1 });
+            routes.MapRoute(name: "AdminNewRack", url: "Manage/Racks/New", defaults: new { controller = "Admin", action = "newRack" });
             routes.MapRoute(name: "AdminRacks", url: "Manage/Racks/{pageId}", defaults: new { controller = "Admin", action = "bikeRackList", pageId = 1 });
             routes.MapRoute(name: "AdminCharges", url: "Manage/Finance/{pageId}", defaults: new { controller = "Admin", action = "chargesList", pageId = 1 });
             routes.MapRoute(name: "AdminChargeDetails", url: "Manage/Finance/Charge/{chargeId}", defaults: new { controller = "Admin", action = "chargeDetails", chargeId = new RangeRouteConstraint(1, 999999) });
@@ -42,7 +43,6 @@ namespace BikeShare
             routes.MapRoute(name: "AdminInspectionList", url: "Manage/Bikes/Inspections/{pageId}", defaults: new { controller = "Admin", action = "inspectionList", pageId = 1});
             routes.MapRoute(name: "AdminMaintDetails", url: "Manage/Bikes/Maintenance/View/{maintId}", defaults: new { controller = "Admin", action = "maintenanceDetails", maintId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminMaintList", url: "Manage/Bikes/Maintenance/{pageId}", defaults: new { controller = "Admin", action = "maintenanceList", pageId = 1});
-            routes.MapRoute(name: "AdminNewRack", url: "Manage/Racks/New", defaults: new { controller = "Admin", action = "newRack"});
             routes.MapRoute(name: "AdminShopsNew", url: "Manage/Workshops/New", defaults: new { controller = "Admin", action = "newWorkshop"});
             routes.MapRoute(name: "AdminUserDetails", url: "Manage/Users/View/{userId}", defaults: new { controller = "Admin", action = "userDetails", userId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminUserList", url: "Manage/Users/{pageId}", defaults: new { controller = "Admin", action = "userList", pageId = 1});

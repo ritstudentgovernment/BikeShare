@@ -38,9 +38,11 @@ namespace BikeShare.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(string firstName, string lastName)
+        public ActionResult Register(string firstName, string lastName, string phoneNumber)
         {
             userRepo.registerUser(User.Identity.Name, firstName, lastName);
+            var oldUser = userRepo.getUserByName(User.Identity.Name);
+            userRepo.updateUser(oldUser.bikeUserId, User.Identity.Name, oldUser.email, phoneNumber, firstName, lastName);
             return RedirectToAction("Index");
         }
         /// <summary>
