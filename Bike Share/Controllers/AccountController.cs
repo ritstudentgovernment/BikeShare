@@ -54,7 +54,7 @@ namespace BikeShare.Controllers
                 FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                 return RedirectToAction("Register", "Explore");
             }
-            FormsAuthentication.RedirectFromLoginPage(model.UserName, model.RememberMe);
+            FormsAuthentication.RedirectFromLoginPage(model.UserName, true);
 #endif
             if (ModelState.IsValid)
             {
@@ -63,10 +63,10 @@ namespace BikeShare.Controllers
                     if(!userRepo.doesUserExist(model.UserName))
                     {
                         userRepo.createuser(model.UserName, model.UserName + settingsRepo.getexpectedEmail(), null, false, true);
-                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        FormsAuthentication.SetAuthCookie(model.UserName, true);
                         return RedirectToAction("Register", "Explore");
                     }
-                    FormsAuthentication.RedirectFromLoginPage(model.UserName, model.RememberMe);
+                    FormsAuthentication.RedirectFromLoginPage(model.UserName, true);
                 }
                 ModelState.AddModelError("", "Incorrect username and/or password");
             }
