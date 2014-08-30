@@ -19,7 +19,7 @@ namespace BikeShare.Repositories
             using(var db = new BikesContext())
             {
                 var query = db.Bike.Include(l => l.bikeRack).Include(c => c.checkOuts).Where(c => c.checkOuts.All(r => r.isResolved)).Where(r => r.bikeRack.bikeRackId == rackId).Where(a => !a.isArchived);
-                var maint = db.MaintenanceEvent.Include(b => b.bikeAffected).Where(r => !r.resolved).Select(b => b.bikeAffected.bikeId).ToList();
+                var maint = db.MaintenanceEvent.Include(b => b.bikeAffected).Where(r => !r.resolved).Where(d => d.disableBike).Select(b => b.bikeAffected.bikeId).ToList();
                 var spec = db.Inspection.Include(b => b.bike).Include(b => b.bike.bikeRack).Where(b => b.bike.bikeRack.bikeRackId == rackId);
                 List<Bike> result = new List<Bike>();
                 var inspectionPeriod = (int)db.settings.First().DaysBetweenInspections;
