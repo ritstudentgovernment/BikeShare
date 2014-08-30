@@ -293,12 +293,22 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
-        public ActionResult userList( string name = "", int page = 1, bool hasCharges = false, bool hasBike = false, bool canMaintain = true, bool canAdmin = true, bool canRide = true, bool canCheckout = true)
+        public ActionResult userList( string name = "", int page = 1, bool hasCharges = false, bool hasBike = false, bool canMaintain = false, bool canAdmin = false, bool canRide = false, bool canCheckout = false)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<bikeUser>();
             model.modelList = repo.getFilteredUsers(pageSize, (page - 1) * pageSize, hasCharges, hasBike, canMaintain, canAdmin, canRide, canCheckout, name.ToString()).ToList();
-            model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
+            int totalResults = userRepo.totalUsers();
+            int totalMechanics = userRepo.totalMechanics();
+            int totalCheckout = userRepo.totalCheckOutPeople();
+            int totalAdmin = userRepo.totalAppAdmins();
+            int totalRiders = userRepo.totalRiders();
+            ViewBag.canRide = canRide; ViewBag.canMaintain = canMaintain; ViewBag.canAdmin = canAdmin; ViewBag.canCheckout = canCheckout;
+            if (canMaintain) { if (totalMechanics < totalResults) { totalResults = totalMechanics; } }
+            if (canCheckout) { if (totalCheckout < totalResults) { totalResults = totalCheckout; } }
+            if (canAdmin) { if (totalAdmin < totalResults) { totalResults = totalAdmin; } }
+            if (canRide) { if (totalRiders < totalResults) { totalResults = totalRiders; } }
+            model.pagingInfo = new ViewModels.PageInfo(totalResults, pageSize, page);
             return View(model);
         }
 

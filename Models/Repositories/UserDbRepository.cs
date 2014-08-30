@@ -231,6 +231,25 @@ namespace BikeShare.Repositories
                 return 0;
             }
         }
+        public int totalRiders(bool includeArchived = false, bool includeCurrent = true)
+        {
+            using (var db = new BikesContext())
+            {
+                if (includeCurrent && includeArchived)
+                {
+                    return db.BikeUser.Where(p => p.canBorrowBikes).Count();
+                }
+                else if (!includeArchived && includeCurrent)
+                {
+                    return db.BikeUser.Where(p => p.canBorrowBikes).Where(a => !a.isArchived).Count();
+                }
+                else if (includeArchived && !includeCurrent)
+                {
+                    return db.BikeUser.Where(p => p.canBorrowBikes).Where(a => a.isArchived).Count();
+                }
+                return 0;
+            }
+        }
 
         public int totalUsers(bool includeArchived = false, bool includeCurrent = true)
         {
