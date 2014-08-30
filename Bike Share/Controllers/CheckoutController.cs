@@ -15,6 +15,7 @@ namespace BikeShare.Controllers
         private IAdminRepository adminRepo;
         private IUserRepository userRepo;
         private IFinanceRepository financeRepo;
+        private IMaintenanceRepository maintRepo;
 
         private bool authorize()
         {
@@ -25,12 +26,13 @@ namespace BikeShare.Controllers
             return true;
         }
 
-        public CheckoutController(ICheckOutRepository checkParam, IFinanceRepository fParam, IUserRepository uRepo,IAdminRepository aRepo)
+        public CheckoutController(ICheckOutRepository checkParam, IFinanceRepository fParam, IUserRepository uRepo,IAdminRepository aRepo, IMaintenanceRepository mRepo)
         {
             repo = checkParam;
             financeRepo = fParam;
             userRepo = uRepo;
             adminRepo = aRepo;
+            maintRepo = mRepo;
         }
 
         // GET: Checkout
@@ -150,35 +152,29 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             financeRepo.addCharge(chargeAmount, userName, chargeTitle, chargeDetails);
-            var newModel = new BikeShare.ViewModels.CheckoutViewModel();
-            newModel.availableBikes = repo.getAvailableBikesForRack(rackId);
-            newModel.checkedOutBikes = repo.getCheckedOutBikes();
-            foreach (Bike bike in newModel.checkedOutBikes)
-            {
-                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
-                if (bike.checkOuts.Count < 1)
-                {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
-                }
-            }
-            foreach (Bike bike in newModel.availableBikes)
-            {
-                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
-                if (bike.checkOuts.Count < 1)
-                {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
-                }
-            }
-            newModel.currentRack = repo.getRackById(rackId);
-            return View("Index", newModel);
+            return RedirectToAction("Index", new { rackId = rackId });
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult submitMaint(string maintTitle, string maintDetails, int rackId, int bikeId, string disableBike)
+        {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            bool bikeDisabled = true; if (String.IsNullOrEmpty(disableBike)) { bikeDisabled = false; }
+            maintRepo.newMaintenance(bikeId, maintTitle, maintDetails, User.Identity.Name, maintRepo.getAllWorkshops().First().workshopId, bikeDisabled);
+            return RedirectToAction("Index", new { rackId = rackId});
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult submitChargeAndMaint(string userName, string title, string details, int rackId, decimal chargeAmount, int bikeId, string disableBike)
+        {
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            financeRepo.addCharge(chargeAmount, userName, title, details);
+            bool bikeDisabled = true; if (String.IsNullOrEmpty(disableBike)) { bikeDisabled = false; }
+            maintRepo.newMaintenance(bikeId, title, details, User.Identity.Name, maintRepo.getAllWorkshops().First().workshopId, bikeDisabled);
+            return RedirectToAction("Index", new { rackId = rackId });
+        }
         public ActionResult doesUserExist(string validationName)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
