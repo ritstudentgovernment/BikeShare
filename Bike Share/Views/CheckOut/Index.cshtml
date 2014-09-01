@@ -75,64 +75,176 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="panel panel-danger">
-            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-warning-sign"></span> Issues</h4></div>
-            @using (Html.BeginForm("submitCharge", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
-            {
-                @Html.AntiForgeryToken()
-                <div class="panel-body">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class = "control-label col-md-2">Subject</label>
-                            <div class="col-md-10">
-                                <input class="form-control" id="chargeTitle" name="chargeTitle" type="text" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Description</label>
-                            <div class="col-md-10">
-                                <input class="form-control" id="chargeDetails" name="chargeDetails" type="text" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Charge Amount</label>
-                            <div class="col-md-10">
-                                <input class="form-control" id="chargeAmount" name="chargeAmount" type="number" value="0.00" />
-                            </div>
-                        </div>
-                    </div>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><span class="glyphicon glyphicon-wrench"></span> Maintenance Report</a>
+                    </h4>
                 </div>
-                @Html.HiddenFor(model => model.currentRack.bikeRackId)
-                <table class="table table-hover">
-                    <thead class="active text-info">
-                        <tr><td>#</td><td>Name</td><td></td></tr>
-                    </thead>
-                    @foreach (var bike in Model.checkedOutBikes)
+                <div class="panel-collapse collapse in" id="collapse1">
+                    @using (Html.BeginForm("submitMaint", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
                     {
-                        <tr>
-                            <td>@bike.bikeNumber</td>
-                            <td>@bike.bikeName</td>
-                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
-                        </tr>
+                        @Html.AntiForgeryToken()
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Title</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="maintTitle" name="maintTitle" type="text" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Description</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="maintDetails" name="maintDetails" type="text" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Take Bike Offline?</label>
+                                    <div class="col-md-10">
+                                        <input id="disableBike" name="disableBike" type="checkbox" value="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.currentRack.bikeRackId)
+                        <table class="table table-hover">
+                            <thead class="active text-info">
+                                <tr><td>#</td><td>Name</td><td></td></tr>
+                            </thead>
+                            @foreach (var bike in Model.checkedOutBikes)
+                            {
+                                <tr>
+                                    <td>@bike.bikeNumber</td>
+                                    <td>@bike.bikeName</td>
+                                    <td><input id="bikeId" name="bikeId" type="radio" value="@bike.bikeId"></td>
+                                </tr>
+                            }
+                            @foreach (var bike in Model.availableBikes)
+                            {
+                                <tr>
+                                    <td>@bike.bikeNumber</td>
+                                    <td>@bike.bikeName</td>
+                                    <td><input id="bikeId" name="bikeId" type="radio" value="@bike.bikeId"></td>
+                                </tr>
+                            }
+                        </table>
+
+                        <div class="panel-footer text-right">
+                            <button type="submit" value="submitMaint" class="btn btn-primary" id="btnMaint"><span class="glyphicon glyphicon-save"></span> Submit</button>
+                        </div>
                     }
-                    @foreach (var bike in Model.availableBikes)
+                </div>
+            </div>
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><span class="glyphicon glyphicon-usd"></span><span class="glyphicon glyphicon-wrench"></span> Charge User + Maintenance Report</a>
+                    </h4>
+                </div>
+                <div class="panel-collapse collapse" id="collapse2">
+                    @using (Html.BeginForm("submitChargeAndMaint", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
                     {
-                        <tr>
-                            <td>@bike.bikeNumber</td>
-                            <td>@bike.bikeName</td>
-                            <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
-                        </tr>
+                        @Html.AntiForgeryToken()
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Subject</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="title" name="title" type="text" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Description</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="details" name="details" type="text" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Charge Amount</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="chargeAmount" name="chargeAmount" type="number" value="0.00" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Take Bike Offline?</label>
+                                    <div class="col-md-10">
+                                        <input id="disableBike" name="disableBike" type="checkbox" value="true" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.currentRack.bikeRackId)
+                        <table class="table table-hover">
+                            <thead class="active text-info">
+                                <tr><td>#</td><td>Name</td><td></td></tr>
+                            </thead>
+                            @foreach (var bike in Model.checkedOutBikes)
+                            {
+                                <tr>
+                                    <td>@bike.bikeNumber</td>
+                                    <td>@bike.bikeName</td>
+                                    <td><input id="bikeId" name="bikeId" type="radio" value="@bike.bikeId"></td>
+                                </tr>
+                            }
+                        </table>
+
+                        <div class="panel-footer">
+                            <div class="input-group text-right" id="chargeUserFormMaint">
+                                <input class="form-control pull-right" id="userNameMaint" name="userName" type="text" value="">
+                                <span class="input-group-btn">
+                                    <button type="submit" value="submitCharge" class="btn btn-primary disabled" id="btnChargeMaint"><span class="glyphicon glyphicon-save"></span> submit</button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </div>
                     }
-                </table>
-            
-            <div class="panel-footer">
-                <div class="input-group text-right" id="chargeUserForm">
-                    <input class="form-control pull-right" id="userName" name="userName" type="text" value="">
-                    <span class="input-group-btn">
-                        <button type="submit" value="submitCharge" class="btn btn-primary disabled" id="btnCharge"><span class="glyphicon glyphicon-save"></span> submit</button>
-                    </span>
-                </div><!-- /input-group -->
-            </div>}
+                </div>
+            </div>
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"><span class="glyphicon glyphicon-usd"></span> Charge User</a>
+                    </h4>
+                </div>
+                <div class="panel-collapse collapse" id="collapse3">
+                    @using (Html.BeginForm("submitCharge", "Checkout", new { rackId = Model.currentRack.bikeRackId }, FormMethod.Post, new { }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Subject</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="chargeTitle" name="chargeTitle" type="text" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Description</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="chargeDetails" name="chargeDetails" type="text" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Charge Amount</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="chargeAmount" name="chargeAmount" type="number" value="0.00" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.currentRack.bikeRackId)
+                        <div class="panel-footer">
+                            <div class="input-group text-right" id="chargeUserForm">
+                                <input class="form-control pull-right" id="userName" name="userName" type="text" value="">
+                                <span class="input-group-btn">
+                                    <button type="submit" value="submitCharge" class="btn btn-primary disabled" id="btnCharge"><span class="glyphicon glyphicon-save"></span> submit</button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -183,7 +295,6 @@
             success: successFunc,
             error: errorFunc
         });
-
         function successFunc(data, status) {
             if (data === false) {
                 userWarningAlert.hidden = false;
@@ -195,6 +306,62 @@
                 $('#chargeUserForm').removeClass('has-error')
                 $('#btnCharge').removeClass('disabled')
                 $('#chargeUserForm').addClass('has-success')
+            }
+        }
+        function successFuncMaint(data, status) {
+            if (data === false) {
+                userWarningAlert.hidden = false;
+                $('#chargeUserForm').addClass("has-error")
+                $('#btnCharge').addClass('disabled')
+            }
+            else {
+                userWarningAlert.hidden = true;
+                $('#chargeUserForm').removeClass('has-error')
+                $('#btnCharge').removeClass('disabled')
+                $('#chargeUserForm').addClass('has-success')
+            }
+        }
+
+        function errorFunc() {
+            alert('error');
+        }
+    });
+    $('#userNameMaint').change(function () {
+        var serviceURL = "@Url.Action("doesUserExist")";
+
+        $.ajax({
+            type: "GET",
+            url: serviceURL,
+            data: { validationName: $('#userNameMaint').val() },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        });
+        function successFunc(data, status) {
+            if (data === false) {
+                userWarningAlert.hidden = false;
+                $('#chargeUserFormMaint').addClass("has-error")
+                $('#btnChargeMaint').addClass('disabled')
+            }
+            else {
+                userWarningAlert.hidden = true;
+                $('#chargeUserFormMaint').removeClass('has-error')
+                $('#btnChargeMaint').removeClass('disabled')
+                $('#chargeUserFormMaint').addClass('has-success')
+            }
+        }
+        function successFuncMaint(data, status) {
+            if (data === false) {
+                userWarningAlert.hidden = false;
+                $('#chargeUserFormMaint').addClass("has-error")
+                $('#btnChargeMaint').addClass('disabled')
+            }
+            else {
+                userWarningAlert.hidden = true;
+                $('#chargeUserFormMaint').removeClass('has-error')
+                $('#btnChargeMaint').removeClass('disabled')
+                $('#chargeUserFormMaint').addClass('has-success')
             }
         }
 
@@ -216,6 +383,17 @@
     }
     });
         $("#userName").addClass("text-right")
+.val("Institutional username")
+.focus(function () {
+    if ($(this).val() == "Institutional username") {
+        $(this).removeClass("text-right").val("");
+    }
+}).blur(function () {
+    if ($(this).val() == "") {
+        $(this).val("Institutional username").addClass("text-right");
+    }
+});
+        $("#userNameMaint").addClass("text-right")
 .val("Institutional username")
 .focus(function () {
     if ($(this).val() == "Institutional username") {
