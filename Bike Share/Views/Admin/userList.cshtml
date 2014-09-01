@@ -66,4 +66,4 @@
 }
 </div>
 <hr />
-<div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("userList", new { page = x }))</div>
+<div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("userList", new { page = x, canAdmin = ViewBag.canAdmin, canCheckout = ViewBag.canCheckout, canRide = ViewBag.canRide, canMaintain = ViewBag.canMaintain }))</div>

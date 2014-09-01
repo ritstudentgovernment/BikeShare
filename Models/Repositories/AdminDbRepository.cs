@@ -511,7 +511,7 @@ namespace BikeShare.Repositories
             }
             try
             {
-                return query.OrderByDescending(u => u.lastRegistered).Skip(skip).Take(count).ToList();
+                return query.OrderByDescending(u => u.userName).Skip(skip).Take(count).ToList();
             }
             catch (Exception ex)
             {
