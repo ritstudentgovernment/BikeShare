@@ -45,7 +45,7 @@ namespace BikeShare
             routes.MapRoute(name: "AdminMaintList", url: "Manage/Bikes/Maintenance/{pageId}", defaults: new { controller = "Admin", action = "maintenanceList", pageId = 1});
             routes.MapRoute(name: "AdminShopsNew", url: "Manage/Workshops/New", defaults: new { controller = "Admin", action = "newWorkshop"});
             routes.MapRoute(name: "AdminUserDetails", url: "Manage/Users/View/{userId}", defaults: new { controller = "Admin", action = "userDetails", userId = new RangeRouteConstraint(1, 999999) });
-            routes.MapRoute(name: "AdminUserList", url: "Manage/Users/{pageId}", defaults: new { controller = "Admin", action = "userList", pageId = 1});
+            routes.MapRoute(name: "AdminUserList", url: "Manage/Users/{page}/Mechanic={canMaintain}/Admin={canAdmin}/Rider={canRide}/Cashier={canCheckout}", defaults: new { controller = "Admin", action = "userList", page = 1, canMaintain = false, canAdmin = false, canRide = false, canCheckout = false});
             routes.MapRoute(name: "AdminWorkshopDetails", url: "Manage/Workshops/View/{shopId}", defaults: new { controller = "Admin", action = "workshopDetails", shopId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminWorkshopList", url: "Manage/Workshops/{pageId}", defaults: new { controller = "Admin", action = "workshopList", pageId = 1});
             //Mailing Unsubscription
