@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
+using FluentScheduler;
 
 namespace BikeShare
 {
@@ -26,6 +27,7 @@ namespace BikeShare
             RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             BikeShare.App_Start.BootstrapBundleConfig.RegisterBundles();
+            TaskManager.Initialize(new BikeShare.Code.MailerRegistry()); 
             //GlobalConfiguration.Configure(WebApiConfig.Register);
             //Database.SetInitializer<BikeShare.Models.BikesContext>(new BikeShare.Models.BikesContext.SettingsInitializer());
         }
