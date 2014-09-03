@@ -58,11 +58,6 @@
             <p>&copy; @DateTime.Now.Year - Nathan C. Castle - 
                 <a href="https://github.com/NathanCastle/BikeShare"><span class="glyphicon glyphicon-link"></span> Available on GitHub</a> - 
             <a href="@Url.Action(actionName: "License", controllerName: "Home")"><span class="glyphicon glyphicon-briefcase"></span>  License Notices</a>
-            @if (User.IsInRole("superAdmin"))
-            {
-                 <text> - <a href="@Url.Action(actionName: "Index", controllerName: "Super")"><span class="glyphicon glyphicon-wrench"></span>  Admin Panel</a></text>
-            }
-            
         </footer>
     </div>
     @RenderSection("scripts", required: false)

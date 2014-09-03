@@ -42,7 +42,6 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
-*.config
 # Build results
 packages/
 App_Data/
@@ -217,13 +216,6 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 *.ldf
-SendASmile/nJupiter.DataAccess.Ldap.config
-SendASmile/Web.config
-SendASmile/Web.Release.config
-SendASmile/Web.Debug.config
-SendASmile/NLog.config
-SendASmile/Code/Secrets.cs
-SendASmile/Code/Secrets.cs
-*.config
+
 *.svg
 *.css
