@@ -10,10 +10,10 @@
 {
     @Html.AntiForgeryToken()
     <h3>Terms</h3>
-    <p>The Bike Share program is administered according to the following guidelines.</p>
-    
+    <p>The Bike Share program is administered according to the attached guidelines.</p>
+    <a href="~/Content/Bike_Share_Waiver.pdf" class="btn btn-primary">Click Here for Waiver</a>
     <hr />
-    <div class="alert alert-danger">Entering your name and clicking "Register" constitutes a legally binding signature in acceptance of the above terms.</div>
+    <div class="alert alert-danger">Entering your name and clicking "Register" constitutes a legally binding signature in acceptance of the above terms. By accepting these terms, you indicate that you have read the above linked waiver.</div>
     <div class="form-horizontal">
         <div class="form-group">
             <label class="control-label col-md-3">First Name: </label>

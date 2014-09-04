@@ -1,29 +1,42 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+    <div class="row">
 
-    <div class="jumbotron">
-        <h1 role="heading">Bike Share</h1>
-        <p class="lead">Making it easy to get across campus.</p>
-        <p><a href="~/Explore/" class="btn btn-primary btn-large">See the Feedback &raquo;</a></p>
+        <div class="col-sm-12">
+
+
+
+            <div style="background-image: url(../../Content/Images/IMAG0060.jpg); background-position: center; background-size: cover; padding: 50px 0; height: 500px;">
+                <div class="col-sm-8 col-sm-offset-2 text-center" style="position: absolute; top: 25%; color: white;">
+                    <h1 style="background-color: orange; font-weight: 900; color: white; padding: 10px; line-height: 38px; overflow: hidden; margin: 0;">RIT BIKESHARE</h1>
+                    <div class="row" style="margin: 40px 0; font-size: 200%;">
+                        <h2>
+                            <p>Bikeshare is free for RIT students and faculty.</p>
+                            <p>Rent a bike for 24 hours. It's yours.</p>
+                        </h2>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-
     <div class="row">
         <div class="col-md-4">
             <h2 role="heading">Learn More</h2>
             <p>
-                The Bike Share makes it easy to get around campus quickly, easily and cheaply. Rentals starting at $0.
+                The RIT Bikeshare makes it easy to get around campus. Rentals starting at $0.
             </p>
             <p>@Html.ActionLink("Learn More", "About", new  {}, new {@class="btn btn-default"})</p>
         </div>
         <div class="col-md-4">
-            <h2 role="heading">Explore</h2>
-            <p>See information about Bike Share usage.</p>
-            <p>@Html.ActionLink("Explore Now", "Explore", new { }, new { @class = "btn btn-default" })</p>
+            <h2 role="heading">Find a Rack</h2>
+            <p>You can check out bikes at our convenient location.</p>
+            <p>@Html.ActionLink("Explore Now", "rackListing", "Explore", new { }, new { @class = "btn btn-default" })</p>
         </div>
         <div class="col-md-4">
             <h2 role="heading">Sign Up</h2>
-            <p>Sign up here to begin renting bikes.</p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Sign Up &raquo;</a></p>
+            <p>You'll need to log in before you can register. Its easy!</p>
+            <p>@Html.ActionLink("Register", "Register", "Explore", new { }, new { @class = "btn btn-default" })</p>
         </div>
     </div>

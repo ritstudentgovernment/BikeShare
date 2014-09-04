@@ -6,7 +6,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Bike Share", "Index", "Home", null, new { @class = "navbar-brand" })
+            <a class="navbar-brand" href="@Url.Action(actionName: "Index", controllerName: "Home")"><img src="~/Content/Images/bike_logo_web.png" height="30" /></a>
+            @Html.ActionLink("RIT Bikeshare", "Index", "Home", null, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">

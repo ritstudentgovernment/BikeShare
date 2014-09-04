@@ -3,9 +3,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="msapplication-TileColor"
-          content="#f36e21" />
-    <meta name="msapplication-square150x150logo" content="~/Content/Images/bike_logo_web.png" />
     <title>@ViewBag.Title - Bike Share</title>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     @if (IsSectionDefined("mapsSection"))
@@ -54,7 +51,7 @@
         </div>
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Nathan C. Castle - 
+            <p>&copy; @DateTime.Now.Year - <a href="https://sg.rit.edu/">RIT Student Government</a> - 
                 <a href="https://github.com/NathanCastle/BikeShare"><span class="glyphicon glyphicon-link"></span> Available on GitHub</a> - 
             <a href="@Url.Action(actionName: "License", controllerName: "Home")"><span class="glyphicon glyphicon-briefcase"></span>  License Notices</a>
         </footer>
