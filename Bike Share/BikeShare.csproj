@@ -52,6 +52,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentScheduler">
+      <HintPath>..\packages\FluentScheduler.3.1.44\lib\net40\FluentScheduler.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -222,6 +225,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -447,6 +451,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Code\Gravatar.cs" />
+    <Compile Include="Code\MailerRegistry.cs" />
+    <Compile Include="Code\MailTasks.cs" />
     <Compile Include="Code\NinjectDependencyResolver.cs" />
     <Compile Include="Code\PagingHelpers.cs" />
     <Compile Include="Code\Secrets.cs" />
@@ -490,7 +496,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Racks\" />
-    <Folder Include="Mailers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
