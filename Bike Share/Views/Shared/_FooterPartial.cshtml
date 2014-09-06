@@ -34,12 +34,16 @@
         
     </div>
     <div id="bottom" style="background-color: #707070">
-        <div class="container" style="color:white;">
+        <div class="container hidden-xs" style="color:white;">
             &copy; @DateTime.Now.Year - <a href="https://sg.rit.edu/" style="color:white;">RIT Student Government</a> -
             <a href="https://github.com/NathanCastle/BikeShare" style="color:white;"><span class="glyphicon glyphicon-link"></span> Available on GitHub</a> -
             <a href="@Url.Action(actionName: "License", controllerName: "Home")" style="color:white;"><span class="glyphicon glyphicon-briefcase"></span>  License Notices</a>
         </div>
-        
+        <div class="container hidden-md hidden-lg hidden-sm visible-xs" style="color:white;">
+            <p>&copy; @DateTime.Now.Year - <a href="https://sg.rit.edu/" style="color:white;">RIT Student Government</a></p>
+            <p><a href="https://github.com/NathanCastle/BikeShare" style="color:white;"><span class="glyphicon glyphicon-link"></span> Available on GitHub</a></p>
+            <p><a href="@Url.Action(actionName: "License", controllerName: "Home")" style="color:white;"><span class="glyphicon glyphicon-briefcase"></span>  License Notices</a></p>
+        </div>
     </div>
 </footer>
                         
