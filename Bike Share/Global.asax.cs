@@ -26,10 +26,7 @@ namespace BikeShare
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            BikeShare.App_Start.BootstrapBundleConfig.RegisterBundles();
             TaskManager.Initialize(new BikeShare.Code.MailerRegistry()); 
-            //GlobalConfiguration.Configure(WebApiConfig.Register);
-            //Database.SetInitializer<BikeShare.Models.BikesContext>(new BikeShare.Models.BikesContext.SettingsInitializer());
         }
     }
 }
