@@ -44,6 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.4.1.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -120,10 +123,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\nJupiter.DataAccess.Ldap.5.1.2.534\lib\net40\nJupiter.DataAccess.Ldap.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="Npgsql, Version=2.2.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Npgsql.2.2.0\lib\net45\Npgsql.dll</HintPath>
@@ -171,6 +170,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Optimization.Less">
+      <HintPath>..\packages\System.Web.Optimization.Less.1.3.2\lib\net40\System.Web.Optimization.Less.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
@@ -208,10 +210,6 @@
     <Content Include="bin\Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="bin\Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="bin\nJupiter.DataAccess.Ldap.config" />
-    <Content Include="bin\NLog.config" />
-    <Content Include="Content\bootstrap-datepicker.css" />
-    <Content Include="Content\bootstrap-datepicker3.css" />
-    <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -219,76 +217,19 @@
     <Content Include="Content\Images\bike_logo_web.png" />
     <Content Include="Content\Images\icon_79.png" />
     <Content Include="Content\Images\IMAG0060.jpg" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\sg_web.svg" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\Bike_Share_Waiver.pdf" />
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Content\less\footer.less" />
+    <Content Include="Content\less\_variables.less" />
     <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.ar.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.az.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.bg.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.ca.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.cs.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.cy.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.da.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.de.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.el.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.es.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.et.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.fa.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.fi.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.fr.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.gl.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.he.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.hr.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.hu.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.id.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.is.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.it.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.ja.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.ka.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.kk.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.kr.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.lt.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.lv.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.mk.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.ms.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.nb.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.nl-BE.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.nl.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.no.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.pl.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.pt-BR.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.pt.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.ro.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.rs-latin.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.rs.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.ru.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.sk.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.sl.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.sq.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.sv.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.sw.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.th.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.tr.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.ua.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.vi.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.zh-CN.js" />
-    <Content Include="Scripts\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Views\Explore\bikeListing.cshtml" />
     <Content Include="Views\Explore\rackListing.cshtml" />
     <Content Include="Views\Mechanic\Index.cshtml" />
@@ -341,14 +282,12 @@
     <Content Include="Views\Admin\newComment.cshtml" />
     <Content Include="Views\Admin\uploadImage.cshtml" />
     <Content Include="Views\Mechanic\newHour.cshtml" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Explore\Register.cshtml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <Content Include="Views\Admin\newCharge.cshtml" />
     <Content Include="Views\Error\authError.cshtml" />
     <Content Include="Views\CheckOut\helpPopup.cshtml" />
+    <Content Include="Views\Shared\_FooterPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -449,7 +388,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BootstrapBundleConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
