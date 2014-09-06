@@ -11,20 +11,12 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="@Url.Action(actionName:"Index", controllerName:"Home")"><span class="glyphicon glyphicon-home"></span> Home</a></li>
                 <li><a href="@Url.Action(actionName:"About", controllerName:"Home")"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-                <li class="dropdown">
-                    <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-search"></span> Explore<span class="caret"></span></a>
-
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <li><a href="@Url.Action(actionName:"bikeListing", controllerName:"Explore")"><span class="glyphicon glyphicon-list-alt"></span> Bikes</a></li>
-                        <li><a href="@Url.Action(actionName:"rackListing", controllerName:"Explore")"><span class="glyphicon glyphicon-list"></span> Bike Racks</a></li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li><a href="@Url.Action(actionName:"Index", controllerName:"Explore")"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
-                        }
-                    </ul>
-                </li>
+                <li><a href="@Url.Action(actionName:"rackListing", controllerName:"Explore")"><span class="glyphicon glyphicon-list"></span> Bikes</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a href="@Url.Action(actionName:"Index", controllerName:"Explore")"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+                }
             </ul>
             
             @Html.Partial("_LoginPartial")
