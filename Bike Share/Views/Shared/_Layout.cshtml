@@ -3,33 +3,36 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Bike Share</title>
+    <title>@ViewBag.Title - RIT Bikeshare</title>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     @if (IsSectionDefined("mapsSection"))
     {
         @RenderSection("mapsSection");
     }
     @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/less")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    @Html.Partial("_HeaderPartial")
-    <div class="container body-content" style="padding-top: 60px">
-        <div class="row">
-            
+<body style="background-color:#707070">
+    <div style="background-color:#eeeeee">
+        @Html.Partial("_HeaderPartial")
+        <div class="container body-content" style="padding-top: 60px;">
+            <div class="row">
+
                 @if (IsSectionDefined("menuSection") || IsSectionDefined("filterSection"))
                 {
-                    <div class="col-sm-3 hidden-xs hidden-print">
-                    @if (IsSectionDefined("menuSection"))
-                    {
-                        <h3></h3>
-                        @RenderSection("menuSection");
-                    }
-                    @if (IsSectionDefined("filterSection"))
-                    {
-                        <h3></h3>
-                        @RenderSection("filterSection");
-                    }
+                    <div class="col-sm-3 hidden-print">
+                        @if (IsSectionDefined("menuSection"))
+                        {
+                            <h3></h3>
+                            @RenderSection("menuSection");
+                        }
+                        @if (IsSectionDefined("filterSection"))
+                        {
+                            <h3></h3>
+                            @RenderSection("filterSection");
+                        }
                     </div>
                     <div class="col-sm-9">
                         @RenderBody()
@@ -41,21 +44,18 @@
                         @RenderBody()
                     </div>
                 }
-        </div>
-        <div class="modal fade" id="siteModal" tabindex="-1" role="dialog" aria-labelledby="siteModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">Loading</div>
+            </div>
+            <div class="modal fade" id="siteModal" tabindex="-1" role="dialog" aria-labelledby="siteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">Loading</div>
+                    </div>
                 </div>
             </div>
+
         </div>
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - <a href="https://sg.rit.edu/">RIT Student Government</a> - 
-                <a href="https://github.com/NathanCastle/BikeShare"><span class="glyphicon glyphicon-link"></span> Available on GitHub</a> - 
-            <a href="@Url.Action(actionName: "License", controllerName: "Home")"><span class="glyphicon glyphicon-briefcase"></span>  License Notices</a>
-        </footer>
     </div>
+@Html.Partial("_FooterPartial")
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

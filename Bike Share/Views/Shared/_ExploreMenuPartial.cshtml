@@ -1,8 +1,7 @@
-﻿<div class="list-group">
-    @Html.ActionLink("Bikes", "bikeListing", new { }, new { @class = "list-group-item" })
+﻿<div class="list-group hidden-xs">
     @Html.ActionLink("Bike Racks", "rackListing", new { }, new { @class = "list-group-item" })
     @if (User.Identity.IsAuthenticated)
             {
-        @Html.ActionLink("My Profile", "Index", new { }, new { @class = "list-group-item active" })
+        @Html.ActionLink("My Account", "Index", new { }, new { @class = "list-group-item active" })
             }
 </div>
