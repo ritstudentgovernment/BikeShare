@@ -22,20 +22,15 @@ namespace BikeShare.Controllers
         /// <returns>View with no ViewModel.</returns>
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View("About");
         }
-
-        /// <summary>
-        /// Displays a page with contact information.
-        /// </summary>
-        /// <returns>View with no ViewModel.</returns>
-        public ActionResult Contact()
+        public ActionResult Safety()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View("Contact");
+            return View();
+        }
+        public ActionResult FAQ()
+        {
+            return View();
         }
 
         /// <summary>
