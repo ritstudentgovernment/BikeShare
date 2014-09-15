@@ -1,121 +1,49 @@
 ﻿@{
     ViewBag.Title = "About the RIT Bikeshare";
 }
-<h2 role="heading"><span class="glyphicon glyphicon-info-sign"></span> @ViewBag.Title.</h2>
+@section menuSection{
+    @Html.Partial("_HomeMenuPartial")
+}
+<h2 role="heading" class="text-center"><span class="glyphicon glyphicon-info-sign pull-left"></span> @ViewBag.Title.</h2>
 <hr />
-<h3>The Basics</h3>
-<ul>
-    <li>The RIT Bikeshare launched spring 2014</li>
-    <li>The RIT Biikeshare is open to anyone with an RIT id and email</li>
-    <li>Bikes can be borrowed for 24 hours without charge</li>
-    <li>Riders are expected to excercise caution while riding and comply with all state and local laws.</li>
-</ul>
-
-<h3>Frequently Asked Questions</h3>
-<hr />
-<div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Is this a free service?</a>
-            </h4>
-        </div>
-        <div class="panel-collapse collapse in" id="collapse1">
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The People</div>
             <div class="panel-body">
-                <p>Yes and no.</p>
-                <p>Yes in that it is free to use the bike share.</p>
-                <p>No in that there are charges for major damage to the bike or failure to return it in a timely fashion.</p>
+                <p>The RIT Bikeshare is a collaborative effort between RIT's Student Government, The Center for Residence Life, Facilities Management Services, Parking &Aacute; Transportation and many more.</p>
+            </div>
+        </div>   
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The Fleet</div>
+            <div class="panel-body">
+                <p>The RIT Bikeshare maintains a fleet of twenty beautiful orange bikes. While they don't come equipped with stunt pegs or gears, they do have everything you need to get around campus comfortably.</p>
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><span class="glyphicon glyphicon-user"></span> Who can join this program?</a>
-            </h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse2">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The Software</div>
             <div class="panel-body">
-                <p>Any RIT Student, Faculty, or Staff can borrow a bike!</p>
-            </div>
-        </div>
-    </div> 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"><span class="glyphicon glyphicon-usd"></span> Are there any fees associated with renting a bicycle?</a>
-            </h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse3">
-            <div class="panel-body">
-                <p>The Rental Service is free; however, there are possible charges for misuse of bikes or the service, These are are outlined in the rental agreement and copied below.</p>
-
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <div class="col-xs-4"><label class="control-label">Late return:</label></div>
-                        <div class="col-xs-8">$5 per 24 hours, not including the holidays/weekends.</div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4"><label class="control-label">Failure to return bike after 4 weeks:</label></div>
-                        <div class="col-xs-8">The cost of replacing the bike (Approx. $350).</div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4"><label class="control-label">Lost Key:</label></div>
-                        <div class="col-xs-8">$30, to replace the U-Lock.</div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4"><label class="control-label">Damaged Key:</label></div>
-                        <div class="col-xs-8">$5, to replace the key.</div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4"><label class="control-label">Lost Bike:</label></div>
-                        <div class="col-xs-8">The cost of replacing the bike (Approx. $350).</div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-4"><label class="control-label">Irreperable Bike Damage:</label></div>
-                        <div class="col-xs-8">The cost of replacing the bike (Approx. $350).</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4"><span class="glyphicon glyphicon-headphones"></span> Do I need to wear a helmet?</a>
-            </h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse4">
-            <div class="panel-body">
-                <p>Wearing a helmet is strongly recommended. Helmets are not included in the rental.</p>
+                <p>The RIT Bikeshare program is administered using custom-built software. This software is available open source as part of Student Government's effort to contribute to the free and open source software community on campus.</p>
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse5"><span class="glyphicon glyphicon-map-marker"></span> Where do I check out a bike?</a>
-            </h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse5">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The Future</div>
             <div class="panel-body">
-                <p><a href="@Url.Action("rackListing", "Explore")">Click Here</a> to see all bike checkout stations.</p>
+                <p>The RIT Bikeshare program has been a huge success. With constant demand for our bikes, it is clear that we need to expand our program to include a larger fleet and more convenient rental locations. More to come soon.</p>
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse6"><span class="glyphicon glyphicon-question-sign"></span> Is there anything that I need to do before borrowing a bike?</a>
-            </h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse6">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The Start</div>
             <div class="panel-body">
-                <p>Yes! You need to register before you can use the site. Follow the steps below:</p>
-                <ol>
-                    <li>Log in with Institutional username and password.</li>
-                    <li>In the navigation bar at the top of the screen, select "Explore" then "My Profile" and then select renew registration.</li>
-                </ol>
+                <p>The RIT Bikeshare launched in spring 2014 with 20 bikes and one rental location in Kate Gleason Hall.</p>
             </div>
         </div>
     </div>
