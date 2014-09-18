@@ -75,7 +75,7 @@ namespace BikeShare.Code.Mailers
             int rentDays = sRepo.getmaxRentDays();
             foreach (var checkout in aRepo.getAllCurrentCheckOuts())
             {
-                if (checkout.timeOut.AddDays(rentDays) > DateTime.Now)
+                if (checkout.timeOut.AddDays(rentDays) < DateTime.Now)
                 {
                     MailMessage mail = new MailMessage();
 
