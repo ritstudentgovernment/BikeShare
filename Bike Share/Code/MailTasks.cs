@@ -15,14 +15,8 @@ namespace BikeShare.Code.Mailers
         public void Execute()
         {
             string emailFrom = ConfigurationSettings.AppSettings["emailFrom"];
-            string pass = ConfigurationSettings.AppSettings["emailPass"];
-            string user = ConfigurationSettings.AppSettings["emailUser"];
-            string server = ConfigurationSettings.AppSettings["emailServer"];
-            int port = Convert.ToInt32(ConfigurationSettings.AppSettings["emailPort"]);
 
-            SmtpClient smtpServer = new SmtpClient(server);
-            smtpServer.Credentials = new System.Net.NetworkCredential(user, pass);
-            smtpServer.Port = port; 
+            SmtpClient smtpServer = new SmtpClient();
             AdminDbRepository aRepo = new AdminDbRepository();
             SettingsDbRepository sRepo = new SettingsDbRepository();
             string appName = sRepo.getappName();
@@ -60,15 +54,13 @@ namespace BikeShare.Code.Mailers
 
         public void Execute()
         {
+            if((DateTime.Now.ToString("ddd") == "Fri" && DateTime.Now.Hour > 17) || DateTime.Now.ToString("ddd") == "Sat" || DateTime.Now.ToString("ddd") == "Sun")
+            {
+                return;
+            }
             string emailFrom = ConfigurationSettings.AppSettings["emailFrom"];
-            string pass = ConfigurationSettings.AppSettings["emailPass"];
-            string user = ConfigurationSettings.AppSettings["emailUser"];
-            string server = ConfigurationSettings.AppSettings["emailServer"];
-            int port = Convert.ToInt32(ConfigurationSettings.AppSettings["emailPort"]);
 
-            SmtpClient smtpServer = new SmtpClient(server);
-            smtpServer.Credentials = new System.Net.NetworkCredential(user, pass);
-            smtpServer.Port = port;
+            SmtpClient smtpServer = new SmtpClient();
             AdminDbRepository aRepo = new AdminDbRepository();
             SettingsDbRepository sRepo = new SettingsDbRepository();
             string appName = sRepo.getappName();
@@ -85,16 +77,6 @@ namespace BikeShare.Code.Mailers
                     mail.Subject = "Bike Now Overdue - " + appName;
                     mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
                         ". Per our policy, your bike is now overdue, and failure to return it in a timely manner may result in charges to your account. Please return your bike as soon as possible.";
-                    if (DateTime.Now.ToString("ddd") == "Fri" && DateTime.Now.Hour > 17)
-                    {
-                        mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
-                        ". Per our policy, your bike will be due at the start of business on the next business day. Failure to return  your bike in a timely manner may result in charges to your account. Please return your bike as soon as possible.";
-                    }
-                    if (DateTime.Now.ToString("ddd") == "Sat" || DateTime.Now.ToString("ddd") == "Sun")
-                    {
-                        mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
-                        ". Per our policy, your bike will be due at the start of business on the next business day. Failure to return  your bike in a timely manner may result in charges to your account. Please return your bike as soon as possible.";
-                    }
                     smtpServer.Send(mail);
                 }
             }
@@ -107,14 +89,8 @@ namespace BikeShare.Code.Mailers
         public void Execute()
         {
             string emailFrom = ConfigurationSettings.AppSettings["emailFrom"];
-            string pass = ConfigurationSettings.AppSettings["emailPass"];
-            string user = ConfigurationSettings.AppSettings["emailUser"];
-            string server = ConfigurationSettings.AppSettings["emailServer"];
-            int port = Convert.ToInt32(ConfigurationSettings.AppSettings["emailPort"]);
 
-            SmtpClient smtpServer = new SmtpClient(server);
-            smtpServer.Credentials = new System.Net.NetworkCredential(user, pass);
-            smtpServer.Port = port;
+            SmtpClient smtpServer = new SmtpClient();
             SettingsDbRepository sRepo = new SettingsDbRepository();
             FinanceDbRepository fRepo = new FinanceDbRepository();
             string appName = sRepo.getappName();
