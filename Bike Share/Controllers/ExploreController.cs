@@ -122,7 +122,7 @@ namespace BikeShare.Controllers
             }
             else
             {
-                return RedirectToAction("logIn", "Account");
+                return RedirectToAction("LogOnForm", "Account");
             }
         }
         

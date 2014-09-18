@@ -1,0 +1,25 @@
+﻿@model BikeShare.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+}
+@section lateScripts{
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('#loginModal').modal('show');
+
+        });
+</script>
+}
+
+<h2 class="text-center">Log In</h2>
+<div class="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="siteModalLabel" data-remote="@Url.Action("LogOn")">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                Loading...
+            </div>
+        </div>
+    </div>
+</div>
+

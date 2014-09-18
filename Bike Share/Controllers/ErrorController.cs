@@ -27,7 +27,7 @@ namespace BikeShare.Controllers
 
         public ActionResult authError()
         {
-            return View();
+            return RedirectToAction("LogOnForm", "Account");
         }
     }
 }

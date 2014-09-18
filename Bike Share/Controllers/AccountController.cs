@@ -46,6 +46,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOn(BikeShare.Models.Login model, String returnUrl = "")
         {
+            model.UserName = model.UserName.ToLower();
             //If in debug mode, bypasses authentication and logs in as the provided userName
 #if DEBUG
             if (!userRepo.doesUserExist(model.UserName))
@@ -73,6 +74,10 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
+        public ActionResult LogOnForm()
+        {
+            return LogOn("");
+        }
         /// <summary>
         /// Logs the current user off.
         /// </summary>
@@ -81,7 +86,7 @@ namespace BikeShare.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("LogOn", "Account", null);
+            return RedirectToAction("Index", "Home", null);
         }
     }
 }

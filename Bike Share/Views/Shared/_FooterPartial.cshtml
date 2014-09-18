@@ -1,52 +1,52 @@
 ﻿<footer class="footer">
-    <div id="top" style="background-color: #515151; color:white; padding-top:15px;" class="hidden-xs">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 hidden-sm" id="logo">
-                    <img src="~/Content/Images/sg_web.svg" height="75" class="pull-left" style="vertical-align: middle" />
-                </div>
-                <div class="col-sm-2" id="menu">
-                    <ul class="list-unstyled">
-                        <li><a href="https://sg.rit.edu" style="color:white;">RIT Student Government</a></li>
-                        <li><a href="https://sg.rit.edu/aboutus" style="color:white;">About Us</a></li>
-                        <li><a href="https://sg.rit.edu/services" style="color:white;">Services We Offer</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-2 hidden-xs" id="address">
-                    <ul class="list-unstyled">
-                        <li>Campus Center</li>
-                        <li>Building 03 - Room 1710</li>
-                        <li>(585) 475 - 4043</li>
-                        <li><a href="mailto:sgsvcs@rit.edu" style="color:white;">Contact Us!</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-3 col-sm-offset-2 col-xs-offset-1 col-xs-5">
-                    <ul class="list-unstyled">
-                        <li><a href="http://www.rit.edu" style="color:white;">Rochester Institute of Technology</a></li>
-                        <li><a href="http://www.rit.edu/privacystatement.html" style="color:white;">Privacy Statement</a></li>
-                        <li><a href="http://www.rit.edu/copyright.html" style="color:white;">Copyright Infringement</a></li>
-                        <li><a href="http://www.rit.edu/disclaimer.html" style="color:white;">Disclaimer</a></li>
-                    </ul>
-                </div>
-            </div>
+    <div class="footer-left col-lg-6 col-md-6 col-sm-6">
+        <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-4">
+            <p class="footer-subtitle">
+                About
+            </p>
+            <p style="font-size: 20px;">
+                RIT Bikeshare is a free service for students to rent bikes for 24 hours.
+            </p>
+            <p style="font-size: 15px;">
+                <a href="https://sg.rit.edu/">
+                    &copy;&nbsp;&nbsp; Student Government 2014.
+                </a>
+                <br>
+                <a href="https://github.com/nathancastle/bikeshare">
+                    <span class="glyphicon glyphicon-link"></span>
+                    Available on GitHub.
+                </a>
+            </p>
         </div>
-        
     </div>
-    <div id="bottom" style="background-color: #707070">
-        <div class="container hidden-xs" style="color:white;">
-            &copy; @DateTime.Now.Year - <a href="https://sg.rit.edu/" style="color:white;">RIT Student Government</a> -
-            <a href="https://github.com/NathanCastle/BikeShare" style="color:white;"><span class="glyphicon glyphicon-link"></span> Available on GitHub</a> -
-            <a href="@Url.Action(actionName: "License", controllerName: "Home")" style="color:white;"><span class="glyphicon glyphicon-briefcase"></span>  License Notices</a>
+    <div class="footer-right col-lg-6 col-md-6 col-sm-6">
+        <div class="col-sm-6 col-sm-offset-1 col-md-4 col-md-offset-1">
+            <p class="footer-subtitle">
+                Learn More
+            </p>
+            <p>
+                <a href="@Url.Action("About", "Home")">About Bikeshare</a>
+                <br>
+                <a href="@Url.Action("Safety", "Home")">Safety</a>
+                <br>
+                <a href="@Url.Action("FAQ", "Home")">FAQ</a>
+                <br>
+                <a href="@Url.Action("Contact", "Home")">Contact</a>
+            </p>
         </div>
-        <div class="container hidden-md hidden-lg hidden-sm visible-xs" style="color:white;">
-            <p>&copy; @DateTime.Now.Year - <a href="https://sg.rit.edu/" style="color:white;">RIT Student Government</a></p>
-            <p><a href="https://github.com/NathanCastle/BikeShare" style="color:white;"><span class="glyphicon glyphicon-link"></span> Available on GitHub</a></p>
-            <p><a href="@Url.Action(actionName: "License", controllerName: "Home")" style="color:white;"><span class="glyphicon glyphicon-briefcase"></span>  License Notices</a></p>
+        <div class="col-sm-3 footer-count">
+            <div class="footer-subtitle">
+                Other Services
+            </div>
+            <p>
+                <a href="https://pawprints.rit.edu/">PawPrints</a>
+                <br>
+                <a href="http://vote.rit.edu">Voting</a>
+                <br>
+                <a href="https://sg.rit.edu/afafs">Funding</a>
+                <br>
+                <a href="https://sg.rit.edu/services">All Services</a>
+            </p>
         </div>
     </div>
 </footer>
-                        
-                        
-                        
-                 

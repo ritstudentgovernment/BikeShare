@@ -8,21 +8,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Bike Share</title>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-    @Styles.Render("~/Content/less")
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
     @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/less")
     @Scripts.Render("~/bundles/modernizr")
+    <link href='~/Content/footer.css' rel='stylesheet' type='text/css'>
 </head>
 <body style="background-color:#707070">
     <div style="background-color:#eeeeee">
         @Html.Partial("_HeaderPartial")
         <div class="container-fluid body-content" style="padding-top: 50px;">
             <div class="row">
-                <div style="background-image: url(../../Content/Images/IMAG0060.jpg); background-position: center; background-size: cover; padding: 50px 0; height: 500px;">
-                    <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center" style="position: absolute; top: 25%; color: white;">
-                        <h1 style="background-color: #f36e21; font-weight: 900; color: white; padding: 10px; line-height: 38px; overflow: hidden; margin: 0;">RIT BIKESHARE</h1>
+                <div style="background-image: url(../../Content/Images/IMAG0060.jpg); background-position: center; background-size: cover; padding: 50px 0px 50px 0px; height: 600px;">
+                    <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center" style="position: relative; top: 25%; color: white;">
+                        <h1 style="background-color: #f36e21; font-weight: 900; color: white; padding: 15px; line-height: 38px; overflow: hidden; margin: 0;">RIT BIKESHARE</h1>
                         <div class="row" style="margin: 40px 0; font-size: 200%;">
                             <h2>
                                 Bikeshare is free for all members of the RIT Community.<br />
@@ -73,6 +74,13 @@
 
             </div>
 
+        </div>
+    </div>
+    <div class="modal fade" id="siteModal" tabindex="-1" role="dialog" aria-labelledby="siteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">Loading</div>
+            </div>
         </div>
     </div>
     @Html.Partial("_FooterPartial")

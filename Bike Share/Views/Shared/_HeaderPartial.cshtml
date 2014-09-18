@@ -1,22 +1,20 @@
 ﻿<div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        <div class="navbar-header">
+        <div class="navbar-header" style="line-height:22px;">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="@Url.Action(actionName: "Index", controllerName: "Home")"><img src="~/Content/Images/bike_logo_web.png" height="30" /></a>
+            <a class="navbar-brand" style="margin-top: -3px;" href="@Url.Action(actionName: "Index", controllerName: "Home")"><img src="~/Content/Images/bike_logo_web.png" height="30" /></a>
             @Html.ActionLink("RIT Bikeshare", "Index", "Home", null, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="@Url.Action(actionName:"About", controllerName:"Home")"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+                <li><a href="@Url.Action(actionName:"Safety", controllerName:"Home")"><span class="glyphicon glyphicon-warning-sign"></span> Safety</a></li>
                 <li><a href="@Url.Action(actionName:"rackListing", controllerName:"Explore")"><span class="glyphicon glyphicon-list"></span> Bikes</a></li>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li><a href="@Url.Action(actionName:"Index", controllerName:"Explore")"><span class="glyphicon glyphicon-user"></span> Account</a></li>
-                }
+                <li><a href="@Url.Action(actionName:"Index", controllerName:"Explore")"><span class="glyphicon glyphicon-user"></span> Account</a></li>
             </ul>
             
             @Html.Partial("_LoginPartial")

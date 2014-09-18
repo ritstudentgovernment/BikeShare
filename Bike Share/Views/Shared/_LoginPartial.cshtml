@@ -29,28 +29,8 @@
 }
 else
 {
+    <ul class="nav navbar-nav navbar-right">
+        <li><a data-toggle="modal" data-target="#siteModal" href="@Url.Action("LogOn", "Account")"><span class=" glyphicon glyphicon-user"></span> Login</a></li>
+    </ul>
 
-    using (Html.BeginForm("logon", "account", new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post))
-{
-        @Html.AntiForgeryToken()
-       <text>
-
-<script type="text/javascript">
-    function forceLower(strInput)
-    {
-        strInput.value=strInput.value.toLowerCase();
-    }
-</script>
-<div role="form" class="navbar-form navbar-right">
-    <div class="form-group">
-        <input class="form-control" id="UserName" name="UserName" placeholder="User Name" type="text" onkeyup="return forceLower(this);" />
-    </div>
-    <div class="form-group">
-        <input class="form-control" id="Password" name="Password" placeholder="Password" type="password" />
-    </div>
-    <input type="submit" value="Log In" role="button" class="btn btn-default" />
-</div>
-
-    </text>
-}
 }

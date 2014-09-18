@@ -33,20 +33,8 @@ namespace BikeShare.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Displays a page with license information.
-        /// </summary>
-        /// <returns>View with no ViewModel.</returns>
-        public ActionResult License()
-        {
-            return View();
-        }
 
-        /// <summary>
-        /// Displays page with information about registering for the service.
-        /// </summary>
-        /// <returns>View with no ViewModel.</returns>
-        public ActionResult Register()
+        public ActionResult Contact()
         {
             return View();
         }

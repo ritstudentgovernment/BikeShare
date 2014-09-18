@@ -214,6 +214,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\footer.css" />
     <Content Include="Content\Images\bike_logo_web.png" />
     <Content Include="Content\Images\icon_79.png" />
     <Content Include="Content\Images\IMAG0060.jpg" />
@@ -222,8 +223,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Content\Bike_Share_Waiver.pdf" />
-    <Content Include="Content\less\footer.less" />
-    <Content Include="Content\less\_variables.less" />
     <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -288,6 +287,10 @@
     <Content Include="Views\Error\authError.cshtml" />
     <Content Include="Views\CheckOut\helpPopup.cshtml" />
     <Content Include="Views\Shared\_FooterPartial.cshtml" />
+    <Content Include="Views\Home\Safety.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Shared\_HomeMenuPartial.cshtml" />
+    <Content Include="Views\Account\LogOnForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -380,8 +383,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\License.cshtml" />
-    <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Web.config" />
@@ -440,6 +441,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Racks\" />
+    <Folder Include="Content\less\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

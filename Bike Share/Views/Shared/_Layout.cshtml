@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - RIT Bikeshare</title>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
     @if (IsSectionDefined("mapsSection"))
     {
         @RenderSection("mapsSection");
@@ -13,9 +14,10 @@
     @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/less")
     @Scripts.Render("~/bundles/modernizr")
+    <link href='~/Content/footer.css' rel='stylesheet' type='text/css'>
 </head>
-<body style="background-color:#707070">
-    <div style="background-color:#eeeeee">
+<body style="background-color:#eeeeee">
+    <div>
         @Html.Partial("_HeaderPartial")
         <div class="container body-content" style="padding-top: 60px;">
             <div class="row">
@@ -23,9 +25,10 @@
                 @if (IsSectionDefined("menuSection") || IsSectionDefined("filterSection"))
                 {
                     <div class="col-sm-3 hidden-print">
+                        <h3></h3>
                         @if (IsSectionDefined("menuSection"))
                         {
-                            <h3></h3>
+
                             @RenderSection("menuSection");
                         }
                         @if (IsSectionDefined("filterSection"))
