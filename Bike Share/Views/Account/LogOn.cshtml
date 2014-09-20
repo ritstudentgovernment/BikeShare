@@ -9,8 +9,6 @@
         $('#loginModal').removeData('bs.modal')
     });
 </script>
-
-<<<<<<< HEAD
     @using (Html.BeginForm(null, null, new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
@@ -19,28 +17,3 @@
         @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg full-width", @placeholder = "Password" })
         <input type="submit" value="Log In" role="button" class="btn btn-primary btn-lg full-width form-control" />
     }
-=======
-<h2 role="heading"><span class="glyphicon glyphicon-log-in"></span> @ViewBag.Title</h2>
-<hr role="separator" />
-@Html.ValidationSummary(true)
-@using (Html.BeginForm(null, null, new {returnUrl = ViewBag.ReturnUrl}, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <div role="form" class="form-horizontal" style="padding-bottom:50px;">
-        <div class="form-group">
-            @Html.LabelFor(m => m.UserName, new { @class = "control-label col-sm-3" })
-            <div class="col-sm-9"><input id="UserName" name="UserName" placeholder="User Name" type="text" onkeyup="return forceLower(this);" /></div>
-            
-            @Html.ValidationMessageFor(m => m.UserName)
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "control-label col-sm-3"})
-            <div class="col-sm-9">@Html.PasswordFor(m => m.Password)</div>
-            @Html.ValidationMessageFor(m => m.Password)
-        </div>
-        <div class="col-sm-9 col-sm-offset-3"><input type="submit" value="Log In" role="button" class="btn btn-primary" /></div>
-        
-    </div>
-    <hr />
-}
->>>>>>> master
