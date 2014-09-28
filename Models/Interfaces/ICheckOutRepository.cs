@@ -11,6 +11,7 @@ namespace BikeShare.Interfaces
     {
         IEnumerable<Bike> getAvailableBikesForRack(int rackId);
         IEnumerable<Bike> getCheckedOutBikes();
+        IEnumerable<Bike> getUnavailableBikesForRack(int rackId);
         BikeRack getRackById(int rackId);
 
         /// <summary>

@@ -322,6 +322,7 @@ namespace BikeShare.Repositories
             {
                 var user = db.BikeUser.Find(id);
                 var setting = db.settings.First();
+                if (!user.canBorrowBikes) { return false; }
                 if (user.lastRegistered.AddDays(setting.daysBetweenRegistrations) < DateTime.Now)
                 {
                     return false;
