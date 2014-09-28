@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BikeShare.Models;
 using BikeShare.Interfaces;
+using System.Text;
 
 namespace BikeShare.Controllers
 {
@@ -629,6 +630,198 @@ namespace BikeShare.Controllers
                return RedirectToAction("editRack", "Admin", new { rackId = (int)rackId });
            }
            return RedirectToAction("Index");
+       }
+
+       public ActionResult reports()
+       {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
+           return View();
+       }
+       [HttpPost]
+       public ActionResult checkoutReport(DateTime start, DateTime end)
+       {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
+           DisplayLogFile(generateCheckoutLog(start, end));
+
+           return RedirectToAction("reports");
+       }
+       [HttpPost]
+       public ActionResult bikeReport()
+       {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
+           DisplayLogFile(generateBikeLog());
+
+           return RedirectToAction("reports");
+       }
+       [HttpPost]
+       public ActionResult rackReport()
+       {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
+           DisplayLogFile(generateRackLog());
+
+           return RedirectToAction("reports");
+       }
+       [HttpPost]
+       public ActionResult userReport()
+       {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
+           DisplayLogFile(generateUserLog());
+
+           return RedirectToAction("reports");
+       }
+       [HttpPost]
+       public ActionResult inspectionReport(DateTime start, DateTime end)
+       {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
+           DisplayLogFile(generateInspectionLog(start, end));
+
+           return RedirectToAction("reports");
+       }
+       [HttpPost]
+       public ActionResult maintReport(DateTime start, DateTime end)
+       {
+           if (!authorize()) { return RedirectToAction("authError", "Error"); }
+           DisplayLogFile(generateMaintenanceLog(start, end));
+
+           return RedirectToAction("reports");
+       }
+       // <summary>
+       /// Transmits the csv file to the browser.
+       /// </summary>
+       /// <param name="csvExportContents">String contents of the csv file.</param>
+       private void DisplayLogFile(string csvExportContents)
+       {
+           byte[] data = new ASCIIEncoding().GetBytes(csvExportContents);
+
+           HttpContext.Response.Clear();
+           HttpContext.Response.ContentType = "APPLICATION/OCTET-STREAM";
+           HttpContext.Response.AppendHeader("Content-Disposition", "attachment; filename=Export.csv");
+           HttpContext.Response.OutputStream.Write(data, 0, data.Length);
+           HttpContext.Response.End();
+       }
+       private string generateCheckoutLog(DateTime start, DateTime end)
+       {
+           StringBuilder csvExport = new StringBuilder();
+           csvExport.AppendLine(String.Format("Checkout Report - {0} to {1}", start, end));
+           
+           csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\"",
+                   "Rider", "Time Out", "Time In", "Rack Out", "Rack In", "Rental Complete?", "Bike Number"));
+           foreach (var checkout in repo.getSomeCheckouts(repo.totalCheckOuts(), 0, false).ToList())
+           {
+               csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\"",
+                   checkout.user.userName, checkout.timeOut, checkout.timeIn, checkout.rackCheckedOut.name, checkout.rackCheckedIn.name, checkout.isResolved, checkout.bike.bikeNumber));
+           }
+
+           return csvExport.ToString();
+       }
+       private string generateBikeLog()
+       {
+           StringBuilder csvExport = new StringBuilder();
+           csvExport.AppendLine("Bike Report");
+
+           csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
+                   "Bike Number", "Bike Name", "Archived?", "Last Checked Out", "Last Passed Inspection", "Total Inspections"));
+           foreach (var bike in repo.getAllBikes().ToList())
+           {
+               csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
+                   bike.bikeNumber, bike.bikeName, bike.isArchived, bike.lastCheckedOut.ToString(), bike.lastPassedInspection.ToString(), maintRepo.totalInspectionsForBike(bike.bikeId)));
+           }
+
+           return csvExport.ToString();
+       }
+
+       private string generateRackLog()
+       {
+           StringBuilder csvExport = new StringBuilder();
+           csvExport.AppendLine("Bike Report");
+
+           csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
+                   "Rack Name", "Archived?", "Latitude", "Longitude", "Description"));
+           foreach (var Rack in repo.getAllBikeRacks().ToList())
+           {
+               csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
+                   Rack.name, Rack.isArchived, Rack.GPSCoordX, Rack.GPSCoordY, Rack.description));
+           }
+
+           return csvExport.ToString();
+       }
+       private string generateUserLog()
+       {
+           StringBuilder csvExport = new StringBuilder();
+           csvExport.AppendLine("User Report");
+
+           csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\"",
+                   "User Name", "First Name", "Last Name", "Phone", "Email", "Last Registered", "Checkout Privileges?", "Rider Privileges?", "Mechanic Privileges?", "Admin Privileges?"));
+           foreach (var User in repo.getAllUsers(true, true, true, true).ToList())
+           {
+               csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\"",
+                   User.userName, User.firstName, User.lastName, User.phoneNumber, User.email, User.lastRegistered, User.canCheckOutBikes, User.canBorrowBikes, User.canMaintainBikes, User.canAdministerSite));
+           }
+
+           return csvExport.ToString();
+       }
+
+       private string generateInspectionLog(DateTime start, DateTime end)
+       {
+           StringBuilder csvExport = new StringBuilder();
+           csvExport.AppendLine("User Report");
+
+           csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
+                   "Bike Name", "Bike Number", "Date Performed", "Comment", "Passed?"));
+           foreach (var Bike in repo.getAllBikes())
+           {
+               foreach(var Inspection in maintRepo.getInspectionsForBike(Bike.bikeId, 0, maintRepo.totalInspectionsForBike(Bike.bikeId), true, true).Where(d => d.datePerformed >= start && d.datePerformed <= end))
+               {
+                   csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
+                   Bike.bikeName, Bike.bikeNumber, Inspection.datePerformed, Inspection.comment, Inspection.isPassed));
+
+               }
+           }
+
+           return csvExport.ToString();
+       }
+       private string generateMaintenanceLog(DateTime start, DateTime end)
+       {
+           StringBuilder csvExport = new StringBuilder();
+           csvExport.AppendLine("User Report");
+
+           csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\"",
+                   "Bike Name", "Bike Number", "Title", "Time Added", "Time Resolved", "Resolved?", "Archived?", "Bike Disabled?", "Details"));
+           foreach (var Bike in repo.getAllBikes())
+           {
+               foreach (var Maint in maintRepo.getMaintenanceForBike(Bike.bikeId, 0, maintRepo.totalMaintForBike(Bike.bikeId), false))
+               {
+                   csvExport.AppendLine(
+                   string.Format(
+                   "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\"",
+                   Bike.bikeName, Bike.bikeNumber, Maint.title, Maint.timeAdded, Maint.timeResolved, Maint.resolved, Maint.isArchived, Maint.disableBike, Maint.details));
+
+               }
+           }
+
+           return csvExport.ToString();
        }
     }
 }

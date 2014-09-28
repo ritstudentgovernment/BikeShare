@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+<h2 class="text-center"><span class="glyphicon glyphicon-dashboard pull-left"></span>@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    <div class="col-sm-6">
+        @using (Html.BeginForm("bikeReport", "Admin", FormMethod.Post))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">Bikes</div>
+                <div class="panel-body">Download a report of all bikes.</div>
+                <div class="panel-footer text-right"><input class="btn-success btn" type="submit" value="Download as CSV" /></div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-6">
+        @using (Html.BeginForm("rackReport", "Admin", FormMethod.Post))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">Bike Racks</div>
+                <div class="panel-body">Download a report of all bike racks.</div>
+                <div class="panel-footer text-right"><input class="btn-success btn" type="submit" value="Download as CSV" /></div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-6">
+        @using (Html.BeginForm("userReport", "Admin", FormMethod.Post))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">Users</div>
+                <div class="panel-body">Download a report of all users.</div>
+                <div class="panel-footer text-right"><input class="btn-success btn" type="submit" value="Download as CSV" /></div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-6">
+        @using (Html.BeginForm("inspectionReport", "Admin", FormMethod.Post))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">Inspections</div>
+                <div class="panel-body">
+                    Download a report of all inspections.
+                    <div class="form-inline">
+                        <input class="form-control" placeholder="mm/dd/yyyy" type="datetime" name="start" />
+                        <input class="form-control" placeholder="mm/dd/yyyy" type="datetime" name="end" />
+                    </div>
+                </div>
+                <div class="panel-footer text-right"><input class="btn-success btn" type="submit" value="Download as CSV" /></div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-6">
+        @using (Html.BeginForm("maintReport", "Admin", FormMethod.Post))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">Maintenance</div>
+                <div class="panel-body">
+                    Download a report of all maintenance.
+                    <div class="form-inline">
+                        <input class="form-control" placeholder="mm/dd/yyyy" type="datetime" name="start" />
+                        <input class="form-control" placeholder="mm/dd/yyyy" type="datetime" name="end" />
+                    </div>
+                </div>
+                <div class="panel-footer text-right"><input class="btn-success btn" type="submit" value="Download as CSV" /></div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-6">
+        @using (Html.BeginForm("checkoutReport", "Admin", FormMethod.Post))
+        {
+            <div class="panel panel-default">
+
+                <div class="panel-heading">Checkouts</div>
+                <div class="panel-body">
+                    Download a report of all checkouts between the following dates:
+                    <div class="form-inline">
+                        <input class="form-control" placeholder="mm/dd/yyyy" type="datetime" name="start" />
+                        <input class="form-control" placeholder="mm/dd/yyyy" type="datetime" name="end" />
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <input class="btn-success btn" type="submit" value="Download as CSV" />
+                </div>
+
+            </div>
+        }
+    </div>
+</div>

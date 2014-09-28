@@ -87,15 +87,9 @@ namespace BikeShare.Repositories
                     db.tracer.Add(trace);
                     db.SaveChanges();
                     string emailFrom = ConfigurationSettings.AppSettings["emailFrom"];
-                    string pass = ConfigurationSettings.AppSettings["emailPass"];
-                    string user = ConfigurationSettings.AppSettings["emailUser"];
-                    string server = ConfigurationSettings.AppSettings["emailServer"];
-                    int port = Convert.ToInt32(ConfigurationSettings.AppSettings["emailPort"]);
                     MailMessage mail = new MailMessage();
 
-                   SmtpClient smtpServer = new SmtpClient(server);
-                   smtpServer.Credentials = new System.Net.NetworkCredential(user, pass);
-                   smtpServer.Port = port; // Gmail works on this port
+                   SmtpClient smtpServer = new SmtpClient();
 
                    mail.From = new MailAddress(emailFrom);
                    mail.To.Add(rider.email);

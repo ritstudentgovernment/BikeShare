@@ -209,7 +209,6 @@
     <Content Include="bin\Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="bin\Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="bin\Content\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="bin\nJupiter.DataAccess.Ldap.config" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -219,9 +218,7 @@
     <Content Include="Content\Images\IMAG0060.jpg" />
     <Content Include="Content\Images\sg_web.svg" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
-    <Content Include="Content\Bike_Share_Waiver.pdf" />
     <Content Include="Content\less\footer.less" />
     <Content Include="Content\less\_variables.less" />
     <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
@@ -288,6 +285,7 @@
     <Content Include="Views\Error\authError.cshtml" />
     <Content Include="Views\CheckOut\helpPopup.cshtml" />
     <Content Include="Views\Shared\_FooterPartial.cshtml" />
+    <Content Include="Views\Admin\reports.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -304,7 +302,6 @@
     <Content Include="bin\Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="bin\Content\Site.css" />
     <Content Include="bin\EntityFramework.dll" />
-    <Content Include="bin\EntityFramework.PostgreSql.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
     <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
     <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
@@ -315,16 +312,12 @@
     <Content Include="bin\Microsoft.Owin.Security.dll" />
     <Content Include="bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
     <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
-    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
     <Content Include="bin\Models.dll" />
     <Content Include="bin\Models.pdb" />
     <Content Include="bin\Mono.Security.dll" />
-    <Content Include="bin\Mono.Security.Protocol.Tls.dll" />
     <Content Include="bin\Mvc.Mailer.dll" />
     <Content Include="bin\Ninject.dll" />
     <Content Include="bin\Ninject.Web.Common.dll" />
-    <Content Include="bin\Ninject.Web.Mvc.dll" />
-    <Content Include="bin\Ninject.Web.Mvc.xml" />
     <Content Include="bin\nJupiter.Abstraction.Logging.dll" />
     <Content Include="bin\nJupiter.DataAccess.Ldap.dll" />
     <Content Include="bin\Npgsql.dll" />
@@ -341,14 +334,9 @@
     <Content Include="bin\System.Web.WebPages.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
     <Content Include="bin\WebActivatorEx.dll" />
-    <Content Include="bin\WebDriver.dll" />
-    <Content Include="bin\WebDriver.Support.dll" />
-    <Content Include="bin\WebDriver.Support.xml" />
-    <Content Include="bin\WebDriver.xml" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\js\bootstrap.js" />
-    <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Licenses\Bootstrap.txt" />
@@ -356,9 +344,6 @@
     <Content Include="Licenses\NLog.txt" />
     <Content Include="Licenses\NpgSQL.txt" />
     <Content Include="packages.config" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -393,7 +378,6 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Code\Gravatar.cs" />
     <Compile Include="Code\MailerRegistry.cs" />
     <Compile Include="Code\MailTasks.cs" />
