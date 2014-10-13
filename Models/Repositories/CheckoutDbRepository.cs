@@ -86,12 +86,8 @@ namespace BikeShare.Repositories
                     trace.comment = "User Checked out Bike";
                     db.tracer.Add(trace);
                     db.SaveChanges();
-                    string emailFrom = ConfigurationSettings.AppSettings["emailFrom"];
                     MailMessage mail = new MailMessage();
-
                    SmtpClient smtpServer = new SmtpClient();
-
-                   mail.From = new MailAddress(emailFrom);
                    mail.To.Add(rider.email);
                    mail.Subject = "Bike Checked Out";
                    mail.Body = "Thank you for checking out a bike! You have the bike for 24 hours. Enjoy your ride and be safe!";
