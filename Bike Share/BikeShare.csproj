@@ -206,9 +206,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="bin\Content\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="bin\Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -218,10 +215,9 @@
     <Content Include="Content\Images\icon_79.png" />
     <Content Include="Content\Images\IMAG0060.jpg" />
     <Content Include="Content\Images\sg_web.svg" />
-    <Content Include="Scripts\bootstrap-datepicker.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Content\Bike_Share_Waiver.pdf" />
+    <None Include="Properties\PublishProfiles\default.pubxml" />
     <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -299,8 +295,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="bin\Content\Site.css" />
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
     <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
@@ -345,20 +339,10 @@
     <Content Include="Licenses\NLog.txt" />
     <Content Include="Licenses\NpgSQL.txt" />
     <Content Include="packages.config" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\modernizr-2.7.2.js" />
-    <None Include="Scripts\_references.js" />
     <Content Include="BikeShare.csproj" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
