@@ -18,5 +18,9 @@ namespace BikeShare.Interfaces
         void setMaxRentDays(int days);
         void setDaysBetweenInspections(int days);
         void setDaysBetweenRegistrations(int days);
+
+        void setOverdueBikeMailingInterval(int hours);
+
+        int getOverdueBikeMailingInterval();
     }
 }

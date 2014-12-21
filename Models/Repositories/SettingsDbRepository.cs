@@ -103,5 +103,23 @@ namespace BikeShare.Repositories
                 return settings.daysBetweenRegistrations;
             }
         }
+
+        public void setOverdueBikeMailingInterval(int hours)
+        {
+            using (var db = new BikesContext())
+            {
+                var settings = db.settings.First();
+                settings.overdueBikeMailingIntervalHours = hours;
+                db.SaveChanges();
+            }
+        }
+
+        public int getOverdueBikeMailingInterval()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().overdueBikeMailingIntervalHours;
+            }
+        }
     }
 }

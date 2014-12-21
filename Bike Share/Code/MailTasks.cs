@@ -76,7 +76,6 @@ namespace BikeShare.Code.Mailers
 
     public class chargeReminder : ITask
     {
-
         public void Execute()
         {
             SmtpClient smtpServer = new SmtpClient();
