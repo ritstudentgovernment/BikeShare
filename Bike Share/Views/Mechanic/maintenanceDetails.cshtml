@@ -28,7 +28,7 @@
         <h4>Problem</h4>
         <div>@Model.details</div>
         <h4>Maintenance Details</h4>
-        <div>@Model.staffPerson.userName will fix this issue.</div>
+        <div>Reported by @Model.staffPerson.userName.</div>
         <div>Maintenance will take place at @Model.workshop.name</div>
     </div>
     @if(!Model.resolved){

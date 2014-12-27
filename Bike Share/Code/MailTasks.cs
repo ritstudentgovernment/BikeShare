@@ -14,7 +14,6 @@ namespace BikeShare.Code.Mailers
     {
         public void Execute()
         {
-
             SmtpClient smtpServer = new SmtpClient();
             AdminDbRepository aRepo = new AdminDbRepository();
             SettingsDbRepository sRepo = new SettingsDbRepository();
@@ -25,7 +24,6 @@ namespace BikeShare.Code.Mailers
                 if (checkout.timeOut.AddHours(2).AddDays(rentDays) > DateTime.Now && checkout.timeOut.AddDays(rentDays) < DateTime.Now)
                 {
                     MailMessage mail = new MailMessage();
-
                     mail.To.Add(checkout.user.email);
                     mail.Subject = "Bike Due Soon - " + appName;
                     mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() + 
@@ -66,7 +64,6 @@ namespace BikeShare.Code.Mailers
                 if (checkout.timeOut.AddDays(rentDays) < DateTime.Now)
                 {
                     MailMessage mail = new MailMessage();
-
                     mail.To.Add(checkout.user.email);
                     mail.Subject = "Bike Now Overdue - " + appName;
                     mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
@@ -79,7 +76,6 @@ namespace BikeShare.Code.Mailers
 
     public class chargeReminder : ITask
     {
-
         public void Execute()
         {
 
@@ -90,7 +86,6 @@ namespace BikeShare.Code.Mailers
             foreach(var charge in fRepo.getUnresolvedCharges())
             {
                 MailMessage mail = new MailMessage();
-
                 mail.To.Add(charge.user.email);
                 mail.Subject = "Account Balance Reminder - " + appName;
                 mail.Body = "Thank you for using the " + appName + ". There is currently a pending charge on your account. Title: " + charge.title + " Description: " + charge.description  +

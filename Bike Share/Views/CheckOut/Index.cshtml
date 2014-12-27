@@ -111,13 +111,14 @@
                         @Html.HiddenFor(model => model.currentRack.bikeRackId)
                         <table class="table table-hover">
                             <thead class="active text-info">
-                                <tr><td>#</td><td>Name</td><td></td></tr>
+                                <tr><td>#</td><td>Name</td><td>Status</td><td></td></tr>
                             </thead>
                             @foreach (var bike in Model.checkedOutBikes)
                             {
                                 <tr>
                                     <td>@bike.bikeNumber</td>
                                     <td>@bike.bikeName</td>
+                                    <td>Checked Out</td>
                                     <td><input id="bikeId" name="bikeId" type="radio" value="@bike.bikeId"></td>
                                 </tr>
                             }
@@ -126,6 +127,16 @@
                                 <tr>
                                     <td>@bike.bikeNumber</td>
                                     <td>@bike.bikeName</td>
+                                    <td>Available for Rent</td>
+                                    <td><input id="bikeId" name="bikeId" type="radio" value="@bike.bikeId"></td>
+                                </tr>
+                            }
+                            @foreach (var bike in Model.unavailableBikes)
+                            {
+                                <tr>
+                                    <td>@bike.bikeNumber</td>
+                                    <td>@bike.bikeName</td>
+                                    <td>Unavailable for Rent</td>
                                     <td><input id="bikeId" name="bikeId" type="radio" value="@bike.bikeId"></td>
                                 </tr>
                             }
@@ -178,13 +189,14 @@
                         @Html.HiddenFor(model => model.currentRack.bikeRackId)
                         <table class="table table-hover">
                             <thead class="active text-info">
-                                <tr><td>#</td><td>Name</td><td></td></tr>
+                                <tr><td>#</td><td>Name</td><td>Status</td><td></td></tr>
                             </thead>
                             @foreach (var bike in Model.checkedOutBikes)
                             {
                                 <tr>
                                     <td>@bike.bikeNumber</td>
                                     <td>@bike.bikeName</td>
+                                    <td>Checked Out</td>
                                     <td><input id="bikeId" name="bikeId" type="radio" value="@bike.bikeId"></td>
                                 </tr>
                             }

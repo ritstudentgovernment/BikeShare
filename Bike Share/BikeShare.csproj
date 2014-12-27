@@ -218,6 +218,10 @@
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Content\Bike_Share_Waiver.pdf" />
     <None Include="Properties\PublishProfiles\default.pubxml" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Content\less\footer.less" />
+    <Content Include="Content\less\_variables.less" />
     <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -286,6 +290,7 @@
     <Content Include="Views\Home\FAQ.cshtml" />
     <Content Include="Views\Shared\_HomeMenuPartial.cshtml" />
     <Content Include="Views\Account\LogOnForm.cshtml" />
+    <Content Include="Views\Admin\reports.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -331,7 +336,6 @@
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\js\bootstrap.js" />
-    <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Licenses\Bootstrap.txt" />

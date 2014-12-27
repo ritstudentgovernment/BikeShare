@@ -87,7 +87,6 @@ namespace BikeShare.Repositories
                     db.tracer.Add(trace);
                     db.SaveChanges();
                     MailMessage mail = new MailMessage();
-
                    SmtpClient smtpServer = new SmtpClient();
                    mail.To.Add(rider.email);
                    mail.Subject = "Bike Checked Out";
@@ -150,6 +149,19 @@ namespace BikeShare.Repositories
             using (var db = new BikesContext())
             {
                 return db.BikeRack.ToList();
+            }
+        }
+
+
+        public IEnumerable<Bike> getUnavailableBikesForRack(int rackId)
+        {
+            using (var db = new BikesContext())
+            {
+                var query = db.Bike.Include(l => l.bikeRack).Where(r => r.bikeRack.bikeRackId == rackId).Where(a => !a.isArchived);
+                var available = getAvailableBikesForRack(rackId).ToList();
+                List<Bike> temp = query.Where(b => !available.Contains(b)).ToList();
+
+                return temp;
             }
         }
     }

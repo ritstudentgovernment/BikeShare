@@ -18,5 +18,6 @@ namespace BikeShare.Models
         public int maxRentDays { get; set; }
         public int DaysBetweenInspections { get; set; }
         public int daysBetweenRegistrations { get; set; }
+        public int overdueBikeMailingIntervalHours { get; set; }
     }
 }

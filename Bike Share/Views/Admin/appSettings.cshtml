@@ -44,5 +44,12 @@
                 @Html.ValidationMessageFor(model => model.expectedEmail)
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">Emails about overdue bikes should be sent every _ hours.</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.overdueBikeMailingIntervalHours, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.overdueBikeMailingIntervalHours)
+            </div>
+        </div>
     </div>
 }

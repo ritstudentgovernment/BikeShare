@@ -42,6 +42,7 @@ namespace BikeShare.Controllers
             var model = new BikeShare.ViewModels.CheckoutViewModel();
             model.availableBikes = repo.getAvailableBikesForRack(rackId);
             model.checkedOutBikes = repo.getCheckedOutBikes();
+            model.unavailableBikes = repo.getUnavailableBikesForRack(rackId);
 
             foreach(Bike bike in model.checkedOutBikes)
             {
@@ -65,6 +66,7 @@ namespace BikeShare.Controllers
                     bike.checkOuts.Add(defaultCheckOut);
                 }
             }
+
             model.currentRack = repo.getRackById(rackId);
             model.checkOutPerson = User.Identity.Name;
             return View(model);
@@ -189,7 +191,7 @@ namespace BikeShare.Controllers
             }
             else
             {
-                return Json(userRepo.doesUserExist(validationName), JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
 
