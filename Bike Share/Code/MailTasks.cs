@@ -10,6 +10,35 @@ using System.Net.Mail;
 
 namespace BikeShare.Code.Mailers
 {
+    public class AdminMailing : ITask
+    {
+        public void Execute()
+        {
+            SmtpClient smtpServer = new SmtpClient();
+            AdminDbRepository aRepo = new AdminDbRepository();
+            SettingsDbRepository sRepo = new SettingsDbRepository();
+            string appName = sRepo.getappName();
+            int rentDays = sRepo.getmaxRentDays();
+            List<CheckOut> checks = aRepo.getAllCurrentCheckOuts().Where(m => m.timeOut.AddDays(rentDays) < DateTime.Now).ToList();
+
+            MailMessage mail = new MailMessage();
+            foreach (var s in sRepo.getAdminEmails().Split(','))
+            {
+                mail.To.Add(s);
+            }
+            mail.Subject = "Admin Bike Report - " + appName;
+            mail.IsBodyHtml = true;
+            mail.Body += "<div style=\"text-align: center; font-size: 24pt\">" + appName + " Admin Mailing</div>";
+            mail.Body += "\n<div style=\"text-align: center; font-size: 20pt; color: gray;\">" + checks.Count().ToString() + "Overdue Bikes</div>";
+            mail.Body += "<table><tr><th>Bike Number</th><th>Rental Date</th><th>User Name</th><th>Real Name</th><th>Phone Number</th></tr>";
+            foreach (var check in checks)
+            {
+                mail.Body += "<tr><td>" + check.bike.bikeNumber.ToString() + "</td><td>" + check.timeOut.ToString() + "</td><td>" + check.user.userName + "</td><td>" + check.user.firstName + " " + check.user.lastName + "</td><td>" + check.user.phoneNumber + "</td></tr>";
+            }
+            mail.Body += "</table>";
+            smtpServer.Send(mail);
+        }
+    }
     public class DueSoonBikes : ITask
     {
         public void Execute()

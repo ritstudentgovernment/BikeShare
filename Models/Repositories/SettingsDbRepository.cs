@@ -27,6 +27,14 @@ namespace BikeShare.Repositories
             }
         }
 
+        public string getAdminEmails()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().adminEmailList;
+            }
+        }
+
         public int getmaxRentDays()
         {
             using (var db = new BikesContext())
@@ -59,6 +67,16 @@ namespace BikeShare.Repositories
             {
                 var settings = db.settings.First();
                 settings.expectedEmail = email;
+                db.SaveChanges();
+            }
+        }
+
+        public void setAdminEmails(string emails)
+        {
+            using (var db = new BikesContext())
+            {
+                var settings = db.settings.First();
+                settings.adminEmailList = emails;
                 db.SaveChanges();
             }
         }

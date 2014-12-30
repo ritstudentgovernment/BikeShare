@@ -15,6 +15,7 @@ namespace BikeShare.Models
         public int settingId { get; set; }
         public string appName { get; set; }
         public string expectedEmail { get; set; }
+        public string adminEmailList { get; set; }
         public int maxRentDays { get; set; }
         public int DaysBetweenInspections { get; set; }
         public int daysBetweenRegistrations { get; set; }

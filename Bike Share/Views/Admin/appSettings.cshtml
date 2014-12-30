@@ -51,5 +51,12 @@
                 @Html.ValidationMessageFor(model => model.overdueBikeMailingIntervalHours)
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">All emails will be copied to this list of comma-separated emails.</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.adminEmailList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.adminEmailList)
+            </div>
+        </div>
     </div>
 }

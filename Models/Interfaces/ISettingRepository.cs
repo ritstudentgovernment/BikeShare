@@ -10,9 +10,11 @@ namespace BikeShare.Interfaces
     {
         string getappName();
         string getexpectedEmail();
+        string getAdminEmails();
         int getmaxRentDays();
         int getDaysBetweenInspections();
         int getDaysBetweenRegistrations();
+        void setAdminEmails(string emails);
         void setAppName(string name);
         void setExpectedEmail(string email);
         void setMaxRentDays(int days);

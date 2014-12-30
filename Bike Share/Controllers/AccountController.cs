@@ -55,7 +55,8 @@ namespace BikeShare.Controllers
                 FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                 return RedirectToAction("Register", "Explore");
             }
-            FormsAuthentication.RedirectFromLoginPage(model.UserName, true);
+            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+            return RedirectToAction("Index", "Explore");
 #endif
             if (ModelState.IsValid)
             {

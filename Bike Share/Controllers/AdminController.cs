@@ -198,6 +198,9 @@ namespace BikeShare.Controllers
             model.DaysBetweenInspections = settingRepo.getDaysBetweenInspections();
             model.expectedEmail = settingRepo.getexpectedEmail();
             model.maxRentDays = settingRepo.getmaxRentDays();
+            model.adminEmailList = settingRepo.getAdminEmails();
+            model.overdueBikeMailingIntervalHours = settingRepo.getOverdueBikeMailingInterval();
+            model.daysBetweenRegistrations = settingRepo.getDaysBetweenRegistrations();
             return View(model);
         }
 
@@ -209,7 +212,11 @@ namespace BikeShare.Controllers
             settingRepo.setMaxRentDays(settings.maxRentDays);
             settingRepo.setExpectedEmail(settings.expectedEmail);
             settingRepo.setDaysBetweenInspections(settings.DaysBetweenInspections);
+            settingRepo.setDaysBetweenRegistrations(settings.daysBetweenRegistrations);
             settingRepo.setAppName(settings.appName);
+            settingRepo.setOverdueBikeMailingInterval(settings.overdueBikeMailingIntervalHours);
+            settingRepo.setAdminEmails(settings.adminEmailList);
+            
             return RedirectToAction("Index");
         }
 
