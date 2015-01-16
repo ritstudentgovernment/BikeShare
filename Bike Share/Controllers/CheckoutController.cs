@@ -36,13 +36,14 @@ namespace BikeShare.Controllers
         }
 
         // GET: Checkout
-        public ActionResult Index(int rackId)
+        public ActionResult Index(int rackId, string message = "")
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.CheckoutViewModel();
             model.availableBikes = repo.getAvailableBikesForRack(rackId);
             model.checkedOutBikes = repo.getCheckedOutBikes();
             model.unavailableBikes = repo.getUnavailableBikesForRack(rackId);
+            model.errorMessage = message;
 
             foreach(Bike bike in model.checkedOutBikes)
             {
@@ -83,34 +84,8 @@ namespace BikeShare.Controllers
         public ActionResult checkOutBike(int rackId, [Bind]BikeShare.ViewModels.CheckoutViewModel model)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            var newModel = new BikeShare.ViewModels.CheckoutViewModel();
-            newModel.errorMessage = repo.checkOutBike(model.selectedBikeForCheckout, model.userToCheckIn, User.Identity.Name, model.currentRack.bikeRackId);
-            newModel.availableBikes = repo.getAvailableBikesForRack(model.currentRack.bikeRackId);
-            newModel.checkedOutBikes = repo.getCheckedOutBikes();
-            foreach (Bike bike in newModel.checkedOutBikes)
-            {
-                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
-                if (bike.checkOuts.Count < 1)
-                {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
-                }
-            }
-            foreach (Bike bike in newModel.availableBikes)
-            {
-                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
-                if (bike.checkOuts.Count < 1)
-                {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
-                }
-            }
-            newModel.currentRack = repo.getRackById(model.currentRack.bikeRackId);
-            return View("Index", newModel);
+            var errorMessage = repo.checkOutBike(model.selectedBikeForCheckout, model.userToCheckIn, User.Identity.Name, model.currentRack.bikeRackId);
+            return RedirectToAction("Index", new { rackId = rackId, message = errorMessage });
         }
 
         [HttpPost]
@@ -119,33 +94,8 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var newModel = new BikeShare.ViewModels.CheckoutViewModel();
-            newModel.errorMessage = repo.checkInBike(model.selectedBikeForCheckout, User.Identity.Name, model.currentRack.bikeRackId);
-            newModel.availableBikes = repo.getAvailableBikesForRack(model.currentRack.bikeRackId);
-            newModel.checkedOutBikes = repo.getCheckedOutBikes();
-            foreach (Bike bike in newModel.checkedOutBikes)
-            {
-                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
-                if (bike.checkOuts.Count < 1)
-                {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
-                }
-            }
-            foreach (Bike bike in newModel.availableBikes)
-            {
-                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
-                if (bike.checkOuts.Count < 1)
-                {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
-                }
-            }
-            newModel.currentRack = repo.getRackById(model.currentRack.bikeRackId);
-            return View("Index", newModel );
+            var errorMessage = repo.checkInBike(model.selectedBikeForCheckout, User.Identity.Name, model.currentRack.bikeRackId);
+            return RedirectToAction("Index", new { rackId = rackId, message = errorMessage });
         }
 
         [HttpPost]

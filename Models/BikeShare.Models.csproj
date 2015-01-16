@@ -76,7 +76,9 @@
     <Compile Include="Interfaces\IMaintentanceRepository.cs" />
     <Compile Include="Interfaces\ICheckOutRepository.cs" />
     <Compile Include="Repositories\AdminDbRepository.cs" />
-    <Compile Include="Repositories\CheckoutDbRepository.cs" />
+    <Compile Include="..\..\..\..\Desktop\CheckoutDbRepository.cs">
+      <Link>Repositories\CheckoutDbRepository.cs</Link>
+    </Compile>
     <Compile Include="Repositories\ExploreDbRepository.cs" />
     <Compile Include="Repositories\FinanceDbRepository.cs" />
     <Compile Include="Repositories\MaintenanceDbRepository.cs" />

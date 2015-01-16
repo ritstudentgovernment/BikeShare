@@ -157,11 +157,12 @@ namespace BikeShare.Repositories
         {
             using (var db = new BikesContext())
             {
-                var query = db.Bike.Include(l => l.bikeRack).Where(r => r.bikeRack.bikeRackId == rackId).Where(a => !a.isArchived);
-                var available = getAvailableBikesForRack(rackId).ToList();
-                List<Bike> temp = query.Where(b => !available.Contains(b)).ToList();
-
-                return temp;
+                List<Bike> query = db.Bike.Include(l => l.bikeRack).Where(r => r.bikeRack.bikeRackId == rackId).Where(a => !a.isArchived).ToList();
+                List<int> activeCheckouts = db.CheckOut.Include(b => b.bike).Where(i => !i.isResolved).Select(b => b.bike.bikeId).ToList();
+                List<Bike> available = getAvailableBikesForRack(rackId).ToList();
+                query.RemoveAll(m => available.Where(a => a.bikeId == m.bikeId).Count() > 0);
+                query.RemoveAll(m => activeCheckouts.Contains(m.bikeId));
+                return query;
             }
         }
     }

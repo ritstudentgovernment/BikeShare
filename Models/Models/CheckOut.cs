@@ -16,7 +16,7 @@ namespace BikeShare.Models
         
         public DateTime timeOut { get; set; }
 
-        public DateTime timeIn { get; set; }
+        public DateTime? timeIn { get; set; }
         
         public virtual bikeUser checkOutPerson { get; set; }
         
