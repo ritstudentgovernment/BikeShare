@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using System;
 
 namespace BikeShare.Models
 {
@@ -22,6 +23,7 @@ namespace BikeShare.Models
         public DbSet<appSetting> settings { get; set; }
         public BikesContext() : base("name=BikesDatabase")
         {
+            Database.SetInitializer<BikesContext>(new BaseDbInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -29,16 +31,22 @@ namespace BikeShare.Models
             modelBuilder.Entity<Bike>().HasRequired(p => p.bikeRack).WithMany(b => b.bikes).WillCascadeOnDelete(false);
             modelBuilder.Entity<MaintenanceEvent>().HasRequired(p => p.staffPerson).WithMany(m => m.maintenanceEvents).WillCascadeOnDelete(false);
             base.OnModelCreating(modelBuilder);
-
         }
-                //base.Seed(context);
-                //var setting = new appSetting();
-                //setting.appName = "Bike Share";
-                //setting.DaysBetweenInspections = 7;
-                //setting.expectedEmail = "@rit.edu";
-                //setting.maxRentDays = 1;
-                //context.settings.Add(setting);
-                //context.SaveChanges();
+        public class BaseDbInitializer : CreateDatabaseIfNotExists<BikesContext>
+        {
+            protected override void Seed(BikesContext context)
+            {
+                Workshop homeWorkshop = new Workshop() { name = "Default", isArchived = false, GPSCoordX = 0, GPSCoordY = 0 };
+                bikeUser defaultAdmin = new bikeUser() { userName = "sgsvcs", lastRegistered = DateTime.Now, email = "sgsvcs@rit.edu", isArchived = false, hasBike = false, canAdministerSite = true, canMaintainBikes = true, canCheckOutBikes = true, canBorrowBikes = true };
+                appSetting defaultSetting = new appSetting() { adminEmailList = "sgsvcs@rit.edu", appName = "RIT Bikeshare", DaysBetweenInspections = 5, daysBetweenRegistrations = 180, expectedEmail = "@rit.edu", maxRentDays = 1, overdueBikeMailingIntervalHours = 4 };
+
+                context.settings.Add(defaultSetting);
+                context.BikeUser.Add(defaultAdmin);
+                context.WorkShop.Add(homeWorkshop);
+
+                base.Seed(context);
+            }
+        }
 
     }
 }
