@@ -58,9 +58,39 @@
                 
             </div>
         </div>
-
-        @foreach (var card in Model.cards)
+@if (Model.hasRental)
+{
+    float x = 100 - ((float)Model.hoursLeft / 24) * 100; 
+    <div class="progress">
+        @if(Model.hoursLeft < 0){
+        <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            <span>Bike Overdue</span>
+        </div>
+        }
+        else if (Model.hoursLeft < 1)
         {
+            <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="@x" aria-valuemin="0" aria-valuemax="100" style="width: @x%">
+                <span>Less than one hour left. Return Soon!</span>
+            </div>
+        }
+        else if (Model.hoursLeft < 4)
+        {
+            <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="@x" aria-valuemin="0" aria-valuemax="100" style="width: @x%">
+                <span>Only @Model.hoursLeft hours left!</span>
+            </div>
+        }
+        else
+        {
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="@x" aria-valuemin="0" aria-valuemax="100" style="width: @x%">
+                <span>@Model.hoursLeft hrs. left</span>
+            </div>
+        }
+    </div>
+}
+<div class="row">
+    @foreach (var card in Model.cards)
+    {
+        <div class="col-lg-6">
             <div class="panel panel-@card.getStatusStyle()">
                 <div class="panel-heading"><h4 class="panel-title">@card.title</h4></div>
                 <div class="panel-body">
@@ -68,5 +98,8 @@
                     @card.type.ToString()
                 </div>
             </div>
-        }
+        </div>
+    }
+</div>
+
         <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("Index", new { page = x }))</div>

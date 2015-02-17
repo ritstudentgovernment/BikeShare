@@ -2,6 +2,7 @@
 using BikeShare.Models;
 using System.Linq;
 using System.Text;
+using System;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using BikeShare.ViewModels;
@@ -16,17 +17,19 @@ namespace BikeShare.Controllers
         private IExploreRepository repo;
         private IUserRepository userRepo;
         private ICheckOutRepository cRepo;
+        private IAdminRepository aRepo;
         private int pageSize = 25;
 
         /// <summary>
         /// Initializes the controller with dependency injection.
         /// </summary>
         /// <param name="param">IExploreRepository implementation to use.</param>
-        public ExploreController(IExploreRepository param, IUserRepository uParam, ICheckOutRepository cParam)
+        public ExploreController(IExploreRepository param, IUserRepository uParam, ICheckOutRepository cParam, IAdminRepository aParam)
         {
             repo = param;
             userRepo = uParam;
             cRepo = cParam;
+            aRepo = aParam;
         }
 
         [Authorize]
@@ -61,6 +64,11 @@ namespace BikeShare.Controllers
                 model.user = userRepo.getUserByName(User.Identity.Name);
                 model.cards = new List<ActivityCard>();
                 model.pagingInfo = new PageInfo(repo.countEventsForUser(model.user.bikeUserId), pageSize, (page - 1) * pageSize);
+                if (aRepo.getAllCurrentCheckOuts().Where(u => u.user.userName == User.Identity.Name).Count() > 0)
+                {
+                    model.hasRental = true;
+                    model.hoursLeft = (int)aRepo.getAllCurrentCheckOuts().Where(u => u.user.userName == User.Identity.Name).First().timeOut.AddHours(24).Subtract(DateTime.Now).TotalHours;
+                }
                 foreach(var item in repo.getSomeEvents(model.user.bikeUserId, (page - 1) * pageSize, pageSize))
                 {
                     var building = new ActivityCard { date = item.time, userName = User.Identity.Name, userId = model.user.bikeUserId };

@@ -11,5 +11,9 @@ namespace BikeShare.ViewModels
         public bikeUser user { get; set; }
         public List<BikeShare.ViewModels.ActivityCard> cards { get; set; }
         public BikeShare.ViewModels.PageInfo pagingInfo { get; set; }
+
+        public Boolean hasRental { get; set; }
+
+        public int hoursLeft { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace BikeShare.Interfaces
         IEnumerable<bikeUser> getAllUsers(bool includeCheckOut, bool includeRiders, bool includeMechanics, bool includeAdmins);
         IEnumerable<bikeUser> getSomeUsers(int count, int skip, bool includeCheckOut, bool includeRiders, bool includeMechanics, bool includeAdmins);
         IEnumerable<CheckOut> getAllCheckouts();
+        IEnumerable<CheckOut> getAllCurrentCheckOuts();
         IEnumerable<CheckOut> getSomeCheckouts(int count, int skip, bool excludeResolved);
         IEnumerable<CheckOut> getBikesCheckouts(int bikeId, int count, int skip);
         IEnumerable<Workshop> getAllWorkshops();
