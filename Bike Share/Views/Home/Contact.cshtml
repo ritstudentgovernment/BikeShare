@@ -6,8 +6,4 @@
 }
 <h2 role="heading" class="text-center">@ViewBag.Title.</h2>
 <hr />
-<p>The RIT Bikeshare website is administered by Student Government. if you have any questions or comments, please contact: </p>
-
-<address>
-    <strong>Email:</strong>   <a href="mailto:sgsvcs@rit.edu">SG Director of Services</a><br />
-</address>
+@Html.Raw(ViewBag.contactHTML)

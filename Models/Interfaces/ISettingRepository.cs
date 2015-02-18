@@ -24,5 +24,21 @@ namespace BikeShare.Interfaces
         void setOverdueBikeMailingInterval(int hours);
 
         int getOverdueBikeMailingInterval();
+        string getFooterHTML();
+        string getHomeHTML();
+        string getAnnouncementHTML();
+        void setFooterHTML(string footerHTML);
+        void setHomeHTML(string homeHTML);
+        void setAnnouncementHTML(string announcementHTML);
+        void setFAQHTML(string FAQHTML);
+        void setAboutHTML(string aboutHTML);
+        void setSafetyHTML(string safetyHTML);
+        void setContactHTML(string contactHTML);
+        string getContactHTML();
+        string getSafetyHTML();
+        string getAboutHTML();
+        string getFAQHTML();
+        string getRegisterHTML();
+        void setRegisterHTML(string registerHTML);
     }
 }

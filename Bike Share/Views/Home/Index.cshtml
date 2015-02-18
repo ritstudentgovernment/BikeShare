@@ -18,65 +18,8 @@
 </head>
 <body style="background-color:#707070">
     <div style="background-color:#eeeeee">
-        @Html.Partial("_HeaderPartial")
-        <div class="container-fluid body-content" style="padding-top: 50px;">
-            <div class="row">
-                <div style="background-image: url(../../Content/Images/IMAG0060.jpg); background-position: center; background-size: cover; padding: 50px 0px 50px 0px; height: 600px;">
-                    <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center" style="position: relative; top: 25%; color: white;">
-                        <h1 style="background-color: #f36e21; font-weight: 900; color: white; padding: 15px; line-height: 38px; overflow: hidden; margin: 0;">RIT BIKESHARE</h1>
-                        <div class="row" style="margin: 40px 0; font-size: 200%;">
-                            <h2>
-                                Bikeshare is free for all members of the RIT Community.<br />
-                                Rent a bike for 24 hours. It's yours.
-                                <br />
-                                Now through 11/15.
-                            </h2>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-10 col-sm-offset-1 text-center">
-                    <h1><b>Learn More</b></h1>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <h2 role="heading" class="text-primary">About</h2>
-                                    <p>
-                                        The RIT Bikeshare makes it easy to get around campus.
-                                    </p>
-                                    <p>@Html.ActionLink("Read More", "About", new { }, new { @class = "btn btn-default" })</p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <h2 role="heading" class="text-primary">Find a Bike</h2>
-                                    <p>You can check out bikes at our convenient location.</p>
-                                    <p>@Html.ActionLink("Explore Now", "rackListing", "Explore", new { }, new { @class = "btn btn-default" })</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <h2 role="heading" class="text-primary">Sign Up</h2>
-                                    <p>You'll need to log in before you can register. Its easy!</p>
-                                    <p>@Html.ActionLink("Register", "Register", "Explore", new { }, new { @class = "btn btn-default" })</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
+        @{Html.RenderAction("HeaderPartial", "Home");}
+        @Html.Raw(ViewBag.homeHTML)
     </div>
     <div class="modal fade" id="siteModal" tabindex="-1" role="dialog" aria-labelledby="siteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -91,7 +34,3 @@
 
 </body>
 </html>
-
-
-
-

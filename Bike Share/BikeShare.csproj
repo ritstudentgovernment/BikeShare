@@ -221,6 +221,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="StarterContent.txt" />
     <Content Include="Views\Explore\bikeListing.cshtml" />
     <Content Include="Views\Explore\rackListing.cshtml" />
     <Content Include="Views\Mechanic\Index.cshtml" />
@@ -264,8 +265,6 @@
     <Content Include="Views\Explore\userEdit.cshtml" />
     <Content Include="Views\Explore\rackDetails.cshtml" />
     <Content Include="Views\Admin\newHour.cshtml" />
-    <Content Include="Views\Explore\signUp.cshtml" />
-    <Content Include="Views\Shared\_HeaderPartial.cshtml" />
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Shared\_ExploreMenuPartial.cshtml" />
     <Content Include="Views\Shared\_MechanicMenuPartial.cshtml" />
@@ -284,6 +283,10 @@
     <Content Include="Views\Shared\_HomeMenuPartial.cshtml" />
     <Content Include="Views\Account\LogOnForm.cshtml" />
     <Content Include="Views\Admin\reports.cshtml" />
+    <Content Include="Views\Shared\footer.cshtml" />
+    <Content Include="Views\Home\FooterPartial.cshtml" />
+    <Content Include="Views\Home\HeaderPartial.cshtml" />
+    <Content Include="Views\Home\AnnouncementPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

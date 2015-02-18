@@ -201,6 +201,15 @@ namespace BikeShare.Controllers
             model.adminEmailList = settingRepo.getAdminEmails();
             model.overdueBikeMailingIntervalHours = settingRepo.getOverdueBikeMailingInterval();
             model.daysBetweenRegistrations = settingRepo.getDaysBetweenRegistrations();
+            model.footerHTML = settingRepo.getFooterHTML();
+            model.homeHTML = settingRepo.getHomeHTML();
+            model.announcementHTML = settingRepo.getAnnouncementHTML();
+            model.daysBetweenRegistrations = settingRepo.getDaysBetweenRegistrations();
+            model.FAQHTML = settingRepo.getFAQHTML();
+            model.aboutHTML = settingRepo.getAboutHTML();
+            model.contactHTML = settingRepo.getContactHTML();
+            model.safetyHTML = settingRepo.getSafetyHTML();
+            model.registerHTML = settingRepo.getRegisterHTML();
             return View(model);
         }
 
@@ -216,7 +225,14 @@ namespace BikeShare.Controllers
             settingRepo.setAppName(settings.appName);
             settingRepo.setOverdueBikeMailingInterval(settings.overdueBikeMailingIntervalHours);
             settingRepo.setAdminEmails(settings.adminEmailList);
-            
+            settingRepo.setFooterHTML(settings.footerHTML);
+            settingRepo.setHomeHTML(settings.homeHTML);
+            settingRepo.setAnnouncementHTML(settings.announcementHTML);
+            settingRepo.setFAQHTML(settings.FAQHTML);
+            settingRepo.setContactHTML(settings.contactHTML);
+            settingRepo.setAboutHTML(settings.aboutHTML);
+            settingRepo.setSafetyHTML(settings.safetyHTML);
+            settingRepo.setRegisterHTML(settings.registerHTML);
             return RedirectToAction("Index");
         }
 

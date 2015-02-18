@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 
 namespace BikeShare.Models
@@ -20,5 +21,21 @@ namespace BikeShare.Models
         public int DaysBetweenInspections { get; set; }
         public int daysBetweenRegistrations { get; set; }
         public int overdueBikeMailingIntervalHours { get; set; }
+        [AllowHtml]
+        public string footerHTML { get; set; }
+        [AllowHtml]
+        public string homeHTML { get; set; }
+        [AllowHtml]
+        public string announcementHTML { get; set; }
+        [AllowHtml]
+        public string FAQHTML { get; set; }
+        [AllowHtml]
+        public string contactHTML { get; set; }
+        [AllowHtml]
+        public string aboutHTML { get; set; }
+        [AllowHtml]
+        public string safetyHTML { get; set; }
+        [AllowHtml]
+        public string registerHTML { get; set; }
     }
 }

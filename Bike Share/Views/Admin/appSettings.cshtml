@@ -38,6 +38,13 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label col-sm-4">How long does a user registration last (days)?</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.daysBetweenRegistrations, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.daysBetweenRegistrations)
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-sm-4">What is the default email ending?</label>
             <div class="col-sm-8">
                 @Html.TextBoxFor(model => model.expectedEmail, new { @class = "form-control" })
@@ -58,5 +65,62 @@
                 @Html.ValidationMessageFor(model => model.adminEmailList)
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">This HTML will be injected into the footer on every page.</label>
+            <div class="col-sm-8">
+                @Html.TextAreaFor(model => model.footerHTML, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.footerHTML)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">This HTML will be injected into the home page.</label>
+            <div class="col-sm-8">
+                @Html.TextAreaFor(model => model.homeHTML, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.homeHTML)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">This HTML will be injected into the top of every page. use for announcements.</label>
+            <div class="col-sm-8">
+                @Html.TextAreaFor(model => model.announcementHTML, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.announcementHTML)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">This HTML will be injected into the FAQ page.</label>
+            <div class="col-sm-8">
+                @Html.TextAreaFor(model => model.FAQHTML, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FAQHTML)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">This HTML will be injected into the contact page.</label>
+            <div class="col-sm-8">
+                @Html.TextAreaFor(model => model.contactHTML, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.contactHTML)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">This HTML will be injected into the safety info page.</label>
+            <div class="col-sm-8">
+                @Html.TextAreaFor(model => model.safetyHTML, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.safetyHTML)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">This HTML will be injected into the about page.</label>
+            <div class="col-sm-8">
+                @Html.TextAreaFor(model => model.aboutHTML, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.aboutHTML)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">This HTML will be injected into registration page. Use it to include things like safety info and waivers.</label>
+            <div class="col-sm-8">
+                @Html.TextAreaFor(model => model.registerHTML, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.registerHTML)
+            </div>
+        </div>
+
     </div>
 }

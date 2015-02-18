@@ -6,45 +6,4 @@
 }
 <h2 role="heading" class="text-center">@ViewBag.Title.</h2>
 <hr />
-<div class="row">
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">The People</div>
-            <div class="panel-body">
-                <p>The RIT Bikeshare is a collaborative effort between RIT's Student Government, The Center for Residence Life, Facilities Management Services, Parking and Transportation and many more.</p>
-            </div>
-        </div>   
-    </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">The Fleet</div>
-            <div class="panel-body">
-                <p>The RIT Bikeshare maintains a fleet of twenty beautiful orange bikes. While they don't come equipped with stunt pegs or gears, they do have everything you need to get around campus comfortably.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">The Software</div>
-            <div class="panel-body">
-                <p>The RIT Bikeshare program is administered using custom-built software. This software is available open source as part of Student Government's effort to contribute to the free and open source software community on campus.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">The Future</div>
-            <div class="panel-body">
-                <p>The RIT Bikeshare program has been a huge success. With constant demand for our bikes, it is clear that we need to expand our program to include a larger fleet and more convenient rental locations. More to come soon.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">The Start</div>
-            <div class="panel-body">
-                <p>The RIT Bikeshare launched in spring 2014 with 20 bikes and one rental location in Kate Gleason Hall.</p>
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Raw(ViewBag.aboutHTML)

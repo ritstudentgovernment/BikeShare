@@ -139,5 +139,136 @@ namespace BikeShare.Repositories
                 return db.settings.First().overdueBikeMailingIntervalHours;
             }
         }
+
+        public string getFooterHTML()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().footerHTML;
+            }
+        }
+
+        public void setFooterHTML(string footerHTML)
+        {
+            using (var db = new BikesContext())
+            {
+                db.settings.First().footerHTML = footerHTML;
+                db.SaveChanges();
+            }
+        }
+        public string getHomeHTML()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().homeHTML;
+            }
+        }
+
+        public void setHomeHTML(string homeHTML)
+        {
+            using (var db = new BikesContext())
+            {
+                db.settings.First().homeHTML = homeHTML;
+                db.SaveChanges();
+            }
+        }
+        public string getAnnouncementHTML()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().announcementHTML;
+            }
+        }
+
+        public void setAnnouncementHTML(string announcementHTML)
+        {
+            using (var db = new BikesContext())
+            {
+                db.settings.First().announcementHTML = announcementHTML;
+                db.SaveChanges();
+            }
+        }
+        public string getFAQHTML()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().FAQHTML;
+            }
+        }
+
+        public void setFAQHTML(string FAQHTML)
+        {
+            using (var db = new BikesContext())
+            {
+                db.settings.First().FAQHTML = FAQHTML;
+                db.SaveChanges();
+            }
+        }
+        public string getContactHTML()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().contactHTML;
+            }
+        }
+
+        public void setContactHTML(string contactHTML)
+        {
+            using (var db = new BikesContext())
+            {
+                db.settings.First().contactHTML = contactHTML;
+                db.SaveChanges();
+            }
+        }
+        public string getAboutHTML()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().aboutHTML;
+            }
+        }
+
+        public void setAboutHTML(string aboutHTML)
+        {
+            using (var db = new BikesContext())
+            {
+                db.settings.First().aboutHTML = aboutHTML;
+                db.SaveChanges();
+            }
+        }
+        public string getSafetyHTML()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().safetyHTML;
+            }
+        }
+
+        public void setSafetyHTML(string safetyHTML)
+        {
+            using (var db = new BikesContext())
+            {
+                db.settings.First().safetyHTML = safetyHTML;
+                db.SaveChanges();
+            }
+        }
+
+
+        public string getRegisterHTML()
+        {
+            using (var db = new BikesContext())
+            {
+                return db.settings.First().registerHTML;
+            }
+        }
+
+        public void setRegisterHTML(string registerHTML)
+        {
+            using (var db = new BikesContext())
+            {
+                db.settings.First().registerHTML = registerHTML;
+                db.SaveChanges();
+            }
+        }
     }
 }

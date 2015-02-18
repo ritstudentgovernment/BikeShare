@@ -38,7 +38,11 @@ namespace BikeShare.Models
             {
                 Workshop homeWorkshop = new Workshop() { name = "Default", isArchived = false, GPSCoordX = 0, GPSCoordY = 0 };
                 bikeUser defaultAdmin = new bikeUser() { userName = "sgsvcs", lastRegistered = DateTime.Now, email = "sgsvcs@rit.edu", isArchived = false, hasBike = false, canAdministerSite = true, canMaintainBikes = true, canCheckOutBikes = true, canBorrowBikes = true };
-                appSetting defaultSetting = new appSetting() { adminEmailList = "sgsvcs@rit.edu", appName = "RIT Bikeshare", DaysBetweenInspections = 5, daysBetweenRegistrations = 180, expectedEmail = "@rit.edu", maxRentDays = 1, overdueBikeMailingIntervalHours = 4 };
+                appSetting defaultSetting = new appSetting() { adminEmailList = "sgsvcs@rit.edu", 
+                    appName = "RIT Bikeshare", DaysBetweenInspections = 5, daysBetweenRegistrations = 180, 
+                    expectedEmail = "@rit.edu", maxRentDays = 1, overdueBikeMailingIntervalHours = 4,
+                    footerHTML = "<footer>Footer goes here.</footer>", homeHTML = "<h3>Welcome to the Bikeshare. Customize home</h3>",
+                    announcementHTML = "" };
 
                 context.settings.Add(defaultSetting);
                 context.BikeUser.Add(defaultAdmin);

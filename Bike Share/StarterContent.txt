@@ -1,0 +1,283 @@
+﻿====Home Page====
+<div class="container-fluid body-content" style="padding-top: 50px;">
+            <div class="row">
+                <div style="background-image: url(../../Content/Images/IMAG0060.jpg); background-position: center; background-size: cover; padding: 50px 0px 50px 0px; height: 600px;">
+                    <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center" style="position: relative; top: 25%; color: white;">
+                        <h1 style="background-color: #f36e21; font-weight: 900; color: white; padding: 15px; line-height: 38px; overflow: hidden; margin: 0;">RIT BIKESHARE</h1>
+                        <div class="row" style="margin: 40px 0; font-size: 200%;">
+                            <h2>
+                                Bikeshare is free for all members of the RIT Community.<br />
+                                Rent a bike for 24 hours. It's yours.
+                                <br />
+                                Now through 11/15.
+                            </h2>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 text-center">
+                    <h1><b>Learn More</b></h1>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h2 role="heading" class="text-primary">About</h2>
+                                    <p>
+                                        The RIT Bikeshare makes it easy to get around campus.
+                                    </p>
+                                    <p>@Html.ActionLink("Read More", "About", new { }, new { @class = "btn btn-default" })</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h2 role="heading" class="text-primary">Find a Bike</h2>
+                                    <p>You can check out bikes at our convenient location.</p>
+                                    <p>@Html.ActionLink("Explore Now", "rackListing", "Explore", new { }, new { @class = "btn btn-default" })</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h2 role="heading" class="text-primary">Sign Up</h2>
+                                    <p>You'll need to log in before you can register. Its easy!</p>
+                                    <p>@Html.ActionLink("Register", "Register", "Explore", new { }, new { @class = "btn btn-default" })</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+====About====
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The People</div>
+            <div class="panel-body">
+                <p>The RIT Bikeshare is a collaborative effort between RIT's Student Government, The Center for Residence Life, Facilities Management Services, Parking and Transportation and many more.</p>
+            </div>
+        </div>   
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The Fleet</div>
+            <div class="panel-body">
+                <p>The RIT Bikeshare maintains a fleet of twenty beautiful orange bikes. While they don't come equipped with stunt pegs or gears, they do have everything you need to get around campus comfortably.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The Software</div>
+            <div class="panel-body">
+                <p>The RIT Bikeshare program is administered using custom-built software. This software is available open source as part of Student Government's effort to contribute to the free and open source software community on campus.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The Future</div>
+            <div class="panel-body">
+                <p>The RIT Bikeshare program has been a huge success. With constant demand for our bikes, it is clear that we need to expand our program to include a larger fleet and more convenient rental locations. More to come soon.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">The Start</div>
+            <div class="panel-body">
+                <p>The RIT Bikeshare launched in spring 2014 with 20 bikes and one rental location in Kate Gleason Hall.</p>
+            </div>
+        </div>
+    </div>
+</div>
+====Contact====
+
+<p>The RIT Bikeshare website is administered by Student Government. if you have any questions or comments, please contact: </p>
+
+<address>
+    <strong>Email:</strong>   <a href="mailto:sgsvcs@rit.edu">SG Director of Services</a><br />
+</address>
+
+====FAQ====
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Is this a free service?</a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse in" id="collapse1">
+            <div class="panel-body">
+                <p>Yes and no.</p>
+                <p>Yes in that it is free to use the bike share.</p>
+                <p>No in that there are charges for major damage to the bike or failure to return it in a timely fashion.</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><span class="glyphicon glyphicon-user"></span> Who can join this program?</a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse" id="collapse2">
+            <div class="panel-body">
+                <p>Any RIT Student, Faculty, or Staff can borrow a bike!</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"><span class="glyphicon glyphicon-usd"></span> Are there any fees associated with renting a bicycle?</a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse" id="collapse3">
+            <div class="panel-body">
+                <p>The Rental Service is free; however, there are possible charges for misuse of bikes or the service, These are are outlined in the rental agreement and copied below.</p>
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-xs-4"><label class="control-label">Late return:</label></div>
+                        <div class="col-xs-8">$5 per 24 hours, not including the holidays/weekends.</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4"><label class="control-label">Failure to return bike after 4 weeks:</label></div>
+                        <div class="col-xs-8">The cost of replacing the bike (Approx. $350).</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4"><label class="control-label">Lost Key:</label></div>
+                        <div class="col-xs-8">$30, to replace the U-Lock.</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4"><label class="control-label">Damaged Key:</label></div>
+                        <div class="col-xs-8">$5, to replace the key.</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4"><label class="control-label">Lost Bike:</label></div>
+                        <div class="col-xs-8">The cost of replacing the bike (Approx. $350).</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4"><label class="control-label">Irreperable Bike Damage:</label></div>
+                        <div class="col-xs-8">The cost of replacing the bike (Approx. $350).</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4"><span class="glyphicon glyphicon-headphones"></span> Do I need to wear a helmet?</a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse" id="collapse4">
+            <div class="panel-body">
+                <p>Wearing a helmet is strongly recommended. Helmets are not included in the rental.</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse5"><span class="glyphicon glyphicon-map-marker"></span> Where do I check out a bike?</a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse" id="collapse5">
+            <div class="panel-body">
+                <p><a href="@Url.Action("rackListing", "Explore")">Click Here</a> to see all bike checkout stations.</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse6"><span class="glyphicon glyphicon-question-sign"></span> Is there anything that I need to do before borrowing a bike?</a>
+            </h4>
+        </div>
+        <div class="panel-collapse collapse" id="collapse6">
+            <div class="panel-body">
+                <p>Yes! You need to register before you can use the site. Follow the steps below:</p>
+                <ol>
+                    <li>Log in with Institutional username and password.</li>
+                    <li>In the navigation bar at the top of the screen, select "Explore" then "My Profile" and then select renew registration.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+====Safety====
+<p>Student Government encourages you to always ride safely. Included below are links to several bike safety resources. </p>
+
+<p><a class="btn btn-primary" href="http://www.safeny.ny.gov/media/share-road.htm">New York State</a>
+    <a class="btn btn-primary" href="http://www.rochestercyclingalliance.org/wp-content/uploads/2012/10/Bike-Safety-English-final-July-17-2012.pdf">Rochester Cyclng Alliance</a>
+    <a class="btn btn-primary" href="http://www.bikeleague.org/content/ride-better-tips">League of American Bicyclists</a></p>
+
+====Footer====
+
+<footer class="footer">
+    <div class="footer-left col-lg-6 col-md-6 col-sm-6">
+        <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-4">
+            <p class="footer-subtitle">
+                About
+            </p>
+            <p style="font-size: 20px;">
+                RIT Bikeshare is a free service for students to rent bikes for 24 hours.
+            </p>
+            <p style="font-size: 15px;">
+                <a href="https://sg.rit.edu/">
+                    &copy;&nbsp;&nbsp; Student Government 2014.
+                </a>
+                <br>
+                <a href="https://github.com/nathancastle/bikeshare">
+                    <span class="glyphicon glyphicon-link"></span>
+                    Available on GitHub.
+                </a>
+            </p>
+        </div>
+    </div>
+    <div class="footer-right col-lg-6 col-md-6 col-sm-6">
+        <div class="col-sm-6 col-sm-offset-1 col-md-4 col-md-offset-1">
+            <p class="footer-subtitle">
+                Learn More
+            </p>
+            <p>
+                <a href="@Url.Action("About", "Home")">About Bikeshare</a>
+                <br>
+                <a href="@Url.Action("Safety", "Home")">Safety</a>
+                <br>
+                <a href="@Url.Action("FAQ", "Home")">FAQ</a>
+                <br>
+                <a href="@Url.Action("Contact", "Home")">Contact</a>
+            </p>
+        </div>
+        <div class="col-sm-3 footer-count">
+            <div class="footer-subtitle">
+                Other Services
+            </div>
+            <p>
+                <a href="https://pawprints.rit.edu/">PawPrints</a>
+                <br>
+                <a href="http://vote.rit.edu">Voting</a>
+                <br>
+                <a href="https://sg.rit.edu/afafs">Funding</a>
+                <br>
+                <a href="https://sg.rit.edu/services">All Services</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
