@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <div class="panel panel-default">
+        <div class="panel panel-danger">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-road"></span> Bikes</h4></div>
             <div class="panel-body">
                 <p class="pull-right">Total: @Model.countBikes</p>
@@ -41,7 +41,7 @@
 
     
     <div class="col-md-12">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Maintenance + Compliance</h4></div>
             <div class="panel-body">
                 <p>Total Maintenance Perfmormed: @Model.countMaintenance</p>
@@ -49,15 +49,15 @@
                 <p class="pull-right">Total Inspections: @Model.countInspections</p>
             </div>
             <div class="panel-footer text-right">
-                @Html.ActionLink("See all Maintenance", "maintenanceList", new { }, new { @class = "btn btn-default" })
-                @Html.ActionLink("See all Inspections", "inspectionList", new { }, new { @class = "btn btn-default" })
-                @Html.ActionLink("See all Workshops", "workshopList", new { }, new { @class = "btn btn-default" })
+                @Html.ActionLink("See all Maintenance", "maintenanceList", new { }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("See all Inspections", "inspectionList", new { }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("See all Workshops", "workshopList", new { }, new { @class = "btn btn-info" })
             </div>
         </div>
     </div>
 
     <div class="col-md-6">
-        <div class="panel panel-default">
+        <div class="panel panel-success">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-cog"></span> App Settings</h4></div>
             <div class="panel-body">Current App information</div>
             <div class="panel-footer text-right">
@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="panel panel-default">
+        <div class="panel panel-warning">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-user"></span> Users</h4></div>
             <div class="panel-body">
                 <p>Total Users: @Model.countUsers</p>
@@ -78,7 +78,7 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-usd"></span> Charges and Financial</h4></div>
             <div class="panel-body"><p>Total Charges: @Model.countCharges</p></div>
             <div class="panel-footer text-right">

@@ -29,7 +29,7 @@ namespace BikeShare.Code.Mailers
             mail.Subject = "Admin Bike Report - " + appName;
             mail.IsBodyHtml = true;
             mail.Body += "<div style=\"text-align: center; font-size: 24pt\">" + appName + " Admin Mailing</div>";
-            mail.Body += "\n<div style=\"text-align: center; font-size: 20pt; color: gray;\">" + checks.Count().ToString() + "Overdue Bikes</div>";
+            mail.Body += "\n<div style=\"text-align: center; font-size: 20pt; color: gray;\">" + checks.Count().ToString() + " Overdue Bikes</div>";
             mail.Body += "<table><tr><th>Bike Number</th><th>Rental Date</th><th>User Name</th><th>Real Name</th><th>Phone Number</th></tr>";
             foreach (var check in checks)
             {

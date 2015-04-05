@@ -18,23 +18,26 @@ namespace BikeShare.Controllers
         private IUserRepository userRepo;
         private ICheckOutRepository cRepo;
         private IAdminRepository aRepo;
+        private ISettingRepository sRepo;
         private int pageSize = 25;
 
         /// <summary>
         /// Initializes the controller with dependency injection.
         /// </summary>
         /// <param name="param">IExploreRepository implementation to use.</param>
-        public ExploreController(IExploreRepository param, IUserRepository uParam, ICheckOutRepository cParam, IAdminRepository aParam)
+        public ExploreController(IExploreRepository param, IUserRepository uParam, ICheckOutRepository cParam, IAdminRepository aParam, ISettingRepository sParam)
         {
             repo = param;
             userRepo = uParam;
             cRepo = cParam;
             aRepo = aParam;
+            sRepo = sParam;
         }
 
         [Authorize]
         public ActionResult Register()
         {
+            ViewBag.registerHTML = sRepo.getRegisterHTML();
             return View();
         }
 
