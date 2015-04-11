@@ -76,7 +76,9 @@ namespace BikeShare.Controllers
         public ActionResult newBike([Bind()] ViewModels.newBikeViewModel bikeModel)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.Bike.Add(new Bike { isArchived = false, bikeNumber = bikeModel.bikeNumber, bikeName = bikeModel.bikeName }); //TODO - may need to set lastCheckedOut to never
+            context.Bike.Add(new Bike { isArchived = false, bikeNumber = bikeModel.bikeNumber, 
+                bikeName = bikeModel.bikeName, bikeRack = context.BikeRack.Find(bikeModel.bikeRackId), 
+                lastCheckedOut = new DateTime(2000, 01, 01), lastPassedInspection = new DateTime(2000, 01, 01) }); //Date fields need to be explicitly set to prevent conversion error
             context.SaveChanges();
             return RedirectToAction("Index", "Admin");
         }
@@ -177,7 +179,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<bikeUser>();
-            model.modelList = context.BikeUser.Where(a => a.canAdministerSite).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = context.BikeUser.Where(a => a.canAdministerSite).OrderByDescending(d => d.userName).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(context.BikeUser.Where(a => a.canAdministerSite).Count(), pageSize, page);
             return View(model);
         }
@@ -226,7 +228,7 @@ namespace BikeShare.Controllers
             }
             model.modelList = all;
             model.pagingInfo = new ViewModels.PageInfo(all.Count(), pageSize, page);
-            model.modelList = all.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = all.OrderByDescending(d => d.bikeId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.includeArchived = incArchived;
             model.includeCheckedIn = incCheckedIn;
             model.includeCheckedOut = incCheckedOut;
@@ -240,7 +242,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.rackListingViewModel();
-            model.bikeRacks = context.BikeRack.Include(c => c.checkOuts).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.bikeRacks = context.BikeRack.Include(c => c.checkOuts).OrderByDescending(d => d.bikeRackId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.countBikeRacks = model.bikeRacks.Count();
             model.pagingInfo = new ViewModels.PageInfo(context.BikeRack.Count(), pageSize, page);
             return View(model);
@@ -251,7 +253,7 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
 
             var model = new ViewModels.inspectionListViewModel();
-            model.inspections = context.Inspection.Include(c => c.bike).Include(c => c.inspector).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.inspections = context.Inspection.Include(c => c.bike).Include(c => c.inspector).OrderByDescending(d => d.datePerformed).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.inspections.Count(), pageSize, page);
             return View(model);
         }
@@ -267,7 +269,7 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
 
             var model = new ViewModels.PaginatedViewModel<MaintenanceEvent>();
-            model.modelList = context.MaintenanceEvent.Include(c => c.updates).Include(c => c.staffPerson).Include(c => c.bikeAffected).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = context.MaintenanceEvent.Include(c => c.updates).Include(c => c.staffPerson).Include(c => c.bikeAffected).OrderByDescending(d => d.timeAdded).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
             return View(model);
         }
@@ -277,7 +279,7 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
 
             var model = new ViewModels.PaginatedViewModel<bikeUser>();
-            model.modelList = context.BikeUser.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = context.BikeUser.OrderByDescending(d => d.userName).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
             return View(model);
         }
@@ -293,7 +295,7 @@ namespace BikeShare.Controllers
                 model.modelList = model.modelList.Where(c => context.Charge.Where(i => i.chargeId == c.bikeUserId).Count() < 1).ToList();
             }
             int totalResults = model.modelList.Count();
-            model.modelList = model.modelList.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = model.modelList.OrderByDescending(d => d.userName).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             int totalMechanics = context.BikeUser.Where(a => a.canMaintainBikes).Count();
             int totalCheckout = context.BikeUser.Where(c => c.canCheckOutBikes).Count();
             int totalAdmin = context.BikeUser.Where(c => c.canAdministerSite).Count();
@@ -308,7 +310,7 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<Workshop>();
 
-            model.modelList = context.WorkShop.Include(m => m.maintenanceEvents).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = context.WorkShop.Include(m => m.maintenanceEvents).OrderByDescending(d => d.workshopId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(context.WorkShop.Count(), pageSize, page);
             return View(model);
         }
@@ -339,7 +341,7 @@ namespace BikeShare.Controllers
                 list = context.CheckOut.Include(b => b.bike).Where(b => b.bike.bikeId == bikeID).Include(r => r.rackCheckedIn).Include(r => r.rackCheckedOut).Include(u => u.user);
             }
             int total = list.Count();
-            model.modelList = list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = list.OrderByDescending(d => d.timeOut).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(total, pageSize, page);
             return View(model);
         }
@@ -473,7 +475,7 @@ namespace BikeShare.Controllers
             var model = new ViewModels.PaginatedViewModel<MaintenanceEvent>();
             IQueryable<MaintenanceEvent> list = context.MaintenanceEvent.Where(b => b.bikeAffected.bikeId == bikeId);
             int total = list.Count();
-            model.modelList = list.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = list.OrderByDescending(d => d.timeAdded).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(total, pageSize, page);
             return View(model);
         }
@@ -518,7 +520,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<Charge>();
-            model.modelList = context.Charge.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = context.Charge.OrderByDescending(d => d.chargeId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(context.Charge.Count(), pageSize, page);
             ViewBag.totalCharges = context.Charge.Count();
             ViewBag.totalResolved = context.Charge.Where(i => i.isResolved).Count();
