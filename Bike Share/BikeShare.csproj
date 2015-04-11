@@ -223,7 +223,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="StarterContent.txt" />
     <Content Include="Views\Explore\bikeListing.cshtml" />
     <Content Include="Views\Explore\rackListing.cshtml" />
@@ -312,14 +313,11 @@
     <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
     <Content Include="bin\Models.dll" />
     <Content Include="bin\Models.pdb" />
-    <Content Include="bin\Mono.Security.dll" />
     <Content Include="bin\Mvc.Mailer.dll" />
     <Content Include="bin\Ninject.dll" />
     <Content Include="bin\Ninject.Web.Common.dll" />
     <Content Include="bin\nJupiter.Abstraction.Logging.dll" />
     <Content Include="bin\nJupiter.DataAccess.Ldap.dll" />
-    <Content Include="bin\Npgsql.dll" />
-    <Content Include="bin\Npgsql.EntityFramework.dll" />
     <Content Include="bin\Owin.dll" />
     <Content Include="bin\System.Net.Http.Formatting.dll" />
     <Content Include="bin\System.Web.Helpers.dll" />
