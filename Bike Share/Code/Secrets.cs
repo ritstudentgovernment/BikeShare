@@ -1,5 +1,4 @@
-﻿
-namespace BikeShare.Code
+﻿namespace BikeShare.Code
 {
     /// <summary>
     /// Returns certain secret values for things like the Google Maps API key.

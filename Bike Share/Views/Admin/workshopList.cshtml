@@ -13,9 +13,9 @@
 @foreach (var workshop in Model.modelList)
 {
     <div class="panel panel-default">
-        <div class="panel-heading"><h4 class="panel-title">@workshop.name</h4></div>
+        <div class="panel-heading"><h4 class="panel-title">@workshop.Name</h4></div>
         <div class="panel-body">
-            <p>@workshop.maintenanceEvents.Count() Maintenances Performed</p>
+            <p>@workshop.MaintenanceEvents.Count() Maintenances Performed</p>
         </div>
         <div class="text-right panel-footer">
             <a class="btn btn-default" href="@Url.Action(actionName: "workshopDetails", controllerName: "Admin", routeValues: new { workshopId = workshop.workshopId})"><span class="glyphicon glyphicon-list"></span>  Details</a>

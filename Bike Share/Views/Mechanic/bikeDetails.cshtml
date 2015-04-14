@@ -1,6 +1,5 @@
 ﻿@model BikeShare.ViewModels.Maint.bikeDetailsVM
 
-
 @{
     ViewBag.Title = "Bike #" + Model.bikeNumber + " Details - " + Model.bikeName;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -46,7 +45,7 @@
             }
         </table>
     </div>
-    
+
     <div class="panel-footer text-right">
         @Html.ActionLink("All Inspections", "bikeInspections", new { bikeId = Model.bikeId}, new { @class = "btn btn-primary" })
         <a class="btn btn-primary" href="@Url.Action("newInspection", new { bikeId = Model.bikeId})" data-toggle="modal" data-target="#siteModal"><span class="glyphicon glyphicon-search"></span>  Inspect</a>
@@ -89,7 +88,7 @@
         }
     }
 </table></div>
-    
+
     <div class="panel-footer text-right">
         @Html.ActionLink("All Maintenance", "bikeMaintenance", new { bikeId = Model.bikeId }, new { @class = "btn btn-primary" })
         <a class="btn btn-warning" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newMaintenance", new { bikeId = Model.bikeId})"><span class="glyphicon glyphicon-wrench"></span>  Maintain</a>

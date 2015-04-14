@@ -27,8 +27,6 @@
             title:"Drag me!"
         })
 
-
-
         google.maps.event.addListener(marker, 'dragend', function(e) {
             moveMarker(e.latLng, map)})
         function moveMarker(position, map) {
@@ -46,7 +44,7 @@
 }
 @section menuSection{
 @Html.Partial("_AdminMenuPartial")
-    
+
 }
 @using (Html.BeginForm())
 {
@@ -83,7 +81,6 @@
                         @Html.ValidationMessageFor(model => model.description)
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -140,4 +137,3 @@
             <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newHour", new { rackId = Model.bikeRackId})"><span class="glyphicon glyphicon-asterisk"></span>  New</a>
         </div>
     </div>
-

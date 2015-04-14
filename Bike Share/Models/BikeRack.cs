@@ -9,7 +9,7 @@ namespace BikeShare.Models
         [Key, DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Required]
         public int bikeRackId { get; set; }
-        
+
         [Required]
         [Display(Name = "Rack Name")]
         public string name { get; set; }
@@ -21,11 +21,11 @@ namespace BikeShare.Models
         [Range(-180, 180)]
         [Required]
         public float GPSCoordY { get; set; }
-        
+
         [Required]
         [Display(Name = "Description")]
         public string description { get; set; }
-        
+
         public virtual ICollection<Bike> bikes { get; set; }
 
         public virtual ICollection<CheckOut> checkOuts { get; set; }

@@ -30,8 +30,6 @@ namespace BikeShare.Code
 
         private void AddBindings()
         {
-
         }
     }
-
 }

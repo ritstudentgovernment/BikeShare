@@ -1,10 +1,8 @@
-﻿using System;
+﻿using BikeShare.Models;
+using FluentScheduler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using BikeShare.Models;
-using FluentScheduler;
-using System.Configuration;
 using System.Net.Mail;
 
 namespace BikeShare.Code.Mailers
@@ -13,7 +11,7 @@ namespace BikeShare.Code.Mailers
     {
         public void Execute()
         {
-            using(var context = new BikesContext())
+            using (var context = new BikesContext())
             {
                 var set = context.settings.First();
                 SmtpClient smtpServer = new SmtpClient();
@@ -40,11 +38,12 @@ namespace BikeShare.Code.Mailers
             }
         }
     }
+
     public class DueSoonBikes : ITask
     {
         public void Execute()
         {
-            using(var context = new BikesContext())
+            using (var context = new BikesContext())
             {
                 SmtpClient smtpServer = new SmtpClient();
                 var set = context.settings.First();
@@ -78,7 +77,6 @@ namespace BikeShare.Code.Mailers
 
     public class overDueBikes : ITask
     {
-
         public void Execute()
         {
             if ((DateTime.Now.ToString("ddd") == "Fri" && DateTime.Now.Hour > 17) || DateTime.Now.ToString("ddd") == "Sat" || DateTime.Now.ToString("ddd") == "Sun" || (DateTime.Now.ToString("ddd") == "Mon" && DateTime.Now.Hour < 9))
@@ -87,8 +85,8 @@ namespace BikeShare.Code.Mailers
             }
 
             SmtpClient smtpServer = new SmtpClient();
-            
-            using(var context = new BikesContext())
+
+            using (var context = new BikesContext())
             {
                 var set = context.settings.First();
                 string appName = set.appName;
@@ -106,7 +104,6 @@ namespace BikeShare.Code.Mailers
                     }
                 }
             }
-           
         }
     }
 
@@ -114,7 +111,6 @@ namespace BikeShare.Code.Mailers
     {
         public void Execute()
         {
-
             SmtpClient smtpServer = new SmtpClient();
             using (var context = new BikesContext())
             {
@@ -131,7 +127,6 @@ namespace BikeShare.Code.Mailers
                 }
                 context.SaveChanges();
             }
-            
         }
     }
 }

@@ -2,6 +2,7 @@
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(BikeShare.Startup))]
+
 namespace BikeShare
 {
     public partial class Startup

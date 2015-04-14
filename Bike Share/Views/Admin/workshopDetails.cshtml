@@ -30,8 +30,6 @@
             title:"Drag me!"
         })
 
-
-
         google.maps.event.addListener(marker, 'dragend', function(e) {
             moveMarker(e.latLng, map)})
         function moveMarker(position, map) {
@@ -54,15 +52,13 @@
     <div class="panel-heading"><h4 class="panel-title">@Model.name</h4></div>
     <div id="map-canvas" style="height: 400px"></div>
     <div class="panel-body">
-        
+
         <div class="form-horizontal">
             <div class="form-group">
                 <label class="control-label col-md-2">Name</label>
                 @Html.DisplayFor(model => model.name)
             </div>
-            
         </div>
-        
     </div>
     <div class="panel-footer text-right">
         <a class="btn btn-primary" href="@Url.Action(actionName: "workshopEdit", controllerName: "Admin", routeValues: new { workshopId = @Model.workshopId })"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>

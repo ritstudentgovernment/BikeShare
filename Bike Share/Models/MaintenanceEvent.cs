@@ -10,32 +10,32 @@ namespace BikeShare.Models
         [Required]
         [Key, DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int MaintenanceEventId { get; set; }
-        
+
         [Required]
         [Display(Name = "Bike")]
         public virtual Bike bikeAffected { get; set; }
-        
+
         [Required]
         [Display(Name = "Title")]
         public string title { get; set; }
 
         [Display(Name = "Description")]
         public string details { get; set; }
-        
+
         [Required]
         [Display(Name = "Maintained by")]
         public virtual bikeUser staffPerson { get; set; }
-        
+
         [Required]
         [Display(Name = "Date Opened")]
         public DateTime timeAdded { get; set; }
-        
+
         [Required]
         [Display(Name = "Workshop")]
         public virtual Workshop workshop { get; set; }
-        
+
         public virtual ICollection<MaintenanceUpdate> updates { get; set; }
-        
+
         [Required]
         [Display(Name = "Open?")]
         public bool resolved { get; set; }

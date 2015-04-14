@@ -9,10 +9,10 @@ namespace BikeShare.Models
         [Required]
         [Key, DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int workshopId { get; set; }
-        
+
         [Required]
         [Display(Name = "Workshop Name")]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [Range(-85.0, 85.0)]
@@ -22,13 +22,13 @@ namespace BikeShare.Models
         [Required]
         public float GPSCoordY { get; set; }
 
-        public virtual ICollection<MaintenanceEvent> maintenanceEvents { get; set; }
+        public virtual ICollection<MaintenanceEvent> MaintenanceEvents { get; set; }
 
         [Required]
         public bool isArchived { get; set; }
 
-        public virtual ICollection<Tracer> events { get; set; }
+        public virtual ICollection<Tracer> Events { get; set; }
 
-        public virtual ICollection<Hour> hours { get; set; }
+        public virtual ICollection<Hour> Hours { get; set; }
     }
 }

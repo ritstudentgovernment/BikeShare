@@ -1,11 +1,9 @@
 ﻿using BikeShare.Models;
-using System.Linq;
-using System.Data.Entity;
-using System.Text;
-using System;
-using System.Web.Mvc;
-using System.Collections.Generic;
 using BikeShare.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace BikeShare.Controllers
 {
@@ -14,7 +12,7 @@ namespace BikeShare.Controllers
     /// </summary>
     public class ExploreController : Controller
     {
-        BikesContext context;
+        private BikesContext context;
         private int pageSize = 25;
 
         /// <summary>
@@ -49,11 +47,12 @@ namespace BikeShare.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
         /// <summary>
         /// Returns the Explore/Index page with no ViewModel.
         /// </summary>
         /// <returns>View without ViewModel.</returns>
-        /// 
+        ///
         [Authorize]
         public ActionResult index(int page = 1)
         {
@@ -71,16 +70,16 @@ namespace BikeShare.Controllers
                 model.hasRental = true;
                 model.hoursLeft = (int)context.CheckOut.Where(c => c.user.bikeUserId == user.bikeUserId).Where(i => !i.isResolved).First().timeOut.AddHours(24).Subtract(DateTime.Now).TotalHours;
             }
-            foreach(var item in context.tracer.Where(u => u.user.bikeUserId == user.bikeUserId).OrderByDescending(d => d.time).Skip((page - 1) * pageSize).Take(pageSize).ToList())
+            foreach (var item in context.tracer.Where(u => u.user.bikeUserId == user.bikeUserId).OrderByDescending(d => d.time).Skip((page - 1) * pageSize).Take(pageSize).ToList())
             {
                 var building = new ActivityCard { date = item.time, userName = User.Identity.Name, userId = model.user.bikeUserId };
                 if (item.charge != null)
                 {
                     building.title = "Charge: " + item.charge.title;
                     if (item.charge.isResolved)
-                    {building.status = cardStatus.success;}
+                    { building.status = cardStatus.success; }
                     else
-                    {building.status = cardStatus.danger;}
+                    { building.status = cardStatus.danger; }
                     building.type = activityType.charge;
                 }
                 if (item.checkOut != null)
@@ -116,7 +115,7 @@ namespace BikeShare.Controllers
                 }
                 if (item.shop != null)
                 {
-                    building.title = "Workshop: " + item.shop.name;
+                    building.title = "Workshop: " + item.shop.Name;
                     building.status = cardStatus.defaults;
                     building.type = activityType.admin;
                 }
@@ -130,7 +129,7 @@ namespace BikeShare.Controllers
             }
             return View(model);
         }
-        
+
         /// <summary>
         /// Displays a listing of all bikes in the system.
         /// </summary>
@@ -140,7 +139,7 @@ namespace BikeShare.Controllers
             var model = new bikeListingViewModel();
             model.allAvailableBikes = context.Bike.Where(l => !l.isArchived).Where(c => c.checkOuts.Where(i => !i.isResolved).Count() == 0)
                 .Where(l => l.lastPassedInspection.AddDays(context.settings.First().DaysBetweenInspections) < DateTime.Now);
-            
+
             model.countAvailableBikes = model.allAvailableBikes.Count();
             model.rentedBikes = 0;
             model.pagingInfo = new PageInfo(model.countAvailableBikes, pageSize, page);
@@ -158,7 +157,7 @@ namespace BikeShare.Controllers
             DateTime dateFloor = DateTime.Now.Subtract(new TimeSpan(context.settings.First().DaysBetweenInspections));
             var availableBikes = context.Bike.Where(l => !l.isArchived).Where(c => c.checkOuts.Where(i => !i.isResolved).Count() == 0)
                 .Where(l => l.lastPassedInspection < dateFloor);
-            foreach(BikeRack rack in model.modelList)
+            foreach (BikeRack rack in model.modelList)
             {
                 rack.bikes = availableBikes.Where(r => r.bikeRack.bikeRackId == rack.bikeRackId).ToList();
             }
@@ -185,7 +184,7 @@ namespace BikeShare.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult userEdit(int userId, [Bind(Include="phoneNumber,email,firstName,lastName")] bikeUser user)
+        public ActionResult userEdit(int userId, [Bind(Include = "phoneNumber,email,firstName,lastName")] bikeUser user)
         {
             var old = context.BikeUser.Find(userId);
             old.phoneNumber = user.phoneNumber;
@@ -205,7 +204,7 @@ namespace BikeShare.Controllers
 
         private string getUrlForRackImage(int rackId)
         {
-            if( System.IO.File.Exists(Request.PhysicalApplicationPath.ToString() + "\\Content\\Images\\Racks\\" + rackId + ".jpg"))
+            if (System.IO.File.Exists(Request.PhysicalApplicationPath.ToString() + "\\Content\\Images\\Racks\\" + rackId + ".jpg"))
             {
                 return Url.Content("~/Content/Images/Racks/" + rackId.ToString() + ".jpg");
             }

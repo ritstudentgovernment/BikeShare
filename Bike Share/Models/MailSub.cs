@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BikeShare.Models
 {
-
     public class MailSub
     {
         [Required]

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using BikeShare.Models;
+using System;
 using System.Linq;
-using System.Data.Entity;
-using BikeShare.Models;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -12,11 +11,13 @@ namespace BikeShare.Controllers
     /// </summary>
     public class AccountController : Controller
     {
-        BikesContext context;
+        private BikesContext context;
+
         public AccountController()
         {
             context = new BikesContext();
         }
+
         /// <summary>
         /// Displays the logon form. Logs the current user off if someone is logged in.
         /// </summary>
@@ -50,7 +51,7 @@ namespace BikeShare.Controllers
 #if DEBUG
             if (context.BikeUser.Where(u => u.userName == model.UserName).Count() < 1)
             {
-                context.BikeUser.Add(new bikeUser { userName = model.UserName, canBorrowBikes = true, isArchived = false, email = User.Identity.Name + context.settings.First().expectedEmail});
+                context.BikeUser.Add(new bikeUser { userName = model.UserName, canBorrowBikes = true, isArchived = false, email = User.Identity.Name + context.settings.First().expectedEmail });
                 context.SaveChanges();
                 FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                 return RedirectToAction("Register", "Explore");
@@ -79,6 +80,7 @@ namespace BikeShare.Controllers
         {
             return LogOn("");
         }
+
         /// <summary>
         /// Logs the current user off.
         /// </summary>

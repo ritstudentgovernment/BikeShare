@@ -76,9 +76,15 @@ namespace BikeShare.Controllers
         public ActionResult newBike([Bind()] ViewModels.newBikeViewModel bikeModel)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.Bike.Add(new Bike { isArchived = false, bikeNumber = bikeModel.bikeNumber, 
-                bikeName = bikeModel.bikeName, bikeRack = context.BikeRack.Find(bikeModel.bikeRackId), 
-                lastCheckedOut = new DateTime(2000, 01, 01), lastPassedInspection = new DateTime(2000, 01, 01) }); //Date fields need to be explicitly set to prevent conversion error
+            context.Bike.Add(new Bike
+            {
+                isArchived = false,
+                bikeNumber = bikeModel.bikeNumber,
+                bikeName = bikeModel.bikeName,
+                bikeRack = context.BikeRack.Find(bikeModel.bikeRackId),
+                lastCheckedOut = new DateTime(2000, 01, 01),
+                lastPassedInspection = new DateTime(2000, 01, 01)
+            }); //Date fields need to be explicitly set to prevent conversion error
             context.SaveChanges();
             return RedirectToAction("Index", "Admin");
         }
@@ -310,7 +316,7 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<Workshop>();
 
-            model.modelList = context.WorkShop.Include(m => m.maintenanceEvents).OrderByDescending(d => d.workshopId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = context.WorkShop.Include(m => m.MaintenanceEvents).OrderByDescending(d => d.workshopId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(context.WorkShop.Count(), pageSize, page);
             return View(model);
         }
@@ -603,7 +609,7 @@ namespace BikeShare.Controllers
             if (workshopId != null)
             {
                 hour.shop = context.WorkShop.Find(workshopId);
-                hour.shop.hours.Add(hour);
+                hour.shop.Hours.Add(hour);
                 return RedirectToAction("workshopDetails", "Admin", new { shopId = (int)workshopId });
             }
             if (rackId != null)

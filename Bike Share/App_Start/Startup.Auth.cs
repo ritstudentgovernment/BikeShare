@@ -1,5 +1,4 @@
-﻿
-namespace BikeShare
+﻿namespace BikeShare
 {
     public partial class Startup
     {

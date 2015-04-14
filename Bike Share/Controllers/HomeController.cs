@@ -1,21 +1,21 @@
-﻿using System.Web.Mvc;
-using System.Data.Entity;
+﻿using BikeShare.Models;
 using System.Linq;
-using BikeShare.Models;
+using System.Web.Mvc;
 
 namespace BikeShare.Controllers
 {
-    
     /// <summary>
     /// Handles display of all of the mostly static home and info areas.
     /// </summary>
     public class HomeController : Controller
     {
-        BikesContext context;
-        public HomeController ()
+        private BikesContext context;
+
+        public HomeController()
         {
             context = new BikesContext();
         }
+
         /// <summary>
         /// Displays a generic homepage.
         /// </summary>
@@ -35,17 +35,19 @@ namespace BikeShare.Controllers
             ViewBag.aboutHTML = context.settings.First().aboutHTML;
             return View("About");
         }
+
         public ActionResult Safety()
         {
             ViewBag.safetyHTML = context.settings.First().safetyHTML;
             return View();
         }
+
         public ActionResult FAQ()
         {
             ViewBag.FAQHTML = context.settings.First().FAQHTML;
             return View();
         }
- 
+
         public ActionResult Contact()
         {
             ViewBag.contactHTML = context.settings.First().contactHTML;
@@ -58,12 +60,14 @@ namespace BikeShare.Controllers
             ViewBag.FooterHTML = context.settings.First().footerHTML;
             return PartialView();
         }
+
         [ChildActionOnly]
         public ActionResult HeaderPartial()
         {
             ViewBag.appName = context.settings.First().appName;
             return PartialView();
         }
+
         [ChildActionOnly]
         public ActionResult AnnouncementPartial()
         {

@@ -1,19 +1,18 @@
-﻿using System;
+﻿using BikeShare.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
-using System.Web;
-using System.Web.Mvc;
-using BikeShare.Models;
+using System.Linq;
 using System.Net.Mail;
-using System.Configuration;
+using System.Web.Mvc;
 
 namespace BikeShare.Controllers
 {
     [Authorize]
     public class CheckoutController : Controller
     {
-        BikesContext context;
+        private BikesContext context;
+
         private bool authorize()
         {
             try
@@ -51,10 +50,10 @@ namespace BikeShare.Controllers
             }
             model.availableBikes = result;
             model.checkedOutBikes = context.CheckOut.Where(i => !i.isResolved).Select(b => b.bike);
-            model.unavailableBikes = context.BikeRack.Include(b => b.bikes).Where(r=>r.bikeRackId == rackId).First().bikes.Except(model.availableBikes);
+            model.unavailableBikes = context.BikeRack.Include(b => b.bikes).Where(r => r.bikeRackId == rackId).First().bikes.Except(model.availableBikes);
             model.errorMessage = message;
 
-            foreach(Bike bike in model.checkedOutBikes.Union(model.availableBikes).ToList())
+            foreach (Bike bike in model.checkedOutBikes.Union(model.availableBikes).ToList())
             {
                 bike.checkOuts = context.Bike.Find(bike.bikeId).checkOuts.OrderByDescending(d => d.timeOut).ToList();
                 if (bike.checkOuts.Count < 1)
@@ -94,7 +93,7 @@ namespace BikeShare.Controllers
                     timeOut = DateTime.Now,
                     timeIn = DateTime.Now
                 };
-                
+
                 bikeUser rider = context.BikeUser.Where(n => n.userName == model.userToCheckIn).First();
                 bikeUser dcheckOutPerson = context.BikeUser.Where(n => n.userName == User.Identity.Name).First();
                 if (!rider.canBorrowBikes)
@@ -135,7 +134,6 @@ namespace BikeShare.Controllers
                 {
                     return RedirectToAction("Index", new { rackId = rackId, message = "The checkout was succesful, but there was difficulty sending email. Please let the system administrator know." });
                 }
-                
             }
             catch (System.InvalidOperationException)
             {
@@ -208,7 +206,7 @@ namespace BikeShare.Controllers
             maintenance.staffPerson = context.BikeUser.Where(u => u.userName == User.Identity.Name).First();
             context.MaintenanceEvent.Add(maintenance);
             context.SaveChanges();
-            return RedirectToAction("Index", new { rackId = rackId});
+            return RedirectToAction("Index", new { rackId = rackId });
         }
 
         [HttpPost]
@@ -232,11 +230,13 @@ namespace BikeShare.Controllers
             context.SaveChanges();
             return RedirectToAction("Index", new { rackId = rackId });
         }
+
         public ActionResult doesUserExist(string validationName)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             return Json(context.BikeUser.Where(u => u.userName == validationName).Count() > 0, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult isUserValid(string validationName)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -261,6 +261,5 @@ namespace BikeShare.Controllers
         {
             return new JsonResult { Data = "Success" };
         }
-        
     }
 }

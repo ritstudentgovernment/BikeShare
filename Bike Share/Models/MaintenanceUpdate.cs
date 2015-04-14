@@ -10,7 +10,7 @@ namespace BikeShare.Models
         [Required]
         [Key, DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int MaintenanceUpdateId { get; set; }
-        
+
         [Required]
         [Display(Name = "Title")]
         public string title { get; set; }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BikeShare.Models;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using BikeShare.Models;
-using System.Data.Entity;
 
 namespace BikeShare.Code
 {
@@ -41,6 +37,7 @@ namespace BikeShare.Code
                 return context.BikeUser.Where(u => u.userName == userName).First().canAdministerSite;
             }
         }
+
         public static bool isUserMechanic(string userName)
         {
             using (var context = new BikesContext())
@@ -48,6 +45,7 @@ namespace BikeShare.Code
                 return context.BikeUser.Where(u => u.userName == userName).First().canMaintainBikes;
             }
         }
+
         public static bool isUserCashier(string userName)
         {
             using (var context = new BikesContext())

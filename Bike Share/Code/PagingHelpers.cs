@@ -1,7 +1,6 @@
-﻿using BikeShare.Models;
+﻿using BikeShare.ViewModels;
 using System;
 using System.Web.Mvc;
-using BikeShare.ViewModels;
 
 namespace BikeShare.Views
 {

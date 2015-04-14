@@ -10,9 +10,9 @@ namespace BikeShare.Models
         [Required]
         [Key, DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int bikeUserId { get; set; }
-        
+
         public DateTime lastRegistered { get; set; }
-        
+
         [Required]
         [Display(Name = "User Name")]
         public string userName { get; set; }
@@ -22,11 +22,12 @@ namespace BikeShare.Models
 
         [Display(Name = "Last Name")]
         public string lastName { get; set; }
+
         [Required]
         public Boolean hasBike { get; set; }
-        
+
         public virtual Bike bike { get; set; }
-        
+
         public virtual ICollection<CheckOut> checkOuts { get; set; }
 
         [Required]

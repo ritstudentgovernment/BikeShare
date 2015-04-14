@@ -11,7 +11,7 @@ namespace BikeShare.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password", Prompt= "Password required.")]
+        [Display(Name = "Password", Prompt = "Password required.")]
         public String Password { get; set; }
 
         [Display(Name = "Remember me?")]

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using BikeShare.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
-using System.Web;
+using System.Linq;
 using System.Web.Mvc;
-using BikeShare.Models;
 
 namespace BikeShare.Controllers
 {
@@ -13,6 +12,7 @@ namespace BikeShare.Controllers
     {
         private int pageSize = 25;
         private BikesContext context;
+
         private bool authorize()
         {
             try
@@ -29,6 +29,7 @@ namespace BikeShare.Controllers
         {
             context = new BikesContext();
         }
+
         /// <summary>
         /// Displays the mechanic's home page.
         /// </summary>
@@ -86,7 +87,7 @@ namespace BikeShare.Controllers
             maint.timeResolved = new DateTime(2000, 01, 01);
             context.MaintenanceEvent.Add(maint);
             context.SaveChanges();
-            return RedirectToAction("bikeDetails", new { bikeId = maint.bikeAffected.bikeId});
+            return RedirectToAction("bikeDetails", new { bikeId = maint.bikeAffected.bikeId });
         }
 
         public ActionResult newInspection(int bikeId)
@@ -106,7 +107,7 @@ namespace BikeShare.Controllers
         public ActionResult newInspection([Bind] ViewModels.specWithMaint inspection)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            
+
             inspection.spec.inspector = context.BikeUser.Where(u => u.userName == User.Identity.Name).First();
             if (!String.IsNullOrWhiteSpace(inspection.maint.title))
             {
@@ -122,7 +123,7 @@ namespace BikeShare.Controllers
             context.Inspection.Add(inspection.spec);
             if (inspection.spec.isPassed) { inspection.spec.bike.lastPassedInspection = DateTime.Now; }
             context.SaveChanges();
-            return RedirectToAction("bikeDetails", "Mechanic", new { bikeId = inspection.spec.bike.bikeId});
+            return RedirectToAction("bikeDetails", "Mechanic", new { bikeId = inspection.spec.bike.bikeId });
         }
 
         [HttpPost]
@@ -134,7 +135,7 @@ namespace BikeShare.Controllers
             maint.timeResolved = DateTime.Now;
             maint.resolved = true;
             context.SaveChanges();
-            return RedirectToAction("maintenanceDetails", new { maintId = maintId});
+            return RedirectToAction("maintenanceDetails", new { maintId = maintId });
         }
 
         public ActionResult bikeInspections(int bikeId, int page = 1)
@@ -146,7 +147,7 @@ namespace BikeShare.Controllers
             ViewBag.bike = context.Bike.Find(bikeId);
             return View(model);
         }
-        
+
         public ActionResult bikeMaintenance(int bikeId, int page = 1)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
@@ -161,7 +162,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<ViewModels.bikeCard>();
-            foreach (var bike in context.Bike.Include(r => r.bikeRack).Where(a => !a.isArchived).OrderByDescending(i => i.bikeId).Skip((page -1) * pageSize).Take(pageSize).ToList())
+            foreach (var bike in context.Bike.Include(r => r.bikeRack).Where(a => !a.isArchived).OrderByDescending(i => i.bikeId).Skip((page - 1) * pageSize).Take(pageSize).ToList())
             {
                 var card = new ViewModels.bikeCard();
                 card.bikeId = bike.bikeId;
@@ -270,7 +271,7 @@ namespace BikeShare.Controllers
             };
             context.MaintenanceEvent.Find(maintenanceId).updates.Add(comment);
             context.SaveChanges();
-            return RedirectToAction("MaintenanceDetails", "Mechanic", new { maintId = maintenanceId});
+            return RedirectToAction("MaintenanceDetails", "Mechanic", new { maintId = maintenanceId });
         }
 
         public ActionResult newHour()
@@ -278,8 +279,9 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new WorkHour
             {
-                user = context.BikeUser.Where(u => u.userName == User.Identity.Name).First(), 
-                timeEnd = DateTime.Now.AddHours(1), timeStart = DateTime.Now 
+                user = context.BikeUser.Where(u => u.userName == User.Identity.Name).First(),
+                timeEnd = DateTime.Now.AddHours(1),
+                timeStart = DateTime.Now
             };
             ViewBag.query = context.WorkShop.Where(a => !a.isArchived);
             return View(model);
