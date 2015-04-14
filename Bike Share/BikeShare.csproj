@@ -223,7 +223,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="StarterContent.txt" />
     <Content Include="Views\Explore\bikeListing.cshtml" />
     <Content Include="Views\Explore\rackListing.cshtml" />
@@ -312,14 +313,11 @@
     <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
     <Content Include="bin\Models.dll" />
     <Content Include="bin\Models.pdb" />
-    <Content Include="bin\Mono.Security.dll" />
     <Content Include="bin\Mvc.Mailer.dll" />
     <Content Include="bin\Ninject.dll" />
     <Content Include="bin\Ninject.Web.Common.dll" />
     <Content Include="bin\nJupiter.Abstraction.Logging.dll" />
     <Content Include="bin\nJupiter.DataAccess.Ldap.dll" />
-    <Content Include="bin\Npgsql.dll" />
-    <Content Include="bin\Npgsql.EntityFramework.dll" />
     <Content Include="bin\Owin.dll" />
     <Content Include="bin\System.Net.Http.Formatting.dll" />
     <Content Include="bin\System.Web.Helpers.dll" />
@@ -382,6 +380,23 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\appSetting.cs" />
+    <Compile Include="Models\Bike.cs" />
+    <Compile Include="Models\BikeRack.cs" />
+    <Compile Include="Models\bikeUser.cs" />
+    <Compile Include="Models\Charge.cs" />
+    <Compile Include="Models\CheckOut.cs" />
+    <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\Hours.cs" />
+    <Compile Include="Models\Inspection.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\MailSub.cs" />
+    <Compile Include="Models\MaintenanceEvent.cs" />
+    <Compile Include="Models\MaintenanceUpdate.cs" />
+    <Compile Include="Models\PageInfo.cs" />
+    <Compile Include="Models\Tracer.cs" />
+    <Compile Include="Models\WorkHours.cs" />
+    <Compile Include="Models\Workshop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Cards.cs" />
@@ -401,12 +416,6 @@
     <Compile Include="ViewModels\bikeListingViewModel.cs" />
     <Compile Include="ViewModels\specWithMaint.cs" />
     <Compile Include="ViewModels\superBike.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Models\BikeShare.Models.csproj">
-      <Project>{f7ea2ef6-c9f2-40f4-a5c3-49bdf5f60e97}</Project>
-      <Name>BikeShare.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

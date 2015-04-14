@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using BikeShare.Repositories;
+using BikeShare.Models;
+using System.Data.Entity;
 
 namespace BikeShare.Code
 {
@@ -35,18 +36,24 @@ namespace BikeShare.Code
     {
         public static bool isUserAdmin(string userName)
         {
-            var uRepo = new Repositories.UserDbRepository();
-            return uRepo.canUserManageApp(userName);
+            using (var context = new BikesContext())
+            {
+                return context.BikeUser.Where(u => u.userName == userName).First().canAdministerSite;
+            }
         }
         public static bool isUserMechanic(string userName)
         {
-            var uRepo = new Repositories.UserDbRepository();
-            return uRepo.getUserByName(userName).canMaintainBikes;
+            using (var context = new BikesContext())
+            {
+                return context.BikeUser.Where(u => u.userName == userName).First().canMaintainBikes;
+            }
         }
         public static bool isUserCashier(string userName)
         {
-            var uRepo = new Repositories.UserDbRepository();
-            return uRepo.getUserByName(userName).canCheckOutBikes;
+            using (var context = new BikesContext())
+            {
+                return context.BikeUser.Where(u => u.userName == userName).First().canCheckOutBikes;
+            }
         }
     }
 }

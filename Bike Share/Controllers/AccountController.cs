@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
+using System.Data.Entity;
+using BikeShare.Models;
 using System.Web.Mvc;
 using System.Web.Security;
-using BikeShare.Interfaces;
 
 namespace BikeShare.Controllers
 {
@@ -10,13 +12,10 @@ namespace BikeShare.Controllers
     /// </summary>
     public class AccountController : Controller
     {
-        private IUserRepository userRepo;
-        private ISettingRepository settingsRepo;
-
-        public AccountController(IUserRepository uRepo, ISettingRepository sRepo)
+        BikesContext context;
+        public AccountController()
         {
-            userRepo = uRepo;
-            settingsRepo = sRepo;
+            context = new BikesContext();
         }
         /// <summary>
         /// Displays the logon form. Logs the current user off if someone is logged in.
@@ -49,9 +48,10 @@ namespace BikeShare.Controllers
             model.UserName = model.UserName.ToLower();
             //If in debug mode, bypasses authentication and logs in as the provided userName
 #if DEBUG
-            if (!userRepo.doesUserExist(model.UserName))
+            if (context.BikeUser.Where(u => u.userName == model.UserName).Count() < 1)
             {
-                userRepo.createuser(model.UserName, model.UserName + settingsRepo.getexpectedEmail(), null, false, true);
+                context.BikeUser.Add(new bikeUser { userName = model.UserName, canBorrowBikes = true, isArchived = false, email = User.Identity.Name + context.settings.First().expectedEmail});
+                context.SaveChanges();
                 FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                 return RedirectToAction("Register", "Explore");
             }
@@ -62,9 +62,9 @@ namespace BikeShare.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    if(!userRepo.doesUserExist(model.UserName))
+                    if (context.BikeUser.Where(u => u.userName == User.Identity.Name).Count() < 1)
                     {
-                        userRepo.createuser(model.UserName, model.UserName + settingsRepo.getexpectedEmail(), null, false, true);
+                        context.BikeUser.Add(new bikeUser { userName = User.Identity.Name, canBorrowBikes = true, isArchived = false, email = User.Identity.Name + context.settings.First().expectedEmail });
                         FormsAuthentication.SetAuthCookie(model.UserName, true);
                         return RedirectToAction("Register", "Explore");
                     }
