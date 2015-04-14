@@ -793,12 +793,12 @@ namespace BikeShare.Controllers
                     string.Format(
                     "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
                     "Bike Number", "Bike Name", "Archived?", "Last Checked Out", "Last Passed Inspection", "Total Inspections"));
-            foreach (var bike in context.Bike)
+            foreach (var bike in context.Bike.ToList())
             {
                 csvExport.AppendLine(
                     string.Format(
                     "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
-                    bike.bikeNumber, bike.bikeName, bike.isArchived, bike.lastCheckedOut.ToString(), bike.lastPassedInspection.ToString(), context.Inspection.Where(b => b.bike == bike).Count()));
+                    bike.bikeNumber, bike.bikeName, bike.isArchived, bike.lastCheckedOut.ToString(), bike.lastPassedInspection.ToString(), context.Inspection.Where(b => b.bike.bikeId == bike.bikeId).Count()));
             }
 
             return csvExport.ToString();
@@ -853,7 +853,7 @@ namespace BikeShare.Controllers
                     string.Format(
                     "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\"",
                     "Bike Name", "Bike Number", "Date Performed", "Comment", "Passed?"));
-            foreach (var Inspection in context.Inspection)
+            foreach (var Inspection in context.Inspection.Include(b => b.bike).OrderByDescending(d => d.datePerformed).ToList())
             {
                 csvExport.AppendLine(
                 string.Format(
@@ -873,7 +873,7 @@ namespace BikeShare.Controllers
                     string.Format(
                     "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\"",
                     "Bike Name", "Bike Number", "Title", "Time Added", "Time Resolved", "Resolved?", "Archived?", "Bike Disabled?", "Details"));
-            foreach (var Maint in context.MaintenanceEvent)
+            foreach (var Maint in context.MaintenanceEvent.Include(b => b.bikeAffected).OrderByDescending(d => d.timeResolved).ToList())
             {
                 csvExport.AppendLine(
                 string.Format(

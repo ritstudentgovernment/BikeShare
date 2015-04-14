@@ -52,10 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IFinanceRepository.cs" />
-    <Compile Include="Interfaces\ISettingRepository.cs" />
-    <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Interfaces\IWorkshopRepository.cs" />
     <Compile Include="Models\appSetting.cs" />
     <Compile Include="Models\Bike.cs" />
     <Compile Include="Models\BikeRack.cs" />
@@ -74,18 +70,6 @@
     <Compile Include="Models\WorkHours.cs" />
     <Compile Include="Models\Workshop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interfaces\IAdminRepository.cs" />
-    <Compile Include="Interfaces\IExploreRepository.cs" />
-    <Compile Include="Interfaces\IMaintentanceRepository.cs" />
-    <Compile Include="Interfaces\ICheckOutRepository.cs" />
-    <Compile Include="Repositories\AdminDbRepository.cs" />
-    <Compile Include="Repositories\CheckoutDbRepository.cs" />
-    <Compile Include="Repositories\ExploreDbRepository.cs" />
-    <Compile Include="Repositories\FinanceDbRepository.cs" />
-    <Compile Include="Repositories\MaintenanceDbRepository.cs" />
-    <Compile Include="Repositories\SettingsDbRepository.cs" />
-    <Compile Include="Repositories\UserDbRepository.cs" />
-    <Compile Include="Repositories\WorkshopDbRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

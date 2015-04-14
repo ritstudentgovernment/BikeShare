@@ -1,6 +1,4 @@
-﻿using BikeShare.Interfaces;
-using BikeShare.Repositories;
-using Ninject;
+﻿using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -32,14 +30,7 @@ namespace BikeShare.Code
 
         private void AddBindings()
         {
-            kernel.Bind<IAdminRepository>().To<AdminDbRepository>();
-            kernel.Bind<IExploreRepository>().To<ExploreDbRepository>();
-            kernel.Bind<IMaintenanceRepository>().To<MaintenanceDbRepository>();
-            kernel.Bind<IWorkshopRepository>().To<WorkshopDbRepository>();
-            kernel.Bind<IUserRepository>().To<UserDbRepository>();
-            kernel.Bind<ICheckOutRepository>().To<CheckoutDbRepository>();
-            kernel.Bind<IFinanceRepository>().To<FinanceDbRepository>();
-            kernel.Bind<ISettingRepository>().To<SettingsDbRepository>();
+
         }
     }
 
