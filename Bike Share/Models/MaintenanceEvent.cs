@@ -7,13 +7,18 @@ namespace BikeShare.Models
 {
     public class MaintenanceEvent
     {
+        public MaintenanceEvent()
+        {
+            isArchived = false;
+            timeAdded = DateTime.Now;
+        }
         [Required]
         [Key, DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int MaintenanceEventId { get; set; }
 
         [Required]
         [Display(Name = "Bike")]
-        public virtual Bike bikeAffected { get; set; }
+        public int bikeId { get; set; }
 
         [Required]
         [Display(Name = "Title")]
@@ -23,8 +28,10 @@ namespace BikeShare.Models
         public string details { get; set; }
 
         [Required]
-        [Display(Name = "Maintained by")]
-        public virtual bikeUser staffPerson { get; set; }
+        [Display(Name = "Submitted by")]
+        public int submittedById { get; set; }
+
+        public int? maintainedById { get; set; }
 
         [Required]
         [Display(Name = "Date Opened")]
@@ -32,16 +39,10 @@ namespace BikeShare.Models
 
         [Required]
         [Display(Name = "Workshop")]
-        public virtual Workshop workshop { get; set; }
-
-        public virtual ICollection<MaintenanceUpdate> updates { get; set; }
-
-        [Required]
-        [Display(Name = "Open?")]
-        public bool resolved { get; set; }
+        public int workshopId { get; set; }
 
         [Display(Name = "Date Closed")]
-        public DateTime timeResolved { get; set; }
+        public DateTime? timeResolved { get; set; }
 
         [Required]
         [Display(Name = "Disable Bike?")]
@@ -49,7 +50,5 @@ namespace BikeShare.Models
 
         [Required]
         public bool isArchived { get; set; }
-
-        public virtual ICollection<Tracer> events { get; set; }
     }
 }

@@ -17,19 +17,13 @@ namespace BikeShare.Models
 
         public DbSet<MaintenanceUpdate> MaintenanceUpdate { get; set; }
 
-        public DbSet<MailSub> MailSub { get; set; }
-
         public DbSet<Workshop> WorkShop { get; set; }
 
         public DbSet<Inspection> Inspection { get; set; }
 
         public DbSet<Charge> Charge { get; set; }
 
-        public DbSet<Tracer> tracer { get; set; }
-
         public DbSet<WorkHour> workHours { get; set; }
-
-        public DbSet<Hour> hour { get; set; }
 
         public DbSet<appSetting> settings { get; set; }
 
@@ -41,8 +35,6 @@ namespace BikeShare.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Bike>().HasRequired(p => p.bikeRack).WithMany(b => b.bikes).WillCascadeOnDelete(false);
-            modelBuilder.Entity<MaintenanceEvent>().HasRequired(p => p.staffPerson).WithMany(m => m.maintenanceEvents).WillCascadeOnDelete(false);
             base.OnModelCreating(modelBuilder);
         }
 
@@ -51,7 +43,7 @@ namespace BikeShare.Models
             protected override void Seed(BikesContext context)
             {
                 Workshop homeWorkshop = new Workshop() { Name = "Default", isArchived = false, GPSCoordX = 0, GPSCoordY = 0 };
-                bikeUser defaultAdmin = new bikeUser() { userName = "sgsvcs", lastRegistered = DateTime.Now, email = "sgsvcs@rit.edu", isArchived = false, hasBike = false, canAdministerSite = true, canMaintainBikes = true, canCheckOutBikes = true, canBorrowBikes = true };
+                bikeUser defaultAdmin = new bikeUser() { userName = "sgsvcs", lastRegistered = DateTime.Now, email = "sgsvcs@rit.edu", isArchived = false, canAdministerSite = true, canMaintainBikes = true, canCheckOutBikes = true, canBorrowBikes = true };
                 appSetting defaultSetting = new appSetting()
                 {
                     adminEmailList = "sgsvcs@rit.edu",

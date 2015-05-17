@@ -77,8 +77,15 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-sm-4" })
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.description, new { @class = "form-control" })
+                        @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.description)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.hours, htmlAttributes: new { @class = "control-label col-sm-4" })
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(model => model.hours, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.hours)
                     </div>
                 </div>
             </div>
@@ -92,48 +99,3 @@
         </div>
     </div>
 }
-    <div class="panel panel-default">
-        <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-time"></span> Hours</h4></div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Days</th>
-                    <th>Hours</th>
-                    <th>Comment</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.hours != null)
-                {
-                    foreach (var hour in Model.hours)
-                    {
-                        <tr>
-                            <td>
-                                @if (hour.dayStart == hour.dayEnd)
-                                {
-                                    @hour.dayStart.ToString()
-                                }
-                                else
-                                {
-                                    <text>@hour.dayStart.ToString() - @hour.dayEnd.ToString()</text>
-                                }
-                        </td>
-                        <td>@hour.hourStart.ToString():@hour.minuteStart.ToString() - @hour.hourEnd.ToString():@hour.minuteEnd.ToString()</td>
-                        <td>@hour.comment</td>
-                            <td class="text-right">
-                                @using (Html.BeginForm("hourDelete", "Admin", new { rackId = Model.bikeRackId, hourId = hour.hourId }, FormMethod.Post, new { id = hour.hourId.ToString() + "hourForm"}))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" value="Delete" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-trash"></span></button>
-                                }
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-        <div class="panel-footer text-right">
-            <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newHour", new { rackId = Model.bikeRackId})"><span class="glyphicon glyphicon-asterisk"></span>  New</a>
-        </div>
-    </div>

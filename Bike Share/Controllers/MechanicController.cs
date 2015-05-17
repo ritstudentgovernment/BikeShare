@@ -52,10 +52,10 @@ namespace BikeShare.Controllers
             var bike = context.Bike.Find(bikeId);
             model.bikeName = bike.bikeName;
             model.bikeNumber = bike.bikeNumber;
-            model.inspections = context.Inspection.Where(b => b.bike.bikeId == bikeId).OrderByDescending(d => d.datePerformed).Take(15).ToList();
-            model.maints = context.MaintenanceEvent.Where(b => b.bikeAffected.bikeId == bikeId).OrderByDescending(d => d.timeAdded).Take(15).ToList();
-            model.totalInspections = context.Inspection.Where(b => b.bike.bikeId == bikeId).Count();
-            model.totalCheckouts = bike.checkOuts.Count();
+            model.inspections = context.Inspection.Where(b => b.bikeId == bikeId).OrderByDescending(d => d.datePerformed).Take(15).ToList();
+            model.maints = context.MaintenanceEvent.Where(b => b.bikeId == bikeId).OrderByDescending(d => d.timeAdded).Take(15).ToList();
+            model.totalInspections = context.Inspection.Where(b => b.bikeId == bikeId).Count();
+            model.totalCheckouts = context.CheckOut.Where(b => b.bike == bikeId).Count();
 
             return View(model);
         }
@@ -70,7 +70,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new MaintenanceEvent();
-            model.bikeAffected = context.Bike.Find(bikeId);
+            model.bikeId = bikeId;
             ViewBag.query = context.WorkShop.Where(a => !a.isArchived).ToList();
             return View(model);
         }
@@ -80,21 +80,18 @@ namespace BikeShare.Controllers
         public ActionResult newMaintenance([Bind] MaintenanceEvent maint)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            maint.staffPerson = context.BikeUser.Where(n => n.userName == User.Identity.Name).First();
-            maint.bikeAffected = context.Bike.Find(maint.bikeAffected.bikeId);
-            maint.workshop = context.WorkShop.Find(maint.workshop.workshopId);
+            maint.submittedById = context.BikeUser.Where(n => n.userName == User.Identity.Name).First().bikeUserId;
             maint.timeAdded = DateTime.Now;
-            maint.timeResolved = new DateTime(2000, 01, 01);
             context.MaintenanceEvent.Add(maint);
             context.SaveChanges();
-            return RedirectToAction("bikeDetails", new { bikeId = maint.bikeAffected.bikeId });
+            return RedirectToAction("bikeDetails", new { bikeId = maint.bikeId });
         }
 
         public ActionResult newInspection(int bikeId)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new Inspection();
-            model.bike = context.Bike.Find(bikeId);
+            model.bikeId = bikeId;
             ViewBag.query = context.WorkShop.Where(a => !a.isArchived).ToList();
             var vModel = new ViewModels.specWithMaint();
             vModel.spec = model;
@@ -108,22 +105,19 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
 
-            inspection.spec.inspector = context.BikeUser.Where(u => u.userName == User.Identity.Name).First();
+            inspection.spec.inspectorId = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
             if (!String.IsNullOrWhiteSpace(inspection.maint.title))
             {
-                inspection.spec.associatedMaintenance.Add(inspection.maint);
-                inspection.maint.staffPerson = context.BikeUser.Where(u => u.userName == User.Identity.Name).First();
+                inspection.maint.submittedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
                 context.MaintenanceEvent.Add(inspection.maint);
                 context.SaveChanges();
                 return RedirectToAction("maintenanceDetails", "Mechanic", new { inspection.maint.MaintenanceEventId });
             }
             inspection.spec.datePerformed = DateTime.Now;
-            inspection.spec.placeInspected = context.WorkShop.Find(inspection.spec.placeInspected.workshopId);
-            inspection.spec.bike = context.Bike.Find(inspection.spec.bike.bikeId);
             context.Inspection.Add(inspection.spec);
-            if (inspection.spec.isPassed) { inspection.spec.bike.lastPassedInspection = DateTime.Now; }
+            context.Bike.Find(inspection.spec.bikeId).onInspectionHold = inspection.spec.isPassed; 
             context.SaveChanges();
-            return RedirectToAction("bikeDetails", "Mechanic", new { bikeId = inspection.spec.bike.bikeId });
+            return RedirectToAction("bikeDetails", "Mechanic", new { bikeId = inspection.spec.bikeId });
         }
 
         [HttpPost]
@@ -131,9 +125,9 @@ namespace BikeShare.Controllers
         public ActionResult closeMaintenance(int maintId)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            var maint = context.MaintenanceEvent.Include(b => b.bikeAffected).Include(w => w.workshop).Include(u => u.staffPerson).Where(m => m.MaintenanceEventId == maintId).First();
+            var maint = context.MaintenanceEvent.Where(m => m.MaintenanceEventId == maintId).First();
             maint.timeResolved = DateTime.Now;
-            maint.resolved = true;
+            maint.maintainedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
             context.SaveChanges();
             return RedirectToAction("maintenanceDetails", new { maintId = maintId });
         }
@@ -142,7 +136,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.PaginatedViewModel<Inspection>();
-            model.modelList = context.Inspection.Where(b => b.bike.bikeId == bikeId).OrderByDescending(d => d.datePerformed).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = context.Inspection.Where(b => b.bikeId == bikeId).OrderByDescending(d => d.datePerformed).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
             ViewBag.bike = context.Bike.Find(bikeId);
             return View(model);
@@ -152,7 +146,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.PaginatedViewModel<MaintenanceEvent>();
-            model.modelList = context.MaintenanceEvent.Where(b => b.bikeAffected.bikeId == bikeId).OrderByDescending(d => d.timeAdded).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            model.modelList = context.MaintenanceEvent.Where(b => b.bikeId == bikeId).OrderByDescending(d => d.timeAdded).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(model.modelList.Count(), pageSize, page);
             ViewBag.bike = context.Bike.Find(bikeId);
             return View(model);
@@ -162,20 +156,20 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new ViewModels.PaginatedViewModel<ViewModels.bikeCard>();
-            foreach (var bike in context.Bike.Include(r => r.bikeRack).Where(a => !a.isArchived).OrderByDescending(i => i.bikeId).Skip((page - 1) * pageSize).Take(pageSize).ToList())
+            foreach (var bike in context.Bike.Where(a => !a.isArchived).OrderByDescending(i => i.bikeId).Skip((page - 1) * pageSize).Take(pageSize).ToList())
             {
                 var card = new ViewModels.bikeCard();
                 card.bikeId = bike.bikeId;
                 card.bikeName = bike.bikeName;
                 card.bikeNumber = bike.bikeNumber;
-                card.rackId = bike.bikeRack.bikeRackId;
-                card.rackName = bike.bikeRack.name;
-                card.totalInspections = context.Inspection.Where(b => b.bike.bikeId == bike.bikeId).Count();
-                card.totalMaintenance = context.MaintenanceEvent.Where(b => b.bikeAffected.bikeId == bike.bikeId).Count();
+                card.rackId = (int)bike.bikeRackId;
+                card.rackName = context.BikeRack.Find(bike.bikeRackId).name;
+                card.totalInspections = context.Inspection.Where(b => b.bikeId == bike.bikeId).Count();
+                card.totalMaintenance = context.MaintenanceEvent.Where(b => b.bikeId == bike.bikeId).Count();
                 card.status = ViewModels.cardStatus.defaults;
                 if (card.totalInspections > 0)
                 {
-                    Inspection last = context.Inspection.Where(b => b.bike.bikeId == bike.bikeId).OrderByDescending(d => d.datePerformed).First();
+                    Inspection last = context.Inspection.Where(b => b.bikeId == bike.bikeId).OrderByDescending(d => d.datePerformed).First();
                     card.dateLastInspected = last.datePerformed.ToShortDateString();
                     if (!last.isPassed)
                     {
@@ -188,13 +182,13 @@ namespace BikeShare.Controllers
                 }
                 if (card.totalMaintenance > 0)
                 {
-                    card.dateLastMaintenance = context.MaintenanceEvent.Where(b => b.bikeAffected.bikeId == bike.bikeId).OrderByDescending(d => d.timeAdded).First().timeAdded.ToShortDateString();
+                    card.dateLastMaintenance = context.MaintenanceEvent.Where(b => b.bikeId == bike.bikeId).OrderByDescending(d => d.timeAdded).First().timeAdded.ToShortDateString();
                 }
                 else
                 {
                     card.dateLastInspected = "never";
                 }
-                if (bike.lastPassedInspection.AddDays(context.settings.First().DaysBetweenInspections) < DateTime.Now)
+                if (!bike.isAvailable())
                 {
                     card.status = ViewModels.cardStatus.danger;
                 }
@@ -217,33 +211,7 @@ namespace BikeShare.Controllers
             var model = new ViewModels.Maint.userActivityVM();
             model.cards = new List<ViewModels.ActivityCard>();
             int userId = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
-            model.activtyPage = new ViewModels.PageInfo(context.tracer.Where(u => u.user.userName == User.Identity.Name).Count(), activityPage, (pageSize - 1) * pageSize);
-            foreach (var item in context.tracer.Where(u => u.user.userName == User.Identity.Name).OrderByDescending(d => d.time).Skip((activityPage - 1) * pageSize).Take(pageSize))
-            {
-                var building = new ViewModels.ActivityCard { date = item.time, userName = User.Identity.Name, userId = userId };
-                if (item.inspection != null)
-                {
-                    building.title = "Inspection: " + item.inspection.comment.ToString();
-                    if (item.inspection.isPassed) { building.status = ViewModels.cardStatus.success; } else { building.status = ViewModels.cardStatus.danger; }
-                    building.type = ViewModels.activityType.inspection;
-                }
-                if (item.maint != null)
-                {
-                    building.title = "Maintenance: " + item.maint.title;
-                    if (item.maint.resolved) { building.status = ViewModels.cardStatus.success; } else { building.status = ViewModels.cardStatus.danger; }
-                    building.type = ViewModels.activityType.maintenance;
-                }
-                if (item.update != null)
-                {
-                    building.title = "Comment on Maintenance: " + item.update.title;
-                    building.status = ViewModels.cardStatus.defaults;
-                    building.type = ViewModels.activityType.comment;
-                }
-                model.cards.Add(building);
-            }
-
-            model.hours = context.workHours.Where(u => u.user.userName == User.Identity.Name).OrderByDescending(d => d.timeEnd).Skip((hourPage - 1) * pageSize).Take(pageSize).ToList();
-            model.hoursPage = new ViewModels.PageInfo(context.workHours.Where(u => u.user.userName == User.Identity.Name).Count(), pageSize, hourPage);
+            
             return View(model);
         }
 
@@ -251,7 +219,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new MaintenanceUpdate();
-            model.associatedEvent = context.MaintenanceEvent.Find(maintId);
+            model.associatedEventId = maintId;
             return View(model);
         }
 
@@ -262,14 +230,14 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             MaintenanceUpdate comment = new MaintenanceUpdate
             {
-                associatedEvent = context.MaintenanceEvent.Find(maintenanceId),
+                associatedEventId = maintenanceId,
                 body = commentBody,
                 isCommentOnBike = false,
-                postedBy = context.BikeUser.Where(u => u.userName == User.Identity.Name).First(),
+                postedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId,
                 timePosted = DateTime.Now,
                 title = commentTitle
             };
-            context.MaintenanceEvent.Find(maintenanceId).updates.Add(comment);
+            context.MaintenanceUpdate.Add(comment);
             context.SaveChanges();
             return RedirectToAction("MaintenanceDetails", "Mechanic", new { maintId = maintenanceId });
         }
@@ -279,7 +247,7 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new WorkHour
             {
-                user = context.BikeUser.Where(u => u.userName == User.Identity.Name).First(),
+                userid = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId,
                 timeEnd = DateTime.Now.AddHours(1),
                 timeStart = DateTime.Now
             };
@@ -292,10 +260,7 @@ namespace BikeShare.Controllers
         public ActionResult newHour([Bind] WorkHour hour, int userId)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            hour.user = context.BikeUser.Find(userId);
-            hour.maint = null;
-            hour.rack = null;
-            hour.shop = context.WorkShop.Find(hour.shop.workshopId);
+            hour.userid = userId;
             context.workHours.Add(hour);
             context.SaveChanges();
             return RedirectToAction("myActivity", "Mechanic");

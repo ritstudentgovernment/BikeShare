@@ -1,4 +1,5 @@
 ﻿@using BikeShare.Views
+@using BikeShare.Models;
 @model BikeShare.ViewModels.PaginatedViewModel<BikeShare.Models.BikeRack>
 
 @{
@@ -12,14 +13,16 @@
 <hr />
 @foreach (var rack in Model.modelList)
 {
-    if(rack.bikes.Count() > 0)
+    List<Bike> bikes = (List<Bike>)ViewBag.availableBikes;
+    bikes = bikes.Where(r => r.bikeRackId == rack.bikeRackId).ToList();
+    if(bikes.Count() > 0)
     {
         <div class="panel panel-success">
             <div class="panel-heading"><h4 class="panel-title">@rack.name</h4></div>
             <div style="height:150px; background-position: center; background-size: cover; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>
             <div class="panel-body">
                 <div>@rack.description</div>
-                <div>@rack.bikes.Count() bikes available.</div>
+                <div>@bikes.Count() bikes available.</div>
             </div>
             <table class="table table-striped">
                 <thead class="">
@@ -29,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var bike in rack.bikes)
+                    @foreach (var bike in bikes)
                     {
                         <tr>
                             <td>@bike.bikeNumber</td>
@@ -50,7 +53,7 @@
             <div style="height:150px; background-position: center; background-size: cover; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>
             <div class="panel-body">
                 <div>@rack.description</div>
-                <div>@rack.bikes.Count() bikes available.</div>
+                <div>@bikes.Count() bikes available.</div>
             </div>
             <div class="panel-footer text-right">
                 <a class="btn btn-primary" href="@Url.Action(actionName: "rackDetails", controllerName: "Explore", routeValues: new { rackId = rack.bikeRackId})"><span class="glyphicon glyphicon-stats"></span>  Details</a>

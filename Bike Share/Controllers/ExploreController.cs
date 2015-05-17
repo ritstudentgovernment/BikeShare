@@ -63,86 +63,13 @@ namespace BikeShare.Controllers
             }
             var model = new BikeShare.ViewModels.profileViewModel();
             model.user = user;
+            model.pagingInfo = new PageInfo(0, 25, 1);
             model.cards = new List<ActivityCard>();
-            model.pagingInfo = new PageInfo(context.tracer.Where(u => u.user.bikeUserId == user.bikeUserId).Count(), pageSize, (page - 1) * pageSize);
-            if (context.CheckOut.Where(c => c.user.bikeUserId == user.bikeUserId).Where(i => !i.isResolved).Count() > 0)
+            if (context.CheckOut.Where(c => c.rider == user.bikeUserId).Where(i => !i.isResolved).Count() > 0)
             {
                 model.hasRental = true;
-                model.hoursLeft = (int)context.CheckOut.Where(c => c.user.bikeUserId == user.bikeUserId).Where(i => !i.isResolved).First().timeOut.AddHours(24).Subtract(DateTime.Now).TotalHours;
+                model.hoursLeft = (int)context.CheckOut.Where(c => c.rider == user.bikeUserId).Where(i => !i.isResolved).First().timeOut.AddHours(24).Subtract(DateTime.Now).TotalHours;
             }
-            foreach (var item in context.tracer.Where(u => u.user.bikeUserId == user.bikeUserId).OrderByDescending(d => d.time).Skip((page - 1) * pageSize).Take(pageSize).ToList())
-            {
-                var building = new ActivityCard { date = item.time, userName = User.Identity.Name, userId = model.user.bikeUserId };
-                if (item.charge != null)
-                {
-                    building.title = "Charge: " + item.charge.title;
-                    if (item.charge.isResolved)
-                    { building.status = cardStatus.success; }
-                    else
-                    { building.status = cardStatus.danger; }
-                    building.type = activityType.charge;
-                }
-                if (item.checkOut != null)
-                {
-                    building.title = "Checkout: " + item.checkOut.timeOut.ToShortDateString();
-                    building.status = cardStatus.success;
-                    building.type = activityType.checkout;
-                }
-                if (item.inspection != null)
-                {
-                    if (item.inspection.comment != null)
-                    {
-                        building.title = "Inspection: " + item.inspection.comment.ToString();
-                    }
-                    else
-                    {
-                        building.title = "Inspection";
-                    }
-                    if (item.inspection.isPassed) { building.status = cardStatus.success; } else { building.status = cardStatus.danger; }
-                    building.type = activityType.inspection;
-                }
-                if (item.maint != null)
-                {
-                    building.title = "Maintenance: " + item.maint.title;
-                    if (item.maint.resolved) { building.status = cardStatus.success; } else { building.status = cardStatus.danger; }
-                    building.type = activityType.maintenance;
-                }
-                if (item.rack != null)
-                {
-                    building.title = "Rack: " + item.rack.name;
-                    building.status = cardStatus.defaults;
-                    building.type = activityType.admin;
-                }
-                if (item.shop != null)
-                {
-                    building.title = "Workshop: " + item.shop.Name;
-                    building.status = cardStatus.defaults;
-                    building.type = activityType.admin;
-                }
-                if (item.update != null)
-                {
-                    building.title = "Comment on Maintenance: " + item.update.title;
-                    building.status = cardStatus.defaults;
-                    building.type = activityType.comment;
-                }
-                model.cards.Add(building);
-            }
-            return View(model);
-        }
-
-        /// <summary>
-        /// Displays a listing of all bikes in the system.
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult bikeListing(int page = 1)
-        {
-            var model = new bikeListingViewModel();
-            model.allAvailableBikes = context.Bike.Where(l => !l.isArchived).Where(c => c.checkOuts.Where(i => !i.isResolved).Count() == 0)
-                .Where(l => l.lastPassedInspection.AddDays(context.settings.First().DaysBetweenInspections) < DateTime.Now);
-
-            model.countAvailableBikes = model.allAvailableBikes.Count();
-            model.rentedBikes = 0;
-            model.pagingInfo = new PageInfo(model.countAvailableBikes, pageSize, page);
             return View(model);
         }
 
@@ -155,12 +82,7 @@ namespace BikeShare.Controllers
             var model = new PaginatedViewModel<BikeRack>();
             model.modelList = context.BikeRack.Where(a => !a.isArchived).ToList();
             DateTime dateFloor = DateTime.Now.Subtract(new TimeSpan(context.settings.First().DaysBetweenInspections));
-            var availableBikes = context.Bike.Where(l => !l.isArchived).Where(c => c.checkOuts.Where(i => !i.isResolved).Count() == 0)
-                .Where(l => l.lastPassedInspection < dateFloor);
-            foreach (BikeRack rack in model.modelList)
-            {
-                rack.bikes = availableBikes.Where(r => r.bikeRack.bikeRackId == rack.bikeRackId).ToList();
-            }
+            ViewBag.availableBikes = context.Bike.ToList().Where(b => b.isAvailable()).ToList();
             model.pagingInfo = new PageInfo(model.modelList.Count(), model.modelList.Count(), page);
             var images = new Dictionary<int, string>();
             ViewBag.images = images;
@@ -198,7 +120,6 @@ namespace BikeShare.Controllers
         public ActionResult rackDetails(int rackId)
         {
             var rack = context.BikeRack.Find(rackId);
-            rack.bikes = rack.bikes;
             return View(rack);
         }
 

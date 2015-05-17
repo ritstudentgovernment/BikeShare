@@ -227,7 +227,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="StarterContent.txt" />
-    <Content Include="Views\Explore\bikeListing.cshtml" />
     <Content Include="Views\Explore\rackListing.cshtml" />
     <Content Include="Views\Mechanic\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
@@ -239,12 +238,9 @@
     <Content Include="Views\Admin\bikeList.cshtml" />
     <Content Include="Views\Admin\bikeRackList.cshtml" />
     <Content Include="Views\Admin\userList.cshtml" />
-    <Content Include="Views\Admin\maintenanceList.cshtml" />
-    <Content Include="Views\Admin\inspectionList.cshtml" />
     <Content Include="Views\Admin\workshopList.cshtml" />
     <Content Include="Views\Admin\appSettings.cshtml" />
     <Content Include="Views\Admin\userEdit.cshtml" />
-    <Content Include="Views\Admin\bikeCheckouts.cshtml" />
     <Content Include="Views\Admin\editBike.cshtml" />
     <Content Include="Views\Admin\infoBike.cshtml" />
     <Content Include="Views\Admin\editRack.cshtml" />
@@ -269,12 +265,9 @@
     <Content Include="Views\Mechanic\newComment.cshtml" />
     <Content Include="Views\Explore\userEdit.cshtml" />
     <Content Include="Views\Explore\rackDetails.cshtml" />
-    <Content Include="Views\Admin\newHour.cshtml" />
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Shared\_ExploreMenuPartial.cshtml" />
     <Content Include="Views\Shared\_MechanicMenuPartial.cshtml" />
-    <Content Include="Views\Admin\maintenanceDetails.cshtml" />
-    <Content Include="Views\Admin\newComment.cshtml" />
     <Content Include="Views\Admin\uploadImage.cshtml" />
     <Content Include="Views\Mechanic\newHour.cshtml" />
     <Content Include="Views\Explore\Register.cshtml" />
@@ -381,6 +374,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Migrations\201504112248083_InitialCreate.cs" />
+    <Compile Include="Migrations\201504112248083_InitialCreate.Designer.cs">
+      <DependentUpon>201504112248083_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504152103503_DeNormalizeRefactor.cs" />
+    <Compile Include="Migrations\201504152103503_DeNormalizeRefactor.Designer.cs">
+      <DependentUpon>201504152103503_DeNormalizeRefactor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\appSetting.cs" />
     <Compile Include="Models\Bike.cs" />
     <Compile Include="Models\BikeRack.cs" />
@@ -388,14 +390,11 @@
     <Compile Include="Models\Charge.cs" />
     <Compile Include="Models\CheckOut.cs" />
     <Compile Include="Models\DataContext.cs" />
-    <Compile Include="Models\Hours.cs" />
     <Compile Include="Models\Inspection.cs" />
     <Compile Include="Models\Login.cs" />
-    <Compile Include="Models\MailSub.cs" />
     <Compile Include="Models\MaintenanceEvent.cs" />
     <Compile Include="Models\MaintenanceUpdate.cs" />
-    <Compile Include="Models\PageInfo.cs" />
-    <Compile Include="Models\Tracer.cs" />
+    <Compile Include="ViewModels\PageInfo.cs" />
     <Compile Include="Models\WorkHours.cs" />
     <Compile Include="Models\Workshop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -421,6 +420,14 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Racks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201504112248083_InitialCreate.resx">
+      <DependentUpon>201504112248083_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504152103503_DeNormalizeRefactor.resx">
+      <DependentUpon>201504152103503_DeNormalizeRefactor.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

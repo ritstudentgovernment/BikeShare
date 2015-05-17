@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BikeShare.Models
 {
+    public enum privilege { rider, admin, mechanic, cashier}
+
     public class bikeUser
     {
         [Required]
@@ -24,13 +26,6 @@ namespace BikeShare.Models
         public string lastName { get; set; }
 
         [Required]
-        public Boolean hasBike { get; set; }
-
-        public virtual Bike bike { get; set; }
-
-        public virtual ICollection<CheckOut> checkOuts { get; set; }
-
-        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string email { get; set; }
@@ -41,12 +36,6 @@ namespace BikeShare.Models
 
         [Required]
         public bool isArchived { get; set; }
-
-        public virtual ICollection<MaintenanceEvent> maintenanceEvents { get; set; }
-
-        public virtual ICollection<MaintenanceUpdate> maintenanceUpdates { get; set; }
-
-        public virtual ICollection<Charge> charges { get; set; }
 
         [Required]
         [Display(Name = "Mechanic Privileges")]
@@ -63,7 +52,5 @@ namespace BikeShare.Models
         [Required]
         [Display(Name = "Cashier Privileges")]
         public bool canCheckOutBikes { get; set; }
-
-        public virtual ICollection<Tracer> events { get; set; }
     }
 }

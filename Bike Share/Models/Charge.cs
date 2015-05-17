@@ -11,6 +11,8 @@ namespace BikeShare.Models
         [Key, DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int chargeId { get; set; }
 
+        public int bikeUserId { get; set; }
+
         [Required]
         [Display(Name = "Charge Title")]
         public string title { get; set; }
@@ -40,7 +42,5 @@ namespace BikeShare.Models
 
         [Display(Name = "Paid")]
         public decimal amountPaid { get; set; }
-
-        public virtual ICollection<Tracer> events { get; set; }
     }
 }

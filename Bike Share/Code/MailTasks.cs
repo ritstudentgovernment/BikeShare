@@ -31,7 +31,8 @@ namespace BikeShare.Code.Mailers
                 mail.Body += "<table><tr><th>Bike Number</th><th>Rental Date</th><th>User Name</th><th>Real Name</th><th>Phone Number</th></tr>";
                 foreach (var check in checks)
                 {
-                    mail.Body += "<tr><td>" + check.bike.bikeNumber.ToString() + "</td><td>" + check.timeOut.ToString() + "</td><td>" + check.user.userName + "</td><td>" + check.user.firstName + " " + check.user.lastName + "</td><td>" + check.user.phoneNumber + "</td></tr>";
+                    var user = context.BikeUser.Find(check.rider);
+                    mail.Body += "<tr><td>" + context.Bike.Find(check.bike).bikeNumber.ToString() + "</td><td>" + check.timeOut.ToString() + "</td><td>" + user.userName + "</td><td>" + user.firstName + " " + user.lastName + "</td><td>" + user.phoneNumber + "</td></tr>";
                 }
                 mail.Body += "</table>";
                 smtpServer.Send(mail);
@@ -49,12 +50,12 @@ namespace BikeShare.Code.Mailers
                 var set = context.settings.First();
                 string appName = set.appName;
                 int rentDays = set.maxRentDays;
-                foreach (var checkout in context.CheckOut.Where(i => !i.isResolved))
+                foreach (var checkout in context.CheckOut.Where(i => !i.isResolved).ToList())
                 {
                     if (checkout.timeOut.AddHours(2).AddDays(rentDays) > DateTime.Now && checkout.timeOut.AddDays(rentDays) < DateTime.Now)
                     {
                         MailMessage mail = new MailMessage();
-                        mail.To.Add(checkout.user.email);
+                        mail.To.Add(context.BikeUser.Find(checkout.rider).email);
                         mail.Subject = "Bike Due Soon - " + appName;
                         mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
                             ". Per our policy, your bike will be due within the next two hours. Please return your bike as soon as possible.";
@@ -91,12 +92,12 @@ namespace BikeShare.Code.Mailers
                 var set = context.settings.First();
                 string appName = set.appName;
                 int rentDays = set.maxRentDays;
-                foreach (var checkout in context.CheckOut.Where(i => !i.isResolved))
+                foreach (var checkout in context.CheckOut.Where(i => !i.isResolved).ToList())
                 {
                     if (checkout.timeOut.AddDays(rentDays) < DateTime.Now)
                     {
                         MailMessage mail = new MailMessage();
-                        mail.To.Add(checkout.user.email);
+                        mail.To.Add(context.BikeUser.Find(checkout.rider).email);
                         mail.Subject = "Bike Now Overdue - " + appName;
                         mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
                             ". Per our policy, your bike is now overdue, and failure to return it in a timely manner may result in charges to your account. Please return your bike as soon as possible.";

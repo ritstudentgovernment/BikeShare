@@ -13,7 +13,6 @@ namespace BikeShare
             routes.MapRoute(name: "siteAbout", url: "About", defaults: new { controller = "Home", action = "About" });
             //Explore
             routes.MapRoute(name: "ExploreHome", url: "Me", defaults: new { controller = "Explore", action = "Index" });
-            routes.MapRoute(name: "ExploreBikes", url: "Bikes", defaults: new { controller = "Explore", action = "bikeListing" });
             routes.MapRoute(name: "ExploreRacks", url: "Racks", defaults: new { controller = "Explore", action = "rackListing" });
             routes.MapRoute(name: "ExploreRack", url: "Racks/{rackId}", defaults: new { controller = "Explore", action = "rackDetails", rackId = new RangeRouteConstraint(1, 999999) });
             //Checkout
@@ -32,7 +31,6 @@ namespace BikeShare
             //Dashboard
             routes.MapRoute(name: "AdminHome", url: "Manage", defaults: new { controller = "Admin", action = "Index" });
             routes.MapRoute(name: "AdminSettings", url: "Manage/Settings", defaults: new { controller = "Admin", action = "appSettings" });
-            routes.MapRoute(name: "AdminCheckouts", url: "Manage/Bikes/Rentals/{pageId}", defaults: new { controller = "Admin", action = "bikeCheckouts", pageId = 1 });
             routes.MapRoute(name: "AdminBikes", url: "Manage/Bikes/{pageId}", defaults: new { controller = "Admin", action = "bikeList", pageId = 1 });
             routes.MapRoute(name: "AdminNewRack", url: "Manage/Racks/New", defaults: new { controller = "Admin", action = "newRack" });
             routes.MapRoute(name: "AdminRacks", url: "Manage/Racks/{pageId}", defaults: new { controller = "Admin", action = "bikeRackList", pageId = 1 });
@@ -40,19 +38,12 @@ namespace BikeShare
             routes.MapRoute(name: "AdminChargeDetails", url: "Manage/Finance/Charge/{chargeId}", defaults: new { controller = "Admin", action = "chargeDetails", chargeId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminRackEdit", url: "Manage/Racks/Rack/{rackId}", defaults: new { controller = "Admin", action = "editRack", rackId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminBikeDetails", url: "Manage/Bikes/Bike/{bikeId}", defaults: new { controller = "Admin", action = "infoBike", bikeId = new RangeRouteConstraint(1, 999999) });
-            routes.MapRoute(name: "AdminInspectionList", url: "Manage/Bikes/Inspections/{pageId}", defaults: new { controller = "Admin", action = "inspectionList", pageId = 1 });
-            routes.MapRoute(name: "AdminMaintDetails", url: "Manage/Bikes/Maintenance/View/{maintId}", defaults: new { controller = "Admin", action = "maintenanceDetails", maintId = new RangeRouteConstraint(1, 999999) });
-            routes.MapRoute(name: "AdminMaintList", url: "Manage/Bikes/Maintenance/{pageId}", defaults: new { controller = "Admin", action = "maintenanceList", pageId = 1 });
             routes.MapRoute(name: "AdminShopsNew", url: "Manage/Workshops/New", defaults: new { controller = "Admin", action = "newWorkshop" });
             routes.MapRoute(name: "AdminUserDetails", url: "Manage/Users/View/{userId}", defaults: new { controller = "Admin", action = "userDetails", userId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminUserList", url: "Manage/Users/{page}/Mechanic={canMaintain}/Admin={canAdmin}/Rider={canRide}/Cashier={canCheckout}", defaults: new { controller = "Admin", action = "userList", page = 1, canMaintain = false, canAdmin = false, canRide = false, canCheckout = false });
             routes.MapRoute(name: "AdminWorkshopDetails", url: "Manage/Workshops/View/{shopId}", defaults: new { controller = "Admin", action = "workshopDetails", shopId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminWorkshopList", url: "Manage/Workshops/{pageId}", defaults: new { controller = "Admin", action = "workshopList", pageId = 1 });
             //Mailing Unsubscription
-            routes.MapRoute(name: "MailSubFail", url: "Mail/Unsubscribe/Failed", defaults: new { controller = "MailSub", action = "failure" });
-            routes.MapRoute(name: "MailSub", url: "Mail/Unsubscribe/{subId}", defaults: new { controller = "MailSub", action = "unsub", subId = new RangeRouteConstraint(1, 999999) });
-            routes.MapRoute(name: "MailSubSucc", url: "Mail/Unsubscribed", defaults: new { controller = "MailSub", action = "success" });
-
             //Account logon and logoff
             //routes.MapRoute(name: "logon", url: "LogOn/{returnUrl}/", defaults: new { controller = "Account", action = "LogOn", returnUrl = "" });
             //routes.MapRoute(name: "logoff", url: "LogOff/", defaults: new { controller = "Account", action = "LogOff" });

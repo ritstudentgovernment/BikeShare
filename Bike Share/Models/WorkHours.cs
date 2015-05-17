@@ -13,20 +13,10 @@ namespace BikeShare.Models
 
         public string comment { get; set; }
 
-        public virtual Bike bike { get; set; }
-
-        public virtual BikeRack rack { get; set; }
-
-        public virtual Workshop shop { get; set; }
-
-        public virtual MaintenanceEvent maint { get; set; }
-
-        public virtual bikeUser user { get; set; }
+        public int userid { get; set; }
 
         public DateTime timeStart { get; set; }
 
         public DateTime timeEnd { get; set; }
-
-        public virtual ICollection<Tracer> events { get; set; }
     }
 }

@@ -26,15 +26,9 @@ namespace BikeShare.Models
         [Display(Name = "Description")]
         public string description { get; set; }
 
-        public virtual ICollection<Bike> bikes { get; set; }
-
-        public virtual ICollection<CheckOut> checkOuts { get; set; }
-
         [Required]
         public bool isArchived { get; set; }
 
-        public virtual ICollection<Tracer> events { get; set; }
-
-        public virtual ICollection<Hour> hours { get; set; }
+        public string hours { get; set; }
     }
 }

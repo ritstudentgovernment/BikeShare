@@ -33,22 +33,15 @@ namespace BikeShare.Controllers
         // GET: Checkout
         public ActionResult Index(int rackId, string message = "")
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            /*if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.CheckoutViewModel();
             var result = new List<Bike>();
             var query = context.Bike.Where(c => c.checkOuts.All(r => r.isResolved)).Where(r => r.bikeRack.bikeRackId == rackId).Where(a => !a.isArchived);
             var maint = context.MaintenanceEvent.Where(r => !r.resolved).Where(d => d.disableBike).Select(b => b.bikeAffected.bikeId);
             var spec = context.Inspection.Where(b => b.bike.bikeRack.bikeRackId == rackId);
             var inspectionPeriod = (int)context.settings.First().DaysBetweenInspections;
-            List<Bike> temp = query.Where(b => !maint.Contains(b.bikeId)).ToList().Where(l => { DateTime x = (DateTime)l.lastPassedInspection; return x.AddDays(inspectionPeriod) > DateTime.Now; }).ToList();
-            foreach (var bike in temp)
-            {
-                if (spec.Where(b => b.bike.bikeId == bike.bikeId).OrderByDescending(d => d.datePerformed).First().isPassed == true)
-                {
-                    result.Add(bike);
-                }
-            }
-            model.availableBikes = result;
+           
+            model.availableBikes = context.Bike.Where(a => a.isAvailable).Where(a => !a.isArchived).ToList();
             model.checkedOutBikes = context.CheckOut.Where(i => !i.isResolved).Select(b => b.bike);
             model.unavailableBikes = context.BikeRack.Include(b => b.bikes).Where(r => r.bikeRackId == rackId).First().bikes.Except(model.availableBikes);
             model.errorMessage = message;
@@ -65,8 +58,9 @@ namespace BikeShare.Controllers
                 }
             }
             model.currentRack = context.BikeRack.Find(rackId);
-            model.checkOutPerson = User.Identity.Name;
-            return View(model);
+            model.checkOutPerson = User.Identity.Name;*/
+            //TODO
+            return View();
         }
 
         public ActionResult selectRack()
@@ -83,13 +77,12 @@ namespace BikeShare.Controllers
             try
             {
                 Bike bike = context.Bike.Find(model.selectedBikeForCheckout);
-                bike.bikeRack = context.BikeRack.Find(rackId); ;
                 bike.lastCheckedOut = DateTime.Now;
                 CheckOut check = new CheckOut
                 {
-                    bike = bike,
+                    bike = bike.bikeId,
                     isResolved = false,
-                    rackCheckedOut = bike.bikeRack,
+                    rackCheckedOut = rackId,
                     timeOut = DateTime.Now,
                     timeIn = DateTime.Now
                 };
@@ -104,18 +97,9 @@ namespace BikeShare.Controllers
                 {
                     return RedirectToAction("Index", new { rackId = rackId, message = "The user's registration is out of date. Please remind them to register." });
                 }
-                check.user = rider;
-                check.checkOutPerson = dcheckOutPerson;
-                rider.bike = bike;
-                rider.hasBike = true;
-                rider.checkOuts.Add(check);
+                check.rider = rider.bikeUserId;
+                check.checkOutPerson = dcheckOutPerson.bikeUserId;
                 context.CheckOut.Add(check);
-                var trace = new Tracer();
-                trace.checkOut = check;
-                trace.user = check.user;
-                trace.time = DateTime.Now;
-                trace.comment = "User Checked out Bike";
-                context.tracer.Add(trace);
                 context.SaveChanges();
                 try
                 {
@@ -153,22 +137,7 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             try
             {
-                Bike bike = context.Bike.Find(model.selectedBikeForCheckout);
-                bike.bikeRack = context.BikeRack.Find(rackId);
-                CheckOut check = context.CheckOut.Where(r => !r.isResolved).Where(b => b.bike.bikeId == model.selectedBikeForCheckout).First();
-                check.bike = bike;
-                check.isResolved = true;
-                check.rackCheckedIn = bike.bikeRack;
-                check.timeIn = DateTime.Now;
-                bikeUser rider = check.user;
-                rider.bike = null;
-                rider.hasBike = false;
-                var trace = new Tracer();
-                trace.checkOut = check;
-                trace.user = check.user;
-                trace.time = DateTime.Now;
-                trace.comment = "User Checked out Bike";
-                context.tracer.Add(trace);
+                //TODO - 
                 context.SaveChanges();
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException)
@@ -203,7 +172,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var maintenance = new MaintenanceEvent { timeAdded = DateTime.Now, timeResolved = DateTime.Now, title = maintTitle, details = maintDetails, disableBike = !String.IsNullOrEmpty(disableBike) };
-            maintenance.staffPerson = context.BikeUser.Where(u => u.userName == User.Identity.Name).First();
+            maintenance.submittedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
             context.MaintenanceEvent.Add(maintenance);
             context.SaveChanges();
             return RedirectToAction("Index", new { rackId = rackId });
@@ -225,7 +194,7 @@ namespace BikeShare.Controllers
             };
             context.Charge.Add(charge);
             var maintenance = new MaintenanceEvent { timeAdded = DateTime.Now, timeResolved = DateTime.Now, title = title, details = details, disableBike = !String.IsNullOrEmpty(disableBike) };
-            maintenance.staffPerson = context.BikeUser.Where(u => u.userName == User.Identity.Name).First();
+            maintenance.submittedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
             context.MaintenanceEvent.Add(maintenance);
             context.SaveChanges();
             return RedirectToAction("Index", new { rackId = rackId });

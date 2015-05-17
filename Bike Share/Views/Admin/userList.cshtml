@@ -48,17 +48,15 @@
         <div class="panel panel-default">
             @if (user.isArchived)
             {
-                <div class="panel-heading"><h4 class="panel-title"><span><img src="@BikeShare.Views.Gravatar.url(user.email)?s=30&d=identicon" /></span> @user.userName <label class="label label-danger pull-right"> Archived</label></h4></div>
+                <div class="panel-heading"><h4 class="panel-title">@user.userName <label class="label label-danger pull-right"> Archived</label></h4></div>
             }
             else
             {
-                <div class="panel-heading"><h4 class="panel-title"><span><img src="@BikeShare.Views.Gravatar.url(user.email)?s=30&d=identicon" /></span> @user.userName</h4></div>
+                <div class="panel-heading"><h4 class="panel-title">@user.userName - @user.firstName @user.lastName</h4></div>
             }
-            <div class="panel-body"><p>@user.email - @user.checkOuts.Count() rentals</p></div>
+            <div class="panel-body"><p>@user.email</p><p>@user.phoneNumber</p><p>@user.lastRegistered.ToShortDateString()</p></div>
             <div class="text-right panel-footer">
                 <a class="btn btn-default" href="@Url.Action(actionName: "userDetails", controllerName: "Admin", routeValues: new { userId = @user.bikeUserId})"><span class="glyphicon glyphicon-user"></span>  Details</a>
-                <a class="btn btn-default" href="@Url.Action(actionName: "chargesForUser", controllerName: "Admin", routeValues: new { userId = @user.bikeUserId })"><span class="glyphicon glyphicon-shopping-cart"></span>  Charges</a>
-                <a class="btn btn-default" href="@Url.Action(actionName: "bikeCheckouts", controllerName: "Admin", routeValues: new { userId = @user.bikeUserId })"><span class="glyphicon glyphicon-time"></span>  Rentals</a>
                 <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = user.bikeUserId})"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
             </div>
         </div>

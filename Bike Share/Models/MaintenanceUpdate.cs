@@ -23,14 +23,12 @@ namespace BikeShare.Models
 
         [Required]
         [Display(Name = "Poster")]
-        public virtual bikeUser postedBy { get; set; }
+        public int postedById { get; set; }
 
-        public virtual MaintenanceEvent associatedEvent { get; set; }
+        public int associatedEventId { get; set; }
 
-        public virtual Bike bike { get; set; }
+        public int bikeId { get; set; }
 
         public bool isCommentOnBike { get; set; }
-
-        public virtual ICollection<Tracer> events { get; set; }
     }
 }

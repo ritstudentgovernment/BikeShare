@@ -16,17 +16,14 @@ namespace BikeShare.Models
         public DateTime datePerformed { get; set; }
 
         [Required]
-        [Display(Name = "Inspected by")]
-        public virtual bikeUser inspector { get; set; }
+        public int inspectorId { get; set; }
 
         [Required]
-        public virtual Bike bike { get; set; }
+        public int bikeId { get; set; }
 
         [Required]
         [Display(Name = "Workshop")]
-        public virtual Workshop placeInspected { get; set; }
-
-        public virtual ICollection<MaintenanceEvent> associatedMaintenance { get; set; }
+        public int placeInspectedId { get; set; }
 
         [Required]
         [Display(Name = "Pass?")]
@@ -34,7 +31,5 @@ namespace BikeShare.Models
 
         [Display(Name = "Comment")]
         public string comment { get; set; }
-
-        public virtual ICollection<Tracer> events { get; set; }
     }
 }

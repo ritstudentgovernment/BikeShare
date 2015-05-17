@@ -6,6 +6,11 @@ namespace BikeShare.Models
 {
     public class Workshop
     {
+        public Workshop()
+        {
+            isArchived = false;
+        }
+
         [Required]
         [Key, DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int workshopId { get; set; }
@@ -22,13 +27,9 @@ namespace BikeShare.Models
         [Required]
         public float GPSCoordY { get; set; }
 
-        public virtual ICollection<MaintenanceEvent> MaintenanceEvents { get; set; }
-
         [Required]
         public bool isArchived { get; set; }
 
-        public virtual ICollection<Tracer> Events { get; set; }
-
-        public virtual ICollection<Hour> Hours { get; set; }
+        public string hours { get; set; }
     }
 }
