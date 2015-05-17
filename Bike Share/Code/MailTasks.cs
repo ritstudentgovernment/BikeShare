@@ -40,42 +40,7 @@ namespace BikeShare.Code.Mailers
         }
     }
 
-    public class DueSoonBikes : ITask
-    {
-        public void Execute()
-        {
-            using (var context = new BikesContext())
-            {
-                SmtpClient smtpServer = new SmtpClient();
-                var set = context.settings.First();
-                string appName = set.appName;
-                int rentDays = set.maxRentDays;
-                foreach (var checkout in context.CheckOut.Where(i => !i.isResolved).ToList())
-                {
-                    if (checkout.timeOut.AddHours(2).AddDays(rentDays) > DateTime.Now && checkout.timeOut.AddDays(rentDays) < DateTime.Now)
-                    {
-                        MailMessage mail = new MailMessage();
-                        mail.To.Add(context.BikeUser.Find(checkout.rider).email);
-                        mail.Subject = "Bike Due Soon - " + appName;
-                        mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
-                            ". Per our policy, your bike will be due within the next two hours. Please return your bike as soon as possible.";
-                        if (DateTime.Now.ToString("ddd") == "Fri" && DateTime.Now.Hour > 17)
-                        {
-                            mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
-                            ". Per our policy, your bike will be due next business day. Please return your bike as soon as possible.";
-                        }
-                        if (DateTime.Now.ToString("ddd") == "Sat" || DateTime.Now.ToString("ddd") == "Sun")
-                        {
-                            mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
-                            ". Per our policy, your bike will be due next business day. Please return your bike as soon as possible.";
-                        }
-                        smtpServer.Send(mail);
-                    }
-                }
-            }
-        }
-    }
-
+   
     public class overDueBikes : ITask
     {
         public void Execute()
