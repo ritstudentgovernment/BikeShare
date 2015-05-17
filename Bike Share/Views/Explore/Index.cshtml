@@ -25,12 +25,7 @@
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-user"></span> My Details</h4></div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="text-center"><img src="@BikeShare.Views.Gravatar.url(User.Identity.Name + "@rit.edu")?s=80&d=identicon" /></div>
-                        <div class="text-center">This image is managed by gravatar.</div>
-                        <a href="http://en.gravatar.com/emails/" class="btn btn-default btn-block">Manage your Gravatar</a>
-                    </div>
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="form-horizontal">
                             <div class="form-group form-inline">
                                 @Html.LabelFor(model => model.user.userName, new { @class = "control-label col-sm-4"})
