@@ -39,39 +39,6 @@ namespace BikeShare.Code.Mailers
             smtpServer.Send(mail);
         }
     }
-    public class DueSoonBikes : ITask
-    {
-        public void Execute()
-        {
-            SmtpClient smtpServer = new SmtpClient();
-            AdminDbRepository aRepo = new AdminDbRepository();
-            SettingsDbRepository sRepo = new SettingsDbRepository();
-            string appName = sRepo.getappName();
-            int rentDays = sRepo.getmaxRentDays();
-            foreach(var checkout in aRepo.getAllCurrentCheckOuts())
-            {
-                if (checkout.timeOut.AddHours(2).AddDays(rentDays) > DateTime.Now && checkout.timeOut.AddDays(rentDays) < DateTime.Now)
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.To.Add(checkout.user.email);
-                    mail.Subject = "Bike Due Soon - " + appName;
-                    mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() + 
-                        ". Per our policy, your bike will be due within the next two hours. Please return your bike as soon as possible.";
-                    if (DateTime.Now.ToString("ddd") == "Fri" && DateTime.Now.Hour > 17)
-                    {
-                        mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
-                        ". Per our policy, your bike will be due next business day. Please return your bike as soon as possible.";
-                    }
-                    if (DateTime.Now.ToString("ddd") == "Sat" || DateTime.Now.ToString("ddd") == "Sun")
-                    {
-                        mail.Body = "Thank you for using the " + appName + ". You rented a bike on " + checkout.timeOut.ToShortDateString() + " at " + checkout.timeOut.ToShortTimeString() +
-                        ". Per our policy, your bike will be due next business day. Please return your bike as soon as possible.";
-                    }
-                    smtpServer.Send(mail);
-                }
-            }
-        }
-    }
 
     public class overDueBikes : ITask
     {
