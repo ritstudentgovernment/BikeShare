@@ -22,10 +22,6 @@ namespace BikeShare.Models
         public int bikeId { get; set; }
 
         [Required]
-        [Display(Name = "Workshop")]
-        public int placeInspectedId { get; set; }
-
-        [Required]
         [Display(Name = "Pass?")]
         public Boolean isPassed { get; set; }
 

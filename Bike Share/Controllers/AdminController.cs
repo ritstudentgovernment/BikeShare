@@ -157,6 +157,7 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             context.BikeRack.Find(rack.bikeRackId).isArchived = true;
+            context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -258,16 +259,6 @@ namespace BikeShare.Controllers
             int totalRiders = context.BikeUser.Where(c => c.canBorrowBikes).Count();
             ViewBag.canRide = canRide; ViewBag.canMaintain = canMaintain; ViewBag.canAdmin = canAdmin; ViewBag.canCheckout = canCheckout;
             model.pagingInfo = new ViewModels.PageInfo(totalResults, pageSize, page);
-            return View(model);
-        }
-
-        public ActionResult workshopList(int page = 1)
-        {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            var model = new ViewModels.PaginatedViewModel<Workshop>();
-
-            model.modelList = context.WorkShop.OrderByDescending(d => d.workshopId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            model.pagingInfo = new ViewModels.PageInfo(context.WorkShop.Count(), pageSize, page);
             return View(model);
         }
 
@@ -392,37 +383,7 @@ namespace BikeShare.Controllers
             return RedirectToAction("userList", "Admin");
         }
 
-        public ActionResult newWorkshop(string userName)
-        {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            return View(new Workshop());
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult newWorkshop([Bind] Workshop shop)
-        {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.WorkShop.Add(shop);
-            context.SaveChanges();
-            return RedirectToAction("workshopList");
-        }
-
-        public ActionResult archiveWorkshop(int workshopId)
-        {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            return View(context.WorkShop.Find(workshopId));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult archiveWorkshop([Bind] Workshop shop)
-        {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.WorkShop.Find(shop.workshopId).isArchived = true;
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
+       
 
         public ActionResult userDetails(int userId)
         {
@@ -454,12 +415,7 @@ namespace BikeShare.Controllers
             return RedirectToAction("userDetails", new { userId = user.bikeUserId });
         }
 
-        public ActionResult workshopDetails(int workshopId)
-        {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            return View(context.WorkShop.Find(workshopId));
-        }
-
+     
         public ActionResult chargesList(int page = 1)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }

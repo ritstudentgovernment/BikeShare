@@ -13,7 +13,6 @@ namespace BikeShare.Controllers
     public class ExploreController : Controller
     {
         private BikesContext context;
-        private int pageSize = 25;
 
         /// <summary>
         /// Initializes the controller with dependency injection.

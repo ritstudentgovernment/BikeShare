@@ -17,8 +17,6 @@ namespace BikeShare.Models
 
         public DbSet<MaintenanceUpdate> MaintenanceUpdate { get; set; }
 
-        public DbSet<Workshop> WorkShop { get; set; }
-
         public DbSet<Inspection> Inspection { get; set; }
 
         public DbSet<Charge> Charge { get; set; }
@@ -42,7 +40,6 @@ namespace BikeShare.Models
         {
             protected override void Seed(BikesContext context)
             {
-                Workshop homeWorkshop = new Workshop() { Name = "Default", isArchived = false, GPSCoordX = 0, GPSCoordY = 0 };
                 bikeUser defaultAdmin = new bikeUser() { userName = "sgsvcs", lastRegistered = DateTime.Now, email = "sgsvcs@rit.edu", isArchived = false, canAdministerSite = true, canMaintainBikes = true, canCheckOutBikes = true, canBorrowBikes = true };
                 appSetting defaultSetting = new appSetting()
                 {
@@ -60,7 +57,6 @@ namespace BikeShare.Models
 
                 context.settings.Add(defaultSetting);
                 context.BikeUser.Add(defaultAdmin);
-                context.WorkShop.Add(homeWorkshop);
 
                 base.Seed(context);
             }

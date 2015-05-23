@@ -67,59 +67,9 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading"><h4 class="panel-title">Hours</h4></div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Days</th>
-                        <th>Hours</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.hours != null)
-                    {
-                        foreach (var hour in Model.hours)
-                        {
-                            <tr>
-                                <td>
-                                    @if (hour.dayStart == hour.dayEnd)
-                                    {
-                                        @hour.dayStart.ToString()
-                                    }
-                                    else
-                                    {
-                                        <text>@hour.dayStart.ToString() - @hour.dayEnd.ToString()</text>
-                                    }
-                                </td>
-                                <td>@hour.hourStart.ToString():@hour.minuteStart.ToString() - @hour.hourEnd.ToString():@hour.minuteEnd.ToString()</td>
-                                <td>@hour.comment</td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-success">
-            <div class="panel-heading"><h4 class="panel-title">Available Bikes</h4></div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Bike #</th>
-                        <th>Bike Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var bike in Model.bikes)
-                    {
-                        <tr>
-                            <td>@bike.bikeNumber</td>
-                            <td>@bike.bikeName</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div class="panel-body">
+                @Model.hours
+            </div>
         </div>
     </div>
 </div>

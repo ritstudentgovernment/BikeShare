@@ -213,6 +213,7 @@
     <Content Include="Content\Images\IMAG0060.jpg" />
     <Content Include="Content\Images\sg_web.svg" />
     <Content Include="Content\Bike_Share_Waiver.pdf" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\default.pubxml" />
     <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
@@ -238,29 +239,23 @@
     <Content Include="Views\Admin\bikeList.cshtml" />
     <Content Include="Views\Admin\bikeRackList.cshtml" />
     <Content Include="Views\Admin\userList.cshtml" />
-    <Content Include="Views\Admin\workshopList.cshtml" />
     <Content Include="Views\Admin\appSettings.cshtml" />
     <Content Include="Views\Admin\userEdit.cshtml" />
     <Content Include="Views\Admin\editBike.cshtml" />
     <Content Include="Views\Admin\infoBike.cshtml" />
     <Content Include="Views\Admin\editRack.cshtml" />
     <Content Include="Views\Admin\newUser.cshtml" />
-    <Content Include="Views\Admin\newWorkshop.cshtml" />
-    <Content Include="Views\Admin\archiveWorkshop.cshtml" />
     <Content Include="Views\CheckOut\Index.cshtml" />
     <Content Include="Views\Mechanic\bikeDetails.cshtml" />
-    <Content Include="Views\Mechanic\bikeListing.cshtml" />
     <Content Include="Views\Mechanic\maintenanceDetails.cshtml" />
     <Content Include="Views\Mechanic\newMaintenance.cshtml" />
     <Content Include="Views\Mechanic\newInspection.cshtml" />
-    <Content Include="Views\Mechanic\myActivity.cshtml" />
     <Content Include="Views\Mechanic\bikeInspections.cshtml" />
     <Content Include="Views\Mechanic\bikeMaintenance.cshtml" />
     <Content Include="Views\Mechanic\inspectionDetails.cshtml" />
     <Content Include="Views\CheckOut\selectRack.cshtml" />
     <Content Include="Views\Admin\userDetails.cshtml" />
     <Content Include="Views\Admin\chargesList.cshtml" />
-    <Content Include="Views\Admin\workshopDetails.cshtml" />
     <Content Include="Views\Admin\chargeDetails.cshtml" />
     <Content Include="Views\Mechanic\newComment.cshtml" />
     <Content Include="Views\Explore\userEdit.cshtml" />
@@ -269,7 +264,6 @@
     <Content Include="Views\Shared\_ExploreMenuPartial.cshtml" />
     <Content Include="Views\Shared\_MechanicMenuPartial.cshtml" />
     <Content Include="Views\Admin\uploadImage.cshtml" />
-    <Content Include="Views\Mechanic\newHour.cshtml" />
     <Content Include="Views\Explore\Register.cshtml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <Content Include="Views\Admin\newCharge.cshtml" />
@@ -353,13 +347,10 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Code\Gravatar.cs" />
     <Compile Include="Code\MailerRegistry.cs" />
     <Compile Include="Code\MailTasks.cs" />
-    <Compile Include="Code\NinjectDependencyResolver.cs" />
     <Compile Include="Code\PagingHelpers.cs" />
     <Compile Include="Code\Secrets.cs" />
     <Compile Include="Code\UserNameFilter.cs" />
@@ -382,6 +373,10 @@
     <Compile Include="Migrations\201504152103503_DeNormalizeRefactor.Designer.cs">
       <DependentUpon>201504152103503_DeNormalizeRefactor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505170410020_remove-workshop.cs" />
+    <Compile Include="Migrations\201505170410020_remove-workshop.Designer.cs">
+      <DependentUpon>201505170410020_remove-workshop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\appSetting.cs" />
     <Compile Include="Models\Bike.cs" />
@@ -396,7 +391,6 @@
     <Compile Include="Models\MaintenanceUpdate.cs" />
     <Compile Include="ViewModels\PageInfo.cs" />
     <Compile Include="Models\WorkHours.cs" />
-    <Compile Include="Models\Workshop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Cards.cs" />
@@ -427,6 +421,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504152103503_DeNormalizeRefactor.resx">
       <DependentUpon>201504152103503_DeNormalizeRefactor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505170410020_remove-workshop.resx">
+      <DependentUpon>201505170410020_remove-workshop.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

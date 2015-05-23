@@ -30,5 +30,7 @@ namespace BikeShare.Models
         public bool isArchived { get; set; }
 
         public string hours { get; set; }
+
+        public IEnumerable<Bike> availableBikes { get; set; }
     }
 }

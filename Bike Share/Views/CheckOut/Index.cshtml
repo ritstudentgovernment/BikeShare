@@ -30,7 +30,7 @@
                             <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
                             <td>@bike.bikeNumber</td>
                             <td>@bike.bikeName</td>
-                            <td>@bike.checkOuts.First().user.userName</td>
+                            <td>bike.checkOuts.First().user.userName</td>
                         </tr>
                     }
                 </table>
@@ -64,7 +64,7 @@
                             <td>@bike.bikeNumber</td>
                             <td>@bike.bikeName</td>
                             <td>@bike.lastCheckedOut.ToString()</td>
-                            <td>@bike.checkOuts.First().user.userName</td>
+                            <td>bike.checkOuts.First().user.userName</td>
                         </tr>
                     }
                 </table>

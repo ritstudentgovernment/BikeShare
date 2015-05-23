@@ -16,7 +16,6 @@
             <thead>
                 <tr>
                     <td>Date</td>
-                    <td>Workshop</td>
                     <td>Comment</td>
                     <td></td>
                 </tr>
@@ -28,7 +27,6 @@
                 {
                     <tr class="bg-success">
                         <td>@spec.datePerformed.ToShortDateString()</td>
-                        <td>@spec.placeInspected.name</td>
                         <td>@spec.comment</td>
                         <td><a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
                     </tr>
@@ -37,7 +35,6 @@
                 {
                     <tr class="bg-danger">
                         <td>@spec.datePerformed.ToShortDateString()</td>
-                        <td>@spec.placeInspected.name</td>
                         <td>@spec.comment</td>
                         <td><a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
                     </tr>
@@ -58,7 +55,6 @@
         <tr>
             <td>Date</td>
             <td>Title</td>
-            <td>Mechanic</td>
             <td>Resolved?</td>
             <td></td>
         </tr>
@@ -66,13 +62,12 @@
 
     @foreach (var maint in Model.maints)
     {
-        if (maint.resolved)
+        if (maint.timeResolved != null)
         {
             <tr class="bg-success">
                 <td>@maint.timeAdded.ToShortDateString()</td>
                 <td>@maint.title</td>
-                <td>@maint.staffPerson.userName</td>
-                <td>@maint.timeResolved.ToShortDateString()</td>
+                <td>@maint.timeResolved.GetValueOrDefault().ToString()</td>
                 <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
             </tr>
         }
@@ -81,7 +76,6 @@
             <tr class="bg-danger">
                 <td>@maint.timeAdded.ToShortDateString()</td>
                 <td>@maint.title</td>
-                <td>@maint.staffPerson.userName</td>
                 <td>Not yet. :(</td>
                 <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-wrench"></span>  Work</a></td>
             </tr>

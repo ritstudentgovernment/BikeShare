@@ -38,16 +38,9 @@ namespace BikeShare
             routes.MapRoute(name: "AdminChargeDetails", url: "Manage/Finance/Charge/{chargeId}", defaults: new { controller = "Admin", action = "chargeDetails", chargeId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminRackEdit", url: "Manage/Racks/Rack/{rackId}", defaults: new { controller = "Admin", action = "editRack", rackId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminBikeDetails", url: "Manage/Bikes/Bike/{bikeId}", defaults: new { controller = "Admin", action = "infoBike", bikeId = new RangeRouteConstraint(1, 999999) });
-            routes.MapRoute(name: "AdminShopsNew", url: "Manage/Workshops/New", defaults: new { controller = "Admin", action = "newWorkshop" });
             routes.MapRoute(name: "AdminUserDetails", url: "Manage/Users/View/{userId}", defaults: new { controller = "Admin", action = "userDetails", userId = new RangeRouteConstraint(1, 999999) });
             routes.MapRoute(name: "AdminUserList", url: "Manage/Users/{page}/Mechanic={canMaintain}/Admin={canAdmin}/Rider={canRide}/Cashier={canCheckout}", defaults: new { controller = "Admin", action = "userList", page = 1, canMaintain = false, canAdmin = false, canRide = false, canCheckout = false });
-            routes.MapRoute(name: "AdminWorkshopDetails", url: "Manage/Workshops/View/{shopId}", defaults: new { controller = "Admin", action = "workshopDetails", shopId = new RangeRouteConstraint(1, 999999) });
-            routes.MapRoute(name: "AdminWorkshopList", url: "Manage/Workshops/{pageId}", defaults: new { controller = "Admin", action = "workshopList", pageId = 1 });
-            //Mailing Unsubscription
-            //Account logon and logoff
-            //routes.MapRoute(name: "logon", url: "LogOn/{returnUrl}/", defaults: new { controller = "Account", action = "LogOn", returnUrl = "" });
-            //routes.MapRoute(name: "logoff", url: "LogOff/", defaults: new { controller = "Account", action = "LogOff" });
-
+   
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

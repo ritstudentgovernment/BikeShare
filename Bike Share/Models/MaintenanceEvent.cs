@@ -37,10 +37,6 @@ namespace BikeShare.Models
         [Display(Name = "Date Opened")]
         public DateTime timeAdded { get; set; }
 
-        [Required]
-        [Display(Name = "Workshop")]
-        public int workshopId { get; set; }
-
         [Display(Name = "Date Closed")]
         public DateTime? timeResolved { get; set; }
 
