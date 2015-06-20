@@ -45,7 +45,7 @@ namespace BikeShare.Code.Mailers
 
         public void Execute()
         {
-            if ((DateTime.Now.ToString("ddd") == "Fri" && DateTime.Now.Hour > 17) || DateTime.Now.ToString("ddd") == "Sat" || DateTime.Now.ToString("ddd") == "Sun" || (DateTime.Now.ToString("ddd") == "Mon" && DateTime.Now.Hour < 9))
+            if ((DateTime.Now.ToString("ddd") == "Fri" && DateTime.Now.Hour > 12) || DateTime.Now.ToString("ddd") == "Sat" || DateTime.Now.ToString("ddd") == "Sun" || (DateTime.Now.ToString("ddd") == "Mon" && DateTime.Now.Hour < 9))
             {
                 return;
             }
