@@ -9,7 +9,10 @@
 <hr />
 @if (!String.IsNullOrWhiteSpace(Model.errorMessage))
 {
-    <div class="alert alert-info alert-dismissable">@Model.errorMessage</div>
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @Model.errorMessage
+    </div>
 }
 <div class="alert alert-danger hidden" id="userWarningAlert">User is not eligible to check out bikes. Please remind the user to update their registration.</div>
 <div class="row">
@@ -30,7 +33,7 @@
                             <td>@Html.RadioButtonFor(m => m.selectedBikeForCheckout, bike.bikeId)</td>
                             <td>@bike.bikeNumber</td>
                             <td>@bike.bikeName</td>
-                            <td>bike.checkOuts.First().user.userName</td>
+                            <td>@Model.lastCheckoutUserForBike[bike.bikeId]</td>
                         </tr>
                     }
                 </table>
@@ -64,7 +67,7 @@
                             <td>@bike.bikeNumber</td>
                             <td>@bike.bikeName</td>
                             <td>@bike.lastCheckedOut.ToString()</td>
-                            <td>bike.checkOuts.First().user.userName</td>
+                            <td>@Model.lastCheckoutUserForBike[bike.bikeId]</td>
                         </tr>
                     }
                 </table>

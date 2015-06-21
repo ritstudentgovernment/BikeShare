@@ -33,34 +33,60 @@ namespace BikeShare.Controllers
         // GET: Checkout
         public ActionResult Index(int rackId, string message = "")
         {
-            /*if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.CheckoutViewModel();
-            var result = new List<Bike>();
-            var query = context.Bike.Where(c => c.checkOuts.All(r => r.isResolved)).Where(r => r.bikeRack.bikeRackId == rackId).Where(a => !a.isArchived);
-            var maint = context.MaintenanceEvent.Where(r => !r.resolved).Where(d => d.disableBike).Select(b => b.bikeAffected.bikeId);
-            var spec = context.Inspection.Where(b => b.bike.bikeRack.bikeRackId == rackId);
-            var inspectionPeriod = (int)context.settings.First().DaysBetweenInspections;
-           
-            model.availableBikes = context.Bike.Where(a => a.isAvailable).Where(a => !a.isArchived).ToList();
-            model.checkedOutBikes = context.CheckOut.Where(i => !i.isResolved).Select(b => b.bike);
-            model.unavailableBikes = context.BikeRack.Include(b => b.bikes).Where(r => r.bikeRackId == rackId).First().bikes.Except(model.availableBikes);
+            
+            model.currentRack = context.BikeRack.Find(rackId);
             model.errorMessage = message;
-
-            foreach (Bike bike in model.checkedOutBikes.Union(model.availableBikes).ToList())
+            model.userToCheckIn = null;
+            model.checkOutPerson = User.Identity.Name;
+            var baseBikeList = context.Bike.Where(b => !b.isArchived).Where(r => r.bikeRackId.Value == rackId || !r.bikeRackId.HasValue).ToList();
+            model.availableBikes = baseBikeList.Where(i => i.isAvailable() && i.bikeRackId.HasValue);
+            model.unavailableBikes = baseBikeList.Where(i => !i.isAvailable());
+            model.checkedOutBikes = baseBikeList.Where(r => !r.bikeRackId.HasValue);
+            model.lastCheckoutUserForBike = new Dictionary<int, string>();
+            model.lastCheckoutTimeForBike = new Dictionary<int, string>();
+            var listBikeIds = baseBikeList.Select(i => i.bikeId).ToList();
+            var checkouts = context.CheckOut.Where(c=> listBikeIds.Contains(c.bike)).ToList().OrderByDescending(t => t.timeOut).ToList();
+            foreach(var bike in baseBikeList)
             {
-                bike.checkOuts = context.Bike.Find(bike.bikeId).checkOuts.OrderByDescending(d => d.timeOut).ToList();
-                if (bike.checkOuts.Count < 1)
+                try
                 {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
+                    var first = checkouts.Where(b => b.bike == bike.bikeId).First();
+                    checkouts = checkouts.Where(b => b.bike != bike.bikeId).ToList();
+                    checkouts.Add(first);
+                }
+                catch
+                {
+                    model.lastCheckoutTimeForBike.Add(bike.bikeId, "no data");
+                    model.lastCheckoutUserForBike.Add(bike.bikeId, "no data");
                 }
             }
-            model.currentRack = context.BikeRack.Find(rackId);
-            model.checkOutPerson = User.Identity.Name;*/
-            //TODO
-            return View();
+            foreach(var checkout in checkouts)
+            {
+                int lastPerson = checkout.rider;
+                try
+                {
+
+
+                    model.lastCheckoutUserForBike.Add(checkout.bike, context.BikeUser.Find(lastPerson).userName);
+                    if (checkout.timeIn.HasValue)
+                    {
+                        model.lastCheckoutTimeForBike.Add(checkout.bike, checkout.timeIn.ToString());
+                    }
+                    else
+                    {
+                        model.lastCheckoutTimeForBike.Add(checkout.bike, checkout.timeOut.ToString());
+                    }
+                }
+                catch(NullReferenceException)
+                {
+                    model.lastCheckoutTimeForBike.Add(checkout.bike, "no data");
+                    model.lastCheckoutUserForBike.Add(checkout.bike, "no data");
+                }
+            }
+
+            return View(model);
         }
 
         public ActionResult selectRack()
@@ -84,7 +110,6 @@ namespace BikeShare.Controllers
                     isResolved = false,
                     rackCheckedOut = rackId,
                     timeOut = DateTime.Now,
-                    timeIn = DateTime.Now
                 };
 
                 bikeUser rider = context.BikeUser.Where(n => n.userName == model.userToCheckIn).First();
@@ -97,6 +122,7 @@ namespace BikeShare.Controllers
                 {
                     return RedirectToAction("Index", new { rackId = rackId, message = "The user's registration is out of date. Please remind them to register." });
                 }
+                bike.bikeRackId = null;
                 check.rider = rider.bikeUserId;
                 check.checkOutPerson = dcheckOutPerson.bikeUserId;
                 context.CheckOut.Add(check);
@@ -116,7 +142,7 @@ namespace BikeShare.Controllers
                 }
                 catch
                 {
-                    return RedirectToAction("Index", new { rackId = rackId, message = "The checkout was succesful, but there was difficulty sending email. Please let the system administrator know." });
+                    return RedirectToAction("Index", new { rackId = rackId, message = "The checkout was successful, but there was difficulty sending email. Please let the system administrator know." });
                 }
             }
             catch (System.InvalidOperationException)
@@ -127,7 +153,7 @@ namespace BikeShare.Controllers
             {
                 return RedirectToAction("Index", new { rackId = rackId, message = "Checkout didn't validate. Sorry." });
             }
-            return RedirectToAction("Index", new { rackId = rackId, message = "Checkout succesful!" });
+            return RedirectToAction("Index", new { rackId = rackId, message = "Checkout successful!" });
         }
 
         [HttpPost]
@@ -137,7 +163,11 @@ namespace BikeShare.Controllers
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             try
             {
-                //TODO - 
+                var checkout = context.CheckOut.Where(t => !t.timeIn.HasValue).Where(b => b.bike == model.selectedBikeForCheckout).First();
+                checkout.isResolved = true;
+                checkout.timeIn = DateTime.Now;
+                var bike = context.Bike.Find(model.selectedBikeForCheckout);
+                bike.bikeRackId = rackId;
                 context.SaveChanges();
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException)
