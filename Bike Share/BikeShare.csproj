@@ -213,7 +213,6 @@
     <Content Include="Content\Images\IMAG0060.jpg" />
     <Content Include="Content\Images\sg_web.svg" />
     <Content Include="Content\Bike_Share_Waiver.pdf" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\default.pubxml" />
     <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
