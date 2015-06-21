@@ -109,7 +109,7 @@ namespace BikeShare.Controllers
             }
             inspection.spec.datePerformed = DateTime.Now;
             context.Inspection.Add(inspection.spec);
-            context.Bike.Find(inspection.spec.bikeId).onInspectionHold = inspection.spec.isPassed; 
+            context.Bike.Find(inspection.spec.bikeId).onInspectionHold = !inspection.spec.isPassed; 
             context.SaveChanges();
             return RedirectToAction("bikeDetails", "Mechanic", new { bikeId = inspection.spec.bikeId });
         }
