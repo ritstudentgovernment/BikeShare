@@ -11,6 +11,10 @@ namespace BikeShare.ViewModels
 
         public IEnumerable<Bike> unavailableBikes { get; set; }
 
+        public Dictionary<int, string> lastCheckoutUserForBike { get; set; }
+
+        public Dictionary<int, string> lastCheckoutTimeForBike { get; set; }
+
         public BikeRack currentRack { get; set; }
 
         public string errorMessage { get; set; }

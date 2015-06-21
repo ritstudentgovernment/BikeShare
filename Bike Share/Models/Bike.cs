@@ -49,5 +49,11 @@ namespace BikeShare.Models
             return !onInspectionHold && !onMaintenanceHold;
         }
 
+        public void makeAvailable()
+        {
+            onInspectionHold = false;
+            onMaintenanceHold = false;
+        }
+
     }
 }
