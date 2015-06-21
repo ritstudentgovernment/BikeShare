@@ -130,7 +130,7 @@ namespace BikeShare.Controllers
         public ActionResult archiveBike([Bind(Include = "bikeId")]Bike bike)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.Bike.Find(bike.bikeId).isArchived = true;
+            context.Bike.Find(bike.bikeId).isArchived = !context.Bike.Find(bike.bikeId).isArchived;
             context.SaveChanges();
             Response.RedirectToRoute(new { action = "Index", controller = "Admin" });
             return RedirectToAction("Index");
@@ -156,7 +156,7 @@ namespace BikeShare.Controllers
         public ActionResult archiveRack([Bind(Include = "bikeRackId")] BikeRack rack)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.BikeRack.Find(rack.bikeRackId).isArchived = true;
+            context.BikeRack.Find(rack.bikeRackId).isArchived = !context.BikeRack.Find(rack.bikeRackId).isArchived;
             context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -172,7 +172,7 @@ namespace BikeShare.Controllers
         public ActionResult archiveUser([Bind(Include = "bikeUserId")] bikeUser user)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.BikeUser.Find(user.bikeUserId).isArchived = true;
+            context.BikeUser.Find(user.bikeUserId).isArchived =!context.BikeUser.Find(user.bikeUserId).isArchived;
             context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -586,7 +586,7 @@ namespace BikeShare.Controllers
                     string.Format(
                     "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\"",
                     "Rider", "Time Out", "Time In", "Rack Out", "Rack In", "Rental Complete?", "Bike Number"));
-            foreach (var checkout in context.CheckOut)
+            foreach (var checkout in context.CheckOut.ToList())
             {
                 csvExport.AppendLine(
                     string.Format(
