@@ -278,6 +278,7 @@
     <Content Include="Views\Home\FooterPartial.cshtml" />
     <Content Include="Views\Home\HeaderPartial.cshtml" />
     <Content Include="Views\Home\AnnouncementPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout_wide.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

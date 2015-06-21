@@ -4,59 +4,30 @@
 
 @{
     ViewBag.Title = "Racks";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_wide.cshtml";
 }
-<h2 class="text-center">@ViewBag.Title</h2>
-<hr />
 @foreach (var rack in Model.modelList)
 {
-    List<Bike> bikes = (List<Bike>)ViewBag.availableBikes;
-    bikes = bikes.Where(r => r.bikeRackId == rack.bikeRackId).ToList();
-    if(bikes.Count() > 0)
-    {
-        <div class="panel panel-success">
-            <div class="panel-heading"><h4 class="panel-title">@rack.name</h4></div>
-            <div style="height:150px; background-position: center; background-size: cover; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>
-            <div class="panel-body">
-                <div>@rack.description</div>
-                <div>@bikes.Count() bikes available.</div>
+    <div class="row">
+        <div style="background-image: url(@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")); background-position: center; background-size: cover; padding: 50px 0px 50px 0px; height: 400px;">
+            <div class="container" style="position: relative; top: 25%; color: white;">
+                <div class="row" style="font-size: 200%;">
+                    <div class="col-xs-12 col-sm-6 col-xs-push-1 col-sm-push-0">
+                        <h2 style="text-shadow:3px 3px 3px black">
+                            @rack.name<br />
+                            @rack.availableBikes.Count() Bikes Available
+                        </h2>
+                        <h3 style="text-shadow:3px 3px 3px black">@rack.description</h3>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-xs-push-1 col-sm-pull-1">
+                        @rack.hours<br />
+                        <a class="btn btn-primary" href="@Url.Action(actionName: "rackDetails", controllerName: "Explore", routeValues: new { rackId = rack.bikeRackId})"><span class="glyphicon glyphicon-chevron-right"></span>  See More</a>
+                    </div>
+                </div>
             </div>
-            <table class="table table-striped">
-                <thead class="">
-                    <tr>
-                        <th>Bike#</th>
-                        <th>Bike Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var bike in bikes)
-                    {
-                        <tr>
-                            <td>@bike.bikeNumber</td>
-                            <td>@bike.bikeName</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <div class="panel-footer text-right">
-                <a class="btn btn-primary" href="@Url.Action(actionName: "rackDetails", controllerName: "Explore", routeValues: new { rackId = rack.bikeRackId})"><span class="glyphicon glyphicon-stats"></span>  Details</a>
-            </div>
+
         </div>
-    }
-    else
-    {
-        <div class="panel panel-danger">
-            <div class="panel-heading"><h4 class="panel-title">@rack.name</h4></div>
-            <div style="height:150px; background-position: center; background-size: cover; background-image: url('@Url.Content("~/Content/Images/Racks/" + rack.bikeRackId.ToString() + ".jpg")')"></div>
-            <div class="panel-body">
-                <div>@rack.description</div>
-                <div>@bikes.Count() bikes available.</div>
-            </div>
-            <div class="panel-footer text-right">
-                <a class="btn btn-primary" href="@Url.Action(actionName: "rackDetails", controllerName: "Explore", routeValues: new { rackId = rack.bikeRackId})"><span class="glyphicon glyphicon-stats"></span>  Details</a>
-            </div>
-        </div>
-    }
+    </div>   
 }
 <hr />
 <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("rackListing", new { page = x }))</div>

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Bike Rack: " + Model.name;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_wide.cshtml";
     @section mapsSection {
         <style type="text/css">
             #map-canvas {
@@ -42,31 +42,23 @@
 
     }
 }
-<h2 class="text-center"><i class="fa fa-exchange pull-left"></i>Rack Details</h2>
-<hr />
 <div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h4 class="panel-title">Information for @Model.name</h4></div>
-            <div style="height:150px; background-size: cover; background-position-x:center; background-position-y:center; background-image: url('@Url.Content("~/Content/Images/Racks/" + Model.bikeRackId.ToString() + ".jpg")')"></div>
-            <div class="panel-body" style="background-position-x:center; background-position-y: center">
-                <p>Description:</p>
-                <p>@Model.description</p>
+    <div style="background-image: url(@Url.Content("~/Content/Images/Racks/" + Model.bikeRackId.ToString() + ".jpg")); background-position: center; background-size: cover; padding: 50px 0px 50px 0px; height: 300px;">
+        <div class="container" style="position: relative; top: 25%; color: white;">
+            <div class="row" style="font-size: 200%;">
+                <div class="col-xs-12 col-sm-6 col-xs-push-1 col-sm-push-0">
+                    <h2 style="text-shadow:3px 3px 3px black">
+                        @Model.name<br />
+                        @Model.availableBikes.Count() Bikes Available
+                    </h2>
+                    <h3 style="text-shadow:3px 3px 3px black">@Model.description</h3> 
+                </div>
+                <div class="col-xs-12 col-sm-6 col-xs-push-1 col-sm-push-0">
+                        @Model.hours
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h4 class="panel-title">Map</h4></div>
-            <div id="map-canvas" style="height: 400px"></div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h4 class="panel-title">Hours</h4></div>
-            <div class="panel-body">
-                @Model.hours
-            </div>
-        </div>
+
     </div>
 </div>
+<div id="map-canvas" style="height: 400px"></div>

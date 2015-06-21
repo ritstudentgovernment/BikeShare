@@ -80,8 +80,12 @@ namespace BikeShare.Controllers
         {
             var model = new PaginatedViewModel<BikeRack>();
             model.modelList = context.BikeRack.Where(a => !a.isArchived).ToList();
+            foreach(var rack in model.modelList)
+            {
+                rack.availableBikes = context.Bike.Where(r => r.bikeRackId == rack.bikeRackId).ToList().Where(b => b.isAvailable()).ToList();
+            }
             DateTime dateFloor = DateTime.Now.Subtract(new TimeSpan(context.settings.First().DaysBetweenInspections));
-            ViewBag.availableBikes = context.Bike.ToList().Where(b => b.isAvailable()).ToList();
+            
             model.pagingInfo = new PageInfo(model.modelList.Count(), model.modelList.Count(), page);
             var images = new Dictionary<int, string>();
             ViewBag.images = images;
@@ -119,6 +123,7 @@ namespace BikeShare.Controllers
         public ActionResult rackDetails(int rackId)
         {
             var rack = context.BikeRack.Find(rackId);
+            rack.availableBikes = context.Bike.ToList().Where(r => r.bikeRackId == rackId).Where(b => b.isAvailable()).ToList();
             return View(rack);
         }
 
