@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-xs-push-1 col-sm-pull-1">
                         @rack.hours<br />
-                        <a class="btn btn-primary" href="@Url.Action(actionName: "rackDetails", controllerName: "Explore", routeValues: new { rackId = rack.bikeRackId})"><span class="glyphicon glyphicon-chevron-right"></span>  See More</a>
+                        <a class="btn btn-primary" href="@Url.Action(actionName: "rackDetails", controllerName: "Explore", routeValues: new { rackId = rack.bikeRackId})">See More <span class="glyphicon glyphicon-chevron-right"></span></a>
                     </div>
                 </div>
             </div>
@@ -29,5 +29,4 @@
         </div>
     </div>   
 }
-<hr />
 <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("rackListing", new { page = x }))</div>
