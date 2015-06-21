@@ -1,3 +1,10 @@
-﻿<div class="list-group">
-    @Html.ActionLink("Home", "Index", new { }, new { @class = "list-group-item" })
+﻿<div class="visible-sm hidden-xs visible-md visible-lg">
+    <div class="list-group">
+        <a class="list-group-item" href="@Url.Action("Index")"><span class="glyphicon glyphicon-home"></span> Home</a>
+    </div>
+</div>
+<div class="hidden-sm visible-xs hidden-md hidden-lg">
+    <ul class="nav nav-tabs">
+        <li><a href="@Url.Action("Index")"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+    </ul>
 </div>

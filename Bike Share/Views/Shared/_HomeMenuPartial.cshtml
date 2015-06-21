@@ -1,6 +1,16 @@
-﻿<div class="list-group">
-    @Html.ActionLink("About", "About", new { }, new { @class = "list-group-item" })
-    @Html.ActionLink("Safety", "Safety", new { }, new { @class = "list-group-item" })
-    @Html.ActionLink("FAQ", "FAQ", new { }, new { @class = "list-group-item" })
-    @Html.ActionLink("Contact", "Contact", new { }, new { @class = "list-group-item" })
+﻿<div class="visible-sm hidden-xs visible-md visible-lg">
+    <div class="list-group">
+        <a class="list-group-item" href="@Url.Action("About")"><span class="glyphicon glyphicon-info-sign"></span> About</a>
+        <a class="list-group-item" href="@Url.Action("Safety")"><span class="glyphicon glyphicon-warning-sign"></span> Safety</a>
+        <a class="list-group-item" href="@Url.Action("FAQ")"><span class="glyphicon glyphicon-question-sign"></span> FAQ</a>
+        <a class="list-group-item" href="@Url.Action("Contact")"><span class="glyphicon glyphicon-envelope"></span> Contact</a>
+    </div> 
+</div>
+<div class="hidden-sm visible-xs hidden-md hidden-lg">
+    <ul class="nav nav-tabs">
+        <li><a href="@Url.Action("About")"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+        <li><a href="@Url.Action("Safety")"><span class="glyphicon glyphicon-warning-sign"></span> Safety</a></li>
+        <li><a href="@Url.Action("FAQ")"><span class="glyphicon glyphicon-question-sign"></span> FAQ</a></li>
+        <li><a href="@Url.Action("Contact")"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
+    </ul>
 </div>
