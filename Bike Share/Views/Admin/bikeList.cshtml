@@ -50,7 +50,6 @@
             <p>Last Checked out: @bike.lastCheckedOut.ToShortDateString()</p>
         </div>
         <div class="text-right panel-footer">
-            <a class="btn btn-default" href="@Url.Action(actionName: "bikeCheckouts", controllerName: "Admin", routeValues: new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-time"></span>  Checkouts</a>
             <a class="btn btn-default" href="@Url.Action(actionName: "infoBike", controllerName: "Admin", routeValues: new { bikeId = bike.bikeId })"><span class="glyphicon glyphicon-list"></span>  Details</a>
             <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("editBike", new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
         </div>
