@@ -18,6 +18,10 @@ namespace BikeShare.Views
         /// <returns>MvcHtmlString to insert into the page markup.</returns>
         public static MvcHtmlString PageLinks(this HtmlHelper html, PageInfo pagingInfo, Func<int, string> pageUrl)
         {
+            if (pagingInfo.TotalItems <= pagingInfo.ItemsPerPage)
+            {
+                return new MvcHtmlString("");
+            }
             TagBuilder outerList = new TagBuilder("ul");
             outerList.AddCssClass("pagination");
             for (int i = 1; i <= pagingInfo.TotalPages; i++)
