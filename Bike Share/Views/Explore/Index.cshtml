@@ -5,9 +5,6 @@
     ViewBag.Title = "My Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section menuSection{
-    @Html.Partial("_ExploreMenuPartial")
-}
 <h2 class="text-center"><span class="glyphicon glyphicon-search pull-left"></span>
     @if (!String.IsNullOrWhiteSpace(Model.user.firstName) && !String.IsNullOrWhiteSpace(Model.user.lastName))
     {

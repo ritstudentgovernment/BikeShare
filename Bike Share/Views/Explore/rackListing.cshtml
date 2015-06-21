@@ -6,9 +6,6 @@
     ViewBag.Title = "Racks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section menuSection{
-    @Html.Partial("_ExploreMenuPartial")
-}
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 @foreach (var rack in Model.modelList)
