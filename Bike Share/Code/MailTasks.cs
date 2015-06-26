@@ -39,7 +39,6 @@ namespace BikeShare.Code.Mailers
             }
         }
     }
-
    
     public class overDueBikes : ITask
     {
