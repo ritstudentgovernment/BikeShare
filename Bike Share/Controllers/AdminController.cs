@@ -41,7 +41,7 @@ namespace BikeShare.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var model = new ViewModels.dashViewModel();
             model.countBikes = context.Bike.Where(b => !b.isArchived).Count();
             model.countAvailableBikes = context.Bike.Where(b => !b.isArchived).ToList().Where(b => b.isAvailable()).Count();
@@ -61,7 +61,7 @@ namespace BikeShare.Controllers
         /// <returns></returns>
         public ActionResult newBike()
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             ViewBag.query = context.BikeRack.Where(a => !a.isArchived).ToList();
             return View();
         }
@@ -75,7 +75,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult newBike([Bind()] ViewModels.newBikeViewModel bikeModel)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             context.Bike.Add(new Bike(bikeModel.bikeNumber)
             {
                 bikeRackId = bikeModel.bikeRackId,
@@ -90,7 +90,7 @@ namespace BikeShare.Controllers
         /// <returns></returns>
         public ActionResult newRack()
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View();
         }
 
@@ -103,7 +103,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult newRack(BikeRack rack)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             rack.isArchived = false;
             context.BikeRack.Add(rack);
             context.SaveChanges();
@@ -116,7 +116,7 @@ namespace BikeShare.Controllers
         /// <returns></returns>
         public ActionResult archiveBike(int bikeId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(context.Bike.Find(bikeId));
         }
 
@@ -129,7 +129,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult archiveBike([Bind(Include = "bikeId")]Bike bike)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             context.Bike.Find(bike.bikeId).isArchived = !context.Bike.Find(bike.bikeId).isArchived;
             context.SaveChanges();
             Response.RedirectToRoute(new { action = "Index", controller = "Admin" });
@@ -142,7 +142,7 @@ namespace BikeShare.Controllers
         /// <returns></returns>
         public ActionResult archiveRack(int rackId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(context.BikeRack.Find(rackId));
         }
 
@@ -155,7 +155,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult archiveRack([Bind(Include = "bikeRackId")] BikeRack rack)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             context.BikeRack.Find(rack.bikeRackId).isArchived = !context.BikeRack.Find(rack.bikeRackId).isArchived;
             context.SaveChanges();
             return RedirectToAction("Index");
@@ -163,7 +163,7 @@ namespace BikeShare.Controllers
 
         public ActionResult archiveUser(int userId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(context.BikeUser.Find(userId));
         }
 
@@ -171,15 +171,15 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult archiveUser([Bind(Include = "bikeUserId")] bikeUser user)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.BikeUser.Find(user.bikeUserId).isArchived =!context.BikeUser.Find(user.bikeUserId).isArchived;
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            context.BikeUser.Find(user.bikeUserId).isArchived = !context.BikeUser.Find(user.bikeUserId).isArchived;
             context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         public ActionResult appSettings()
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(context.settings.First());
         }
 
@@ -187,7 +187,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult appSettings([Bind] appSetting settings)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             context.settings.Remove(context.settings.First());
             context.settings.Add(settings);
             context.SaveChanges();
@@ -196,7 +196,7 @@ namespace BikeShare.Controllers
 
         public ActionResult bikeList(int? rackId, int page = 1, bool incMissing = true, bool incOverdue = true, bool incCheckedOut = true, bool incCheckedIn = true, bool incCurrent = true, bool incArchived = false)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var model = new ViewModels.FilteredBikeViewModel();
             var all = new List<Bike>();
             if (incCurrent)
@@ -233,7 +233,7 @@ namespace BikeShare.Controllers
 
         public ActionResult bikeRackList(int page = 1)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var model = new ViewModels.rackListingViewModel();
             model.bikeRacks = context.BikeRack.OrderByDescending(d => d.bikeRackId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.countBikeRacks = model.bikeRacks.Count();
@@ -241,23 +241,47 @@ namespace BikeShare.Controllers
             return View(model);
         }
 
-        public ActionResult userList(string name = "", int page = 1, bool hasCharges = false, bool hasBike = false, bool canMaintain = false, bool canAdmin = false, bool canRide = false, bool canCheckout = false)
+        public ActionResult userList(string name = "", int page = 1, bool? hasCharges = null, bool? hasBike = null, bool? canMaintain = null, bool? canAdmin = null, bool? canRide = null, bool? canCheckout = null)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
+           
             var model = new ViewModels.PaginatedViewModel<bikeUser>();
-            model.modelList = context.BikeUser.Where(c => c.canBorrowBikes == canRide).Where(c => c.canAdministerSite == canAdmin).Where(c => c.canCheckOutBikes == canCheckout).Where(c => c.canMaintainBikes == canMaintain).ToList();
-            if (hasCharges)
+            model.modelList = new List<bikeUser>();
+            if(hasCharges.HasValue && hasCharges.Value)
             {
-                model.modelList = model.modelList.Where(c => context.Charge.Where(i => i.chargeId == c.bikeUserId).Count() < 1).ToList();
+                model.modelList = context.Charge.Where(r => !r.isResolved).Select(u => u.user).ToList();
+            }
+            if(hasBike.HasValue && hasBike.Value)
+            {
+                var userIds = context.CheckOut.Where(r => !r.isResolved).Select(u => u.rider).ToList();
+                userIds.ForEach(u => model.modelList.Add(context.BikeUser.Find(u)));
+            }
+            
+            if(canMaintain.HasValue && canMaintain.Value)
+            {
+                model.modelList = context.BikeUser.Where(c => c.canMaintainBikes).ToList();
+            }
+            if(canAdmin.HasValue && canAdmin.Value)
+            {
+                model.modelList = context.BikeUser.Where(c => c.canAdministerSite).ToList();
+            }
+            if(canRide.HasValue && canRide.Value)
+            {
+                model.modelList = context.BikeUser.Where(c => !c.canBorrowBikes).ToList();
+            }
+            if(canCheckout.HasValue && canCheckout.Value)
+            {
+                model.modelList = context.BikeUser.Where(c => c.canCheckOutBikes).ToList();
+            }
+            if(!String.IsNullOrWhiteSpace(name))
+            {
+                model.modelList = context.BikeUser.Where(c => c.userName.Contains(name)).ToList();
+                model.modelList.AddRange(context.BikeUser.Where(c => c.firstName.Contains(name)).ToList());
+                model.modelList.AddRange(context.BikeUser.Where(c => c.lastName.Contains(name)).ToList());
             }
             int totalResults = model.modelList.Count();
             model.modelList = model.modelList.OrderByDescending(d => d.userName).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            int totalMechanics = context.BikeUser.Where(a => a.canMaintainBikes).Count();
-            int totalCheckout = context.BikeUser.Where(c => c.canCheckOutBikes).Count();
-            int totalAdmin = context.BikeUser.Where(c => c.canAdministerSite).Count();
-            int totalRiders = context.BikeUser.Where(c => c.canBorrowBikes).Count();
-            ViewBag.canRide = canRide; ViewBag.canMaintain = canMaintain; ViewBag.canAdmin = canAdmin; ViewBag.canCheckout = canCheckout;
+            //ViewBag.canRide = canRide; ViewBag.canMaintain = canMaintain; ViewBag.canAdmin = canAdmin; ViewBag.canCheckout = canCheckout;
             model.pagingInfo = new ViewModels.PageInfo(totalResults, pageSize, page);
             return View(model);
         }
@@ -271,7 +295,7 @@ namespace BikeShare.Controllers
         /// <returns></returns>
         public ActionResult bikeCheckouts(int? rackId, int? bikeID, int page = 1)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var model = new ViewModels.PaginatedViewModel<CheckOut>();
 
             IQueryable<CheckOut> list;
@@ -295,8 +319,8 @@ namespace BikeShare.Controllers
 
         public ActionResult editBike(int bikeId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
+           
             return View(context.Bike.Find(bikeId));
         }
 
@@ -304,8 +328,8 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult editBike([Bind] Bike bike)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
+           
             var dbike = context.Bike.Find(bike.bikeId);
             dbike.bikeName = bike.bikeName;
             dbike.bikeNumber = bike.bikeNumber;
@@ -317,7 +341,7 @@ namespace BikeShare.Controllers
 
         public ActionResult infoBike(int bikeID)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var model = new BikeShare.ViewModels.superBike();
 
             model.bike = context.Bike.Find(bikeID);
@@ -328,8 +352,8 @@ namespace BikeShare.Controllers
 
         public ActionResult editRack(int rackId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
+           
             return View(context.BikeRack.Find(rackId));
         }
 
@@ -342,8 +366,8 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult editRack([Bind] BikeRack rack)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
+           
             var dRack = context.BikeRack.Find(rack.bikeRackId);
             dRack.description = rack.description;
             dRack.GPSCoordX = rack.GPSCoordX;
@@ -357,7 +381,7 @@ namespace BikeShare.Controllers
 
         public ActionResult newUser(string userName)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(new BikeShare.ViewModels.bikeUserPermissionViewModel());
         }
 
@@ -365,8 +389,8 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult newUser([Bind] BikeShare.ViewModels.bikeUserPermissionViewModel user)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
+           
             context.BikeUser.Add(new bikeUser
             {
                 userName = user.userName,
@@ -387,13 +411,13 @@ namespace BikeShare.Controllers
 
         public ActionResult userDetails(int userId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(context.BikeUser.Find(userId));
         }
 
         public ActionResult userEdit(int userId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(context.BikeUser.Find(userId));
         }
 
@@ -401,7 +425,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult userEdit([Bind] bikeUser user)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var dUser = context.BikeUser.Find(user.bikeUserId);
             dUser.canAdministerSite = user.canAdministerSite;
             dUser.canBorrowBikes = user.canBorrowBikes;
@@ -418,20 +442,30 @@ namespace BikeShare.Controllers
      
         public ActionResult chargesList(int page = 1)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var model = new ViewModels.PaginatedViewModel<Charge>();
             model.modelList = context.Charge.OrderByDescending(d => d.chargeId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             model.pagingInfo = new ViewModels.PageInfo(context.Charge.Count(), pageSize, page);
             ViewBag.totalCharges = context.Charge.Count();
-            ViewBag.totalResolved = context.Charge.Where(i => i.isResolved).Count();
-            ViewBag.totalPaid = context.Charge.Sum(c => c.amountPaid);
-            ViewBag.totalUnpaid = context.Charge.Sum(c => c.amountCharged) - ViewBag.totalPaid;
+            
+            if(context.Charge.Count() > 0)
+            {
+                ViewBag.totalPaid = context.Charge.Where(c => c.amountPaid != null).Sum(c => c.amountPaid);
+                ViewBag.totalResolved = context.Charge.Where(i => i.isResolved).Count();
+                ViewBag.totalUnpaid = context.Charge.Sum(c => c.amountCharged) - ViewBag.totalPaid;
+            }
+            else
+            {
+                ViewBag.totalPaid = 0;
+                ViewBag.totalResolved = 0;
+                ViewBag.totalUnpaid = 0;
+            }
             return View(model);
         }
 
         public ActionResult chargeDetails(int chargeId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(context.Charge.Find(chargeId));
         }
 
@@ -439,7 +473,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult closeCharge(int chargeId, decimal amountPaid)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var x = context.Charge.Find(chargeId);
             x.amountPaid = amountPaid;
             x.isResolved = true;
@@ -452,7 +486,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult editCharge(int chargeId, decimal amountCharged, string chargeTitle, string chargeDescription)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             var x = context.Charge.Find(chargeId);
             x.amountCharged = amountCharged;
             x.title = chargeTitle;
@@ -463,7 +497,7 @@ namespace BikeShare.Controllers
 
         public ActionResult newCharge(string userName)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(new Charge());
         }
 
@@ -471,15 +505,15 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult newCharge(decimal amountCharged, string chargeTitle, string chargeDescription, string chargeUser)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            context.Charge.Add(new Charge { amountCharged = amountCharged, title = chargeTitle, dateAssesed = DateTime.Now, description = chargeDescription, user = context.BikeUser.Where(u => u.userName == chargeUser).First() });
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            context.Charge.Add(new Charge { amountCharged = amountCharged, dateResolved = DateTime.Now, title = chargeTitle, dateAssesed = DateTime.Now, description = chargeDescription, user = context.BikeUser.Where(u => u.userName == chargeUser).First() });
             context.SaveChanges();
             return RedirectToAction("chargesList", "Admin");
         }
 
         public ActionResult uploadImage(int rackId)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             return View(context.BikeRack.Find(rackId));
         }
 
@@ -487,7 +521,7 @@ namespace BikeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult uploadImage(int rackId, string image)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
             HttpPostedFileBase file = Request.Files["image"];
             byte[] tempImage = new byte[file.ContentLength];
             file.InputStream.Read(tempImage, 0, file.ContentLength);
@@ -497,21 +531,81 @@ namespace BikeShare.Controllers
 
         public ActionResult doesUserExist(string validationName)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
             var x = Json(context.BikeUser.Where(u => u.userName == validationName).Count() > 0, JsonRequestBehavior.AllowGet);
             return x;
         }
 
         public ActionResult reports()
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
             return View();
+        }
+
+        public ActionResult schedules()
+        {
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            return View(context.schedules.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult newSchedule(ScheduledInspection sched)
+        {
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            context.schedules.Add(sched);
+            context.SaveChanges();
+            return RedirectToAction("schedules");
+        }
+
+        [HttpPost]
+        public ActionResult deleteSchedule(int id)
+        {
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            var sched = context.schedules.Find(id);
+            context.schedules.Remove(sched);
+            context.SaveChanges();
+            return RedirectToAction("schedules");
+        }
+
+        public ActionResult resetRegistrations()
+        {
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult resetRegistrations(bool notify)
+        {
+            //TODO - implement notification functionality
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            foreach(var user in context.BikeUser)
+            {
+                user.lastRegistered = DateTime.MinValue;
+            }
+            context.SaveChangesAsync();
+            return RedirectToAction("index");
+        }
+
+        [HttpPost]
+        public ActionResult bulkOfflineBikes(int start, int end)
+        {
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            foreach(var bike in context.Bike)
+            {
+                if (bike.bikeNumber >= start && bike.bikeNumber <= end)
+                {
+                    bike.onInspectionHold = true;
+                }
+            }
+            context.SaveChanges();
+            return RedirectToAction("index");
         }
 
         [HttpPost]
         public ActionResult checkoutReport(DateTime start, DateTime end)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             DisplayLogFile(generateCheckoutLog(start, end));
 
             return RedirectToAction("reports");
@@ -520,7 +614,7 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult bikeReport()
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             DisplayLogFile(generateBikeLog());
 
             return RedirectToAction("reports");
@@ -529,7 +623,7 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult rackReport()
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             DisplayLogFile(generateRackLog());
 
             return RedirectToAction("reports");
@@ -538,7 +632,7 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult userReport()
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             DisplayLogFile(generateUserLog());
 
             return RedirectToAction("reports");
@@ -547,7 +641,7 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult inspectionReport(DateTime start, DateTime end)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             DisplayLogFile(generateInspectionLog(start, end));
 
             return RedirectToAction("reports");
@@ -556,7 +650,7 @@ namespace BikeShare.Controllers
         [HttpPost]
         public ActionResult maintReport(DateTime start, DateTime end)
         {
-            if (!authorize()) { return RedirectToAction("authError", "Error"); }
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
             DisplayLogFile(generateMaintenanceLog(start, end));
 
             return RedirectToAction("reports");
@@ -691,7 +785,7 @@ namespace BikeShare.Controllers
             {
                 csvExport.AppendLine(
                 string.Format(
-                "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\"",
+                "\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\"",
                  context.Bike.Find(Maint.bikeId).bikeNumber, Maint.title, Maint.timeAdded, Maint.timeResolved, Maint.timeResolved != null, Maint.isArchived, Maint.disableBike, Maint.details));
             }
 
