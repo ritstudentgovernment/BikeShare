@@ -10,36 +10,7 @@
     @Html.Partial("_AdminMenuPartial")
 }
 
-<h2 class="text-center"><span class="glyphicon glyphicon-road pull-left"></span> @ViewBag.Title <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newBike")"><span class="glyphicon glyphicon-asterisk"></span>  New</a></h2>
-<hr />
-@section filterSection{
-@using (Html.BeginForm(actionName: "bikeList", controllerName: "Admin"))
-{
-
-<div class="panel panel-primary">
-    <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-filter"></span> Filters</h4></div>
-    <div class="panel-body">
-
-        <div class="col-md-12">
-            <h4>Status</h4>
-            <div class="form-inline"><label class="control-label">Include Missing</label> @Html.CheckBox("incMissing") </div>
-            <div class="form-inline"><label class="control-label">Include Overdue</label> @Html.CheckBox("incOverdue") </div>
-            <div class="form-inline"><label class="control-label">Include Checked Out</label> @Html.CheckBox("incCheckedOut") </div>
-            <div class="form-inline"><label class="control-label">Include Checked In</label> @Html.CheckBox("incCheckedIn") </div>
-        </div>
-        <div class="col-md-12">
-            <h4>Type</h4>
-            <div class="form-inline"><label class="control-label">Include Archived</label> @Html.CheckBox("incArchived") </div>
-            <div class="form-inline"><label class="control-label">Include Current</label> @Html.CheckBox("incCurrent") </div>
-        </div>
-    </div>
-    <div class="panel-footer text-right">
-        <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span> Clear All</a>
-        <input type="submit" value="Filter" class="btn btn-primary" role="button" />
-    </div>
-</div>
-}
-    }
+<h2><span class="glyphicon glyphicon-road pull-left"></span>  @ViewBag.Title <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newBike")"><span class="glyphicon glyphicon-asterisk"></span>  New</a></h2>
 <div class="row">
 @foreach (var bike in Model.modelList)
 {
