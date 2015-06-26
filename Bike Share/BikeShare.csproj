@@ -279,6 +279,8 @@
     <Content Include="Views\Home\HeaderPartial.cshtml" />
     <Content Include="Views\Home\AnnouncementPartial.cshtml" />
     <Content Include="Views\Shared\_Layout_wide.cshtml" />
+    <Content Include="Views\Admin\schedules.cshtml" />
+    <Content Include="Views\Admin\resetRegistrations.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -352,6 +354,7 @@
     <Compile Include="Code\MailerRegistry.cs" />
     <Compile Include="Code\MailTasks.cs" />
     <Compile Include="Code\PagingHelpers.cs" />
+    <Compile Include="Code\ScheduledTasks.cs" />
     <Compile Include="Code\Secrets.cs" />
     <Compile Include="Code\UserNameFilter.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -377,6 +380,14 @@
     <Compile Include="Migrations\201505170410020_remove-workshop.Designer.cs">
       <DependentUpon>201505170410020_remove-workshop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506252220133_addedSchedules.cs" />
+    <Compile Include="Migrations\201506252220133_addedSchedules.Designer.cs">
+      <DependentUpon>201506252220133_addedSchedules.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506260207274_add_lastRun_to_inspection.cs" />
+    <Compile Include="Migrations\201506260207274_add_lastRun_to_inspection.Designer.cs">
+      <DependentUpon>201506260207274_add_lastRun_to_inspection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\appSetting.cs" />
     <Compile Include="Models\Bike.cs" />
@@ -389,6 +400,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\MaintenanceEvent.cs" />
     <Compile Include="Models\MaintenanceUpdate.cs" />
+    <Compile Include="Models\ScheduledInspection.cs" />
     <Compile Include="ViewModels\PageInfo.cs" />
     <Compile Include="Models\WorkHours.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -424,6 +436,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505170410020_remove-workshop.resx">
       <DependentUpon>201505170410020_remove-workshop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506252220133_addedSchedules.resx">
+      <DependentUpon>201506252220133_addedSchedules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506260207274_add_lastRun_to_inspection.resx">
+      <DependentUpon>201506260207274_add_lastRun_to_inspection.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
