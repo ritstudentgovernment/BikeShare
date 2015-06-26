@@ -15,8 +15,7 @@
         <div class="panel panel-default">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-road"></span> Bikes</h4></div>
             <div class="panel-body">
-                <p class="pull-right">Total: @Model.countBikes</p>
-                <p class="pull-left">Available: @Model.countAvailableBikes</p>
+                Total: @Model.countBikes, Available: @Model.countAvailableBikes
             </div>
             <div class="panel-footer text-right">
                 @using (Html.BeginForm("bikeReport", "Admin", FormMethod.Post))
@@ -33,8 +32,7 @@
         <div class="panel panel-default">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-align-right"></span> Bike Racks</h4></div>
             <div class="panel-body">
-                <p class="pull-left">Total Racks: @Model.countRacks</p>
-                <p class="pull-right">Total Checkouts: @Model.countCheckouts</p>
+                Total Racks: @Model.countRacks
             </div>
             <div class="panel-footer text-right">
                 @using (Html.BeginForm("rackReport", "Admin", FormMethod.Post))
@@ -78,6 +76,42 @@
             <div class="panel-body"><p>Total Charges: @Model.countCharges</p></div>
             <div class="panel-footer text-right">
                 @Html.ActionLink("See All", "chargesList", new { }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-circle-arrow-down"></span> Reports</h4></div>
+            <div class="panel-body">Download system data</div>
+            <div class="panel-footer text-right">
+                @Html.ActionLink("See All", "reports", new { }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4 class="panel-title">Bulk Actions &amp; Schedules</h4></div>
+            <div class="panel-body">
+                @using (Html.BeginForm("bulkOfflineBikes", "admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label>Bikes</label>
+                            <input type="number" id="start" name="start" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>through</label>
+                            <input type="number" id="end" name="end" class="form-control" />
+
+                        </div>
+                        <button type="submit" value="Confirm" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-warning-sign"></span> Take Offline</button>
+                    </div>
+                }
+            </div>
+            <div class="panel-footer text-right">
+                <a href="@Url.Action("resetRegistrations")" class="btn btn-default">Reset Registrations</a>
+                <a href="@Url.Action("schedules")"  class="btn btn-default">Manage Schedules</a>
             </div>
         </div>
     </div>
