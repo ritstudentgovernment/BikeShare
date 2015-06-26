@@ -24,6 +24,7 @@ namespace BikeShare.Models
         public DbSet<WorkHour> workHours { get; set; }
 
         public DbSet<appSetting> settings { get; set; }
+        public DbSet<ScheduledInspection> schedules { get; set; }
 
         public BikesContext()
             : base("name=BikesDatabase")
