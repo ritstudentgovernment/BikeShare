@@ -37,7 +37,7 @@ namespace BikeShare.Controllers
         public ActionResult Index()
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            return View(context.Bike.Where(a => !a.isArchived).OrderByDescending(i => i.bikeNumber).ToList());
+            return View(context.Bike.Where(a => !a.isArchived).OrderBy(i => i.bikeNumber).ToList());
         }
 
         public ActionResult bikeDetails(int bikeId, int page = 1)
