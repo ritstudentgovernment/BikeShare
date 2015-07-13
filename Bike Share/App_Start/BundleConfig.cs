@@ -1,4 +1,5 @@
 ﻿using System.Web.Optimization;
+using dotless;
 
 namespace BikeShare
 {
@@ -19,10 +20,9 @@ namespace BikeShare
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-          "~/Content/js/bootstrap.js"));
-
+          "~/Scripts/bootstrap.js"));
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include("~/Content/bootstrap.css"));
-            bundles.Add(new LessBundle("~/Content/less").Include("~/Content/*.less"));
+            bundles.Add(new LessBundle("~/Content/less").IncludeDirectory("~/Content/less", "*.less"));
         }
     }
 }
