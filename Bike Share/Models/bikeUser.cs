@@ -52,5 +52,7 @@ namespace BikeShare.Models
         [Required]
         [Display(Name = "Cashier Privileges")]
         public bool canCheckOutBikes { get; set; }
+
+        public int registrationPDFNumber { get; set; }
     }
 }

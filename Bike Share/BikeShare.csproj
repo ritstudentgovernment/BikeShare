@@ -242,6 +242,7 @@
     <Content Include="Views\Shared\_Layout_wide.cshtml" />
     <Content Include="Views\Admin\schedules.cshtml" />
     <Content Include="Views\Admin\resetRegistrations.cshtml" />
+    <Content Include="Views\Admin\uploadWaiver.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -311,6 +312,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Code\MailerRegistry.cs" />
+    <Compile Include="Code\Mailing.cs" />
     <Compile Include="Code\MailTasks.cs" />
     <Compile Include="Code\PagingHelpers.cs" />
     <Compile Include="Code\ScheduledTasks.cs" />
@@ -346,6 +348,10 @@
     <Compile Include="Migrations\201506260207274_add_lastRun_to_inspection.cs" />
     <Compile Include="Migrations\201506260207274_add_lastRun_to_inspection.Designer.cs">
       <DependentUpon>201506260207274_add_lastRun_to_inspection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507051655013_registrationEnhancement.cs" />
+    <Compile Include="Migrations\201507051655013_registrationEnhancement.Designer.cs">
+      <DependentUpon>201507051655013_registrationEnhancement.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\appSetting.cs" />
@@ -402,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506260207274_add_lastRun_to_inspection.resx">
       <DependentUpon>201506260207274_add_lastRun_to_inspection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507051655013_registrationEnhancement.resx">
+      <DependentUpon>201507051655013_registrationEnhancement.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

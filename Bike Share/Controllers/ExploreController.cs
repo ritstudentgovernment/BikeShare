@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using BikeShare.Code;
 
 namespace BikeShare.Controllers
 {
@@ -26,7 +27,21 @@ namespace BikeShare.Controllers
         [Authorize]
         public ActionResult Register()
         {
-            ViewBag.registerHTML = context.settings.First().registerHTML;
+            var setting = context.settings.First();
+            ViewBag.registerHTML = setting.registerHTML;
+            ViewBag.legalHTML = setting.legalHTML;
+            ViewBag.programHTML = setting.programHTML;
+            ViewBag.hasWaiver = true;
+            if(setting.latestPDFNumber.HasValue)
+            {
+                ViewBag.latestPDFNumber = setting.latestPDFNumber;
+            }
+            else
+            {
+                ViewBag.hasWaiver = false;
+            }
+            
+
             return View();
         }
 
@@ -40,9 +55,14 @@ namespace BikeShare.Controllers
             {
                 user.lastRegistered = DateTime.Now;
             }
+            var setting = context.settings.First();
+            Mailing.queueRegistrationNotice(user.email, setting.programHTML, setting.legalHTML, Request.PhysicalApplicationPath.ToString() + "\\Content\\waivers\\" + setting.latestPDFNumber.Value + ".pdf", setting.daysBetweenRegistrations, phoneNumber, firstName, lastName, setting.appName);
+
             user.firstName = firstName;
             user.lastName = lastName;
             user.phoneNumber = phoneNumber;
+
+
             context.SaveChanges();
             return RedirectToAction("Index");
         }

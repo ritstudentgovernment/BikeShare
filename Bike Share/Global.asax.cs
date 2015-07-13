@@ -22,7 +22,7 @@ namespace BikeShare
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            TaskManager.Initialize(new BikeShare.Code.MailerRegistry());
+            TaskManager.Initialize(new BikeShare.Code.SceduleRegistry());
         }
     }
 }

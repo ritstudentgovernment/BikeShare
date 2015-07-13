@@ -46,5 +46,14 @@ namespace BikeShare.Models
 
         [AllowHtml]
         public string registerHTML { get; set; }
+
+        [AllowHtml]
+        public string legalHTML { get; set; }
+
+        [AllowHtml]
+        public string programHTML { get; set; }
+
+        [AllowHtml]
+        public int? latestPDFNumber { get; set; }
     }
 }

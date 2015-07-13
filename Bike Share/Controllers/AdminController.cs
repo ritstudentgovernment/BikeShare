@@ -529,6 +529,26 @@ namespace BikeShare.Controllers
             return RedirectToAction("editRack", new { rackId = rackId });
         }
 
+        public ActionResult uploadWaiver()
+        {
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult uploadWaiver(string waiver)
+        {
+            if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            HttpPostedFileBase file = Request.Files["waiver"];
+            byte[] tempWaiver = new byte[file.ContentLength];
+            file.InputStream.Read(tempWaiver, 0, file.ContentLength);
+            int newNumber = context.settings.First().latestPDFNumber.GetValueOrDefault(0) + 1;
+            file.SaveAs(Request.PhysicalApplicationPath.ToString() + "\\Content\\waivers\\" + newNumber + ".pdf");
+            context.settings.First().latestPDFNumber = newNumber;
+            context.SaveChanges();
+            return RedirectToAction("appSettings");
+        }
+
         public ActionResult doesUserExist(string validationName)
         {
             if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 

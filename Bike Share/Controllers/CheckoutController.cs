@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net.Mail;
 using System.Web.Mvc;
+using BikeShare.Code;
 
 namespace BikeShare.Controllers
 {
@@ -127,23 +127,7 @@ namespace BikeShare.Controllers
                 check.checkOutPerson = dcheckOutPerson.bikeUserId;
                 context.CheckOut.Add(check);
                 context.SaveChanges();
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    SmtpClient smtpServer = new SmtpClient();
-                    mail.To.Add(rider.email);
-                    mail.Subject = "Bike Checked Out";
-                    mail.Body = "Thank you for checking out a bike! You have the bike for 24 hours. Enjoy your ride and be safe!";
-                    if (DateTime.Now.ToString("ddd") == "Fri")
-                    {
-                        mail.Body = "Thank you for checking out a bike! You have the bike until Monday morning. Enjoy your ride and be safe!";
-                    }
-                    smtpServer.Send(mail);
-                }
-                catch
-                {
-                    return RedirectToAction("Index", new { rackId = rackId, message = "The checkout was successful, but there was difficulty sending email. Please let the system administrator know." });
-                }
+                Mailing.queueCheckoutNotice(rider.email, DateTime.Now.AddHours(24));
             }
             catch (System.InvalidOperationException)
             {
@@ -174,7 +158,7 @@ namespace BikeShare.Controllers
             {
                 return RedirectToAction("Index", new { rackId = rackId, message = "There was an issue checking the bike in." });
             }
-            return RedirectToAction("Index", new { rackId = rackId, message = "Bike succesfully checked in." });
+            return RedirectToAction("Index", new { rackId = rackId, message = "Bike successfully checked in." });
         }
 
         [HttpPost]

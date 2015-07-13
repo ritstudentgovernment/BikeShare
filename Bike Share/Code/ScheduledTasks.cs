@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BikeShare.Models;
 
-namespace BikeShare.Code.Mailers
+namespace BikeShare.Code.ScheduledTasks
 {
     public class InspectionSchedule : ITask
     {

@@ -17,7 +17,7 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Name of the application. Changes to this setting will automatically affect all emails, pages, and content. This will not affect the URL.</label>
             <div class="col-sm-8">
-                @Html.TextBoxFor(Model => Model.appName, new { @class="form-control"})
+                @Html.TextBoxFor(model => model.appName, new { @class="form-control"})
                 @Html.ValidationMessageFor(model => model.appName)
             </div>
         </div>
@@ -74,7 +74,43 @@
                 </div>
             </div>
         </div>
-
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="panel-title">User Registration Settings</h3></div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label col-sm-4">This HTML will be inserted into the top of the registration page.</label>
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(model => model.registerHTML, new { @class = "form-control", @style = "height:200px" })
+                        @Html.ValidationMessageFor(model => model.registerHTML)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">This HTML will be inserted into the legal section of the registration page. It should be the same or similar text to what is presented in the waiver document.</label>
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(model => model.legalHTML, new { @class = "form-control", @style = "height:200px" })
+                        @Html.ValidationMessageFor(model => model.legalHTML)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">This HTML will be inserted into the program expectations section of the registration page. It should identify any procedures or non-legal requirements of the program.</label>
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(model => model.programHTML, new { @class = "form-control", @style = "height:200px" })
+                        @Html.ValidationMessageFor(model => model.programHTML)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">Legal/Liability Waiver</label>
+                    @if(Model.latestPDFNumber.HasValue){
+                        <div class="col-sm-4"><a href="@Url.Content("~/Content/waivers/" + Model.latestPDFNumber.Value + ".pdf")">view</a></div>
+                    }else {
+                        <div class="col-sm-4">No Waiver Set</div>
+                    }
+                    <div class="col-sm-4">
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("uploadWaiver")"><span class="glyphicon glyphicon-upload"></span>  Upload New</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading"><h3 class="panel-title">Content Settings</h3></div>
             <div class="panel-body">
@@ -125,13 +161,6 @@
                     <div class="col-sm-8">
                         @Html.TextAreaFor(model => model.aboutHTML, new { @class = "form-control", @style = "height:200px" })
                         @Html.ValidationMessageFor(model => model.aboutHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be injected into registration page. Use it to include things like safety info and waivers.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.registerHTML, new { @class = "form-control", @style="height:200px"})
-                        @Html.ValidationMessageFor(model => model.registerHTML)
                     </div>
                 </div>
             </div>
