@@ -10,17 +10,36 @@
 {
     @Html.HiddenFor(r => r.bikeRackId)
     @Html.AntiForgeryToken()
-    <h2>Warning!</h2>
-    <p>Archiving bike rack "@Model.name" will have the following consequences:</p>
-    <ul>
-        <li>Users will not see this rack in the explore section of the site.</li>
-        <li>Checkout people will not be able to interact with the rack.</li>
-        <li>Bikes will not be allowed to be associated with the rack.</li>
-    </ul>
-    <div class="alert alert-danger"><em>Treat this action as if it were a deletion!</em></div>
-    <hr />
-    <div>
-        <a class="btn btn-default" href="@Url.Action(actionName: "Index", controllerName: "Admin")"><span class="glyphicon glyphicon-arrow-left"></span>  Back to Dashboard</a>
-        <button type="submit" value="Archive Rack" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
-    </div>
+    if (Model.isArchived)
+    {
+        <h2>Warning!</h2>
+        <p>Restoring bike rack "@Model.name" will have the following consequences:</p>
+        <ul>
+            <li>Users will see this rack in the explore section of the site.</li>
+            <li>Checkout people not be able to interact with the rack.</li>
+            <li>Bikes not be allowed to be associated with the rack.</li>
+        </ul>
+        <hr />
+        <div>
+            <a class="btn btn-default" href="@Url.Action(actionName: "Index", controllerName: "Admin")"><span class="glyphicon glyphicon-arrow-left"></span>  Back to Dashboard</a>
+            <button type="submit" value="Archive Rack" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
+        </div>
+    }
+    else
+    {
+        <h2>Warning!</h2>
+        <p>Archiving bike rack "@Model.name" will have the following consequences:</p>
+        <ul>
+            <li>Users will not see this rack in the explore section of the site.</li>
+            <li>Checkout people will not be able to interact with the rack.</li>
+            <li>Bikes will not be allowed to be associated with the rack.</li>
+        </ul>
+        <div class="alert alert-danger"><em>Treat this action as if it were a deletion!</em></div>
+        <hr />
+        <div>
+            <a class="btn btn-default" href="@Url.Action(actionName: "Index", controllerName: "Admin")"><span class="glyphicon glyphicon-arrow-left"></span>  Back to Dashboard</a>
+            <button type="submit" value="Archive Rack" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
+        </div>
+    }
+
 }

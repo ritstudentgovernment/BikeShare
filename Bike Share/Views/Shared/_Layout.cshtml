@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - RIT Bikeshare</title>
+    <title>@ViewBag.Title - RIT</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
@@ -13,7 +13,6 @@
     }
     @Styles.Render("~/Content/bootstrap")
     @Styles.Render("~/Content/less")
-    @Scripts.Render("~/bundles/modernizr")
     <link href='~/Content/footer.css' rel='stylesheet' type='text/css'>
 </head>
 <body style="background-color:#eeeeee">
@@ -49,11 +48,9 @@
                     </div>
                 }
             </div>
-            
-
         </div>
     </div>
-    
+
 @Html.Partial("_FooterPartial")
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/jquery")
@@ -62,11 +59,17 @@
     {
         @RenderSection("lateScripts");
     }
-    
+
     <div class="modal" id="siteModal" role="dialog" aria-labelledby="siteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">Loading</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="loginModal" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-login">
+            <div class="modal-content">
             </div>
         </div>
     </div>

@@ -3,19 +3,19 @@
     <text>
         <ul class="nav navbar-nav navbar-right" role="menu">
             <li class="dropdown">
-                <a data-toggle="dropdown" href="#"><img src="@BikeShare.Views.Gravatar.url(User.Identity.Name + "@rit.edu")?s=20&d=identicon" />
+                <a data-toggle="dropdown" href="#">
                         @User.Identity.Name <span class="caret"></span></a>
 
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    @if (BikeShare.Code.roleCheck.isUserAdmin(User.Identity.Name))
+                    @if (BikeShare.Code.RoleCheck.IsUserAdmin(User.Identity.Name))
                     {
                         <li><a href="@Url.Action(actionName:"Index", controllerName:"Admin")"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
                     }
-                    @if (BikeShare.Code.roleCheck.isUserMechanic(User.Identity.Name))
+                    @if (BikeShare.Code.RoleCheck.IsUserMechanic(User.Identity.Name))
                     {
                         <li><a href="@Url.Action(actionName:"Index", controllerName:"Mechanic")"><span class="glyphicon glyphicon-wrench"></span> Mechanic</a></li>
                     }
-                    @if (BikeShare.Code.roleCheck.isUserCashier(User.Identity.Name))
+                    @if (BikeShare.Code.RoleCheck.IsUserCashier(User.Identity.Name))
                     {
                         <li><a href="@Url.Action(actionName:"selectRack", controllerName:"Checkout")"><span class="glyphicon glyphicon-check"></span> Checkout</a></li>
                     }
@@ -23,13 +23,12 @@
                     <li><a href="@Url.Action(actionName:"LogOff", controllerName:"Account")"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
                 </ul>
             </li>
-            
         </ul>
     </text>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a data-toggle="modal" data-target="#siteModal" data-backdrop="false" href="@Url.Action("LogOn", "Account")"><span class=" glyphicon glyphicon-user"></span> Login</a></li>
+        <li><a data-toggle="modal" data-target="#loginModal" data-backdrop="false" href="@Url.Action("LogOn", "Account")"><span class=" glyphicon glyphicon-user"></span> Login</a></li>
     </ul>
 }

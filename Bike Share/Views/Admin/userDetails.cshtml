@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default">
-                            <div class="panel-heading"><h4 class="panel-title"><span><img src="@BikeShare.Views.Gravatar.url(Model.email)?s=28&d=identicon" /></span> @Model.userName</h4></div>
+                            <div class="panel-heading"><h4 class="panel-title"> @Model.userName</h4></div>
                             <div class="panel-body">
                                 <div class="form-horizontal">
                                     <div class="form-group">
@@ -74,76 +74,5 @@
         </div>
     </div>
 </div>
-@if (Model.maintenanceEvents.Count() > 0)
-            {
-<div class="panel panel-default">
-    <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Maintenance</h4></div>
-    <div class="panel-body">
-        <div class="row">
-                @foreach (var maint in Model.maintenanceEvents)
-                {
-                    <div class="col-md-4">
-                        @if (maint.resolved)
-                        {
-                            <div class="panel panel-success">
-                                <div class="panel panel-heading"><h4>Finished @maint.timeResolved.ToShortDateString() on Bike @maint.bikeAffected.bikeNumber</h4></div>
-                                <div class="panel-body"><p>Performed at @maint.workshop.name</p></div>
-                                <div class="panel-footer text-right">
-                                    <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new { maintId = maint.MaintenanceEventId})"><span class="glyphicon glyphicon-list"></span> Details</a>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="panel panel-danger">
-                                <div class="panel panel-heading"><h4>Started @maint.timeAdded.ToShortDateString() on Bike @maint.bikeAffected.bikeNumber</h4></div>
-                                <div class="panel-body"><p>Performed at @maint.workshop.name</p></div>
-                                <div class="panel-footer text-right">
-                                    <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new { maintId = maint.MaintenanceEventId})"><span class="glyphicon glyphicon-list"></span> Details</a>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-            
-        </div>
-    </div>
-    <div class="panel-footer text-right"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> See More</a></div>
-</div>}
-@if (Model.checkOuts.Count() > 0)
-            {
-<div class="panel panel-default">
-    <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-check"></span> Checkouts</h4></div>
-    <div class="panel-body">
-        <div class="row">
-                @foreach (var check in Model.checkOuts)
-                {
-                    <div class="col-md-4">
-                        @if (check.isResolved)
-                        {
-                            <div class="panel panel-success">
-                                <div class="panel panel-heading">Checked in at @check.timeIn.ToString()</div>
-                                <div class="panel-body"><p>Borrowed at @check.timeOut.ToShortTimeString() on @check.timeOut.ToShortDateString()</p></div>
-                                <div class="panel-footer text-right">
-                                    <a class="btn btn-default" href="@Url.Action(actionName: "checkoutDetails", controllerName: "Admin", routeValues: new { checkId = check.checkOutId})"><span class="glyphicon glyphicon-list"></span> Details</a>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="panel panel-danger">
-                                <div class="panel panel-heading">Checked out at @check.timeOut.ToString()</div>
-                                <div class="panel-body"><p>Still Out</p></div>
-                                <div class="panel-footer text-right">
-                                    <a class="btn btn-default" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Admin", routeValues: new  {checkId = check.checkOutId})"><span class="glyphicon glyphicon-list"></span> Details</a>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                }
-            
-        </div>
-    </div>
-    <div class="panel-footer text-right"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> See More</a></div>
-</div>
-            }
+
+         

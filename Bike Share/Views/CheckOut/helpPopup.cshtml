@@ -5,6 +5,8 @@
     $(document.body).on('hidden.bs.modal', function () {
         $('#siteModal').removeData('bs.modal')
     });
+
+
 </script>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -12,23 +14,23 @@
 </div>
 @using (Html.BeginForm())
 {
-<div class="modal-body">
+    <div class="modal-body">
 
-    @Html.AntiForgeryToken()
-    <h2>Checking out Bikes</h2>
-    <p>Follow these steps to check out a bike:</p>
-    <ol>
-        <li>Select a bike from the list.</li>
-        <li>Enter the username to rent the bike to in the textbox below.</li>
-        <li>Click Checkout.</li>
-    </ol>
-    <h2>Checking in Bikes</h2>
-    <p>Follow these steps to check in a bike:</p>
-    <ol>
-        <li>Select a bike from the list.</li>
-        <li>Click Check In</li>
-    </ol>
-    <h2>Charges and Issues</h2>
-    <p>To report an issue, please select a bike from the list, enter a title and descripion of the issue, and enter a username to associate with it. Then, click submit.</p>
-</div>
+        @Html.AntiForgeryToken()
+        <h2>Checking out Bikes</h2>
+        <p>Follow these steps to check out a bike:</p>
+        <ol>
+            <li>Select a bike from the list.</li>
+            <li>Enter the username to rent the bike to in the textbox below.</li>
+            <li>Click Checkout.</li>
+        </ol>
+        <h2>Checking in Bikes</h2>
+        <p>Follow these steps to check in a bike:</p>
+        <ol>
+            <li>Select a bike from the list.</li>
+            <li>Click Check In</li>
+        </ol>
+        <h2>Charges and Issues</h2>
+        <p>To report an issue, please select a bike from the list, enter a title and descripion of the issue, and enter a username to associate with it. Then, click submit.</p>
+    </div>
 }

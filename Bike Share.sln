@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShare", "Bike Share\BikeShare.csproj", "{A24BC3B9-231D-429C-A92F-EDDCE8297B03}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BikeShare.Models", "Models\BikeShare.Models.csproj", "{F7EA2EF6-C9F2-40F4-A5C3-49BDF5F60E97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,10 +16,6 @@ Global
 		{A24BC3B9-231D-429C-A92F-EDDCE8297B03}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{A24BC3B9-231D-429C-A92F-EDDCE8297B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A24BC3B9-231D-429C-A92F-EDDCE8297B03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7EA2EF6-C9F2-40F4-A5C3-49BDF5F60E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7EA2EF6-C9F2-40F4-A5C3-49BDF5F60E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7EA2EF6-C9F2-40F4-A5C3-49BDF5F60E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7EA2EF6-C9F2-40F4-A5C3-49BDF5F60E97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

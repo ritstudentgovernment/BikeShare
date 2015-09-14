@@ -1,7 +1,8 @@
-﻿using System;
+﻿using BikeShare.Models;
+using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
-using BikeShare.Interfaces;
 
 namespace BikeShare.Controllers
 {
@@ -10,14 +11,13 @@ namespace BikeShare.Controllers
     /// </summary>
     public class AccountController : Controller
     {
-        private IUserRepository userRepo;
-        private ISettingRepository settingsRepo;
+        private BikesContext context;
 
-        public AccountController(IUserRepository uRepo, ISettingRepository sRepo)
+        public AccountController()
         {
-            userRepo = uRepo;
-            settingsRepo = sRepo;
+            context = new BikesContext();
         }
+
         /// <summary>
         /// Displays the logon form. Logs the current user off if someone is logged in.
         /// </summary>
@@ -49,10 +49,28 @@ namespace BikeShare.Controllers
             model.UserName = model.UserName.ToLower();
             //If in debug mode, bypasses authentication and logs in as the provided userName
 #if DEBUG
-            if (!userRepo.doesUserExist(model.UserName))
+            if (context.BikeUser.Where(u => u.userName == model.UserName).Count() < 1)
             {
-                userRepo.createuser(model.UserName, model.UserName + settingsRepo.getexpectedEmail(), null, false, true);
+                context.BikeUser.Add(new bikeUser
+                {
+                    userName = model.UserName,
+                    canBorrowBikes = true,
+                    email = model.UserName + context.settings.First().expectedEmail,
+                    lastRegistered = new DateTime(2000, 01, 01)
+                });
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException)
+                {
+                    throw;
+                }
                 FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                if (!String.IsNullOrWhiteSpace(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Register", "Explore");
             }
             FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
@@ -62,9 +80,16 @@ namespace BikeShare.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    if(!userRepo.doesUserExist(model.UserName))
+                    if (context.BikeUser.Where(u => u.userName == model.UserName).Count() < 1)
                     {
-                        userRepo.createuser(model.UserName, model.UserName + settingsRepo.getexpectedEmail(), null, false, true);
+                        context.BikeUser.Add(new bikeUser
+                        {
+                            userName = model.UserName,
+                            canBorrowBikes = true,
+                            email = model.UserName + context.settings.First().expectedEmail,
+                            lastRegistered = new DateTime(2000, 01, 01)
+                        }); 
+                        context.SaveChanges();
                         FormsAuthentication.SetAuthCookie(model.UserName, true);
                         return RedirectToAction("Register", "Explore");
                     }
@@ -72,13 +97,14 @@ namespace BikeShare.Controllers
                 }
                 ModelState.AddModelError("", "Incorrect username and/or password");
             }
-            return View(model);
+            return View("LogOnForm", model);
         }
 
         public ActionResult LogOnForm()
         {
             return LogOn("");
         }
+
         /// <summary>
         /// Logs the current user off.
         /// </summary>

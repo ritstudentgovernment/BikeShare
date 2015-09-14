@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,22 +9,103 @@
 {
     @Html.AntiForgeryToken()
     @Html.Raw(ViewBag.registerHTML)
-        <div class="form-horizontal">
-        <div class="form-group">
-            <label class="control-label col-md-3">First Name: </label>
-            <div class="col-md-9"><input type="text" id="firstName" name="firstName" /></div>
+    <div class="row">
+        @if(ViewBag.hasWaiver){
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Program Waiver</h3></div>
+                <div class="panel-body">
+                    <iframe src="@Url.Content("~/Content/waivers/" + ViewBag.latestPDFNumber + ".pdf")" seamless="seamless" frameborder="0" scrolling="auto" height="500" marginwidth="0" width="100%"></iframe>
+                    <a target="_blank" href="@Url.Content("~/Content/waivers/" + ViewBag.latestPDFNumber + ".pdf")">Click here to open the PDF if you can't see it.</a>
+                </div>
+                <div class="panel-footer">
+                    <span><input type="checkbox" id="checkWaiver" /> I have read, understood, and agreed to the terms of this agreement.</span>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-3">Last Name: </label>
-            <div class="col-md-9"><input type="text" id="lastName" name="lastName" /></div>
+        }
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Legal Requirements</h3></div>
+                <div class="panel-body">
+                    @Html.Raw(ViewBag.legalHTML)
+                </div>
+                <div class="panel-footer">
+                    <span><input type="checkbox" id="checkLegal" /> I have read, understood, and agreed to the legal requirements of the program.</span>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-3">Phone Number: </label>
-            <div class="col-md-9"><input type="tel" id="phoneNumber" name="phoneNumber" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="###-###-####" title='123-123-1234' /></div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Program Requirements</h3></div>
+                <div class="panel-body">
+                    @Html.Raw(ViewBag.programHTML)
+                </div>
+                <div class="panel-footer">
+                    <span><input type="checkbox" id="checkProgram" /> I have read, understood, and agreed to follow this program's procedures.</span>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-3"></div>
-            <div class="col-md-9"><input class="btn btn-primary" type="submit" value="Register" /></div>
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Sign Here</div>
+                <div class="panel-body">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label">First Name: </label>
+                            <input class="form-control" type="text" id="firstName" name="firstName" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Last Name: </label>
+                            <input class="form-control" type="text" id="lastName" name="lastName" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Phone Number: </label>
+                            <input class="form-control" type="tel" id="phoneNumber" name="phoneNumber" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="###-###-####" title='123-123-1234' />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="submit" value="Register" id="register" disabled="disabled" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    
+
+
+}
+@section lateScripts{
+    <script>
+        $('input[type=checkbox]').change(
+    function () {
+
+            checkFunction();
+        
+    });
+
+        function checkFunction() {
+            var checkWaiver2 = document.getElementById("checkWaiver");
+            var checkLegal2 = document.getElementById("checkLegal");
+            var checkProgram2 = document.getElementById("checkProgram");
+
+            var registerButton = document.getElementById("register");
+            if (checkLegal2.checked == false || checkWaiver2.checked == false || checkProgram2.checked == false) {
+                registerButton.disabled = true;
+            }
+            else {
+                registerButton.disabled = false;
+            }
+        };
+        document.getElementById("checkWaiver").onclick(function () {
+            checkFunction();
+        });
+        document.getElementById("checkLegal").onclick(function () {
+            checkFunction();
+        });
+        document.getElementById("checkProgram").onclick(function () {
+            checkFunction();
+        });
+
+</script>
 }

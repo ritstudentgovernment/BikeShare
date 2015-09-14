@@ -1,10 +1,7 @@
-﻿using System.Data.Entity;
-using System.Web.Http;
+﻿using FluentScheduler;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Security;
-using FluentScheduler;
 
 namespace BikeShare
 {
@@ -21,12 +18,11 @@ namespace BikeShare
         /// </summary>
         protected void Application_Start()
         {
-            
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            TaskManager.Initialize(new BikeShare.Code.MailerRegistry()); 
+            TaskManager.Initialize(new BikeShare.Code.SceduleRegistry());
         }
     }
 }

@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Reset Registrations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menuSection{
+    @Html.Partial("_AdminMenuPartial")
+}
+<h2><span class="glyphicon glyphicon-warning-sign pull-left"></span> @ViewBag.Title</h2>
+<div class="alert alert-danger">If you proceed, any registration reset will affect all users and take effect immediately.</div>
+@using (Html.BeginForm("resetRegistrations", "admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+        <div class="form-inline">
+            <div class="form-group">
+                <label>Notify all users by email:  </label>
+                <input type="checkbox" id="notify" name="notify" value="Notify all users by email:" />
+            </div>
+            <button type="submit" value="Proceed" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-warning-sign"></span> Reset Registrations (cannot undo)</button>
+        </div>
+
+}

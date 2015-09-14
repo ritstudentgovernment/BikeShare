@@ -1,38 +1,33 @@
-﻿using System;
+﻿using BikeShare.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using BikeShare.Models;
-using BikeShare.Interfaces;
+using BikeShare.Code;
 
 namespace BikeShare.Controllers
 {
     [Authorize]
     public class CheckoutController : Controller
     {
-        private ICheckOutRepository repo;
-        private IAdminRepository adminRepo;
-        private IUserRepository userRepo;
-        private IFinanceRepository financeRepo;
-        private IMaintenanceRepository maintRepo;
+        private BikesContext context;
 
         private bool authorize()
         {
-            if (!userRepo.getUserByName(User.Identity.Name).canCheckOutBikes)
+            try
+            {
+                return context.BikeUser.Where(n => n.userName == User.Identity.Name).First().canCheckOutBikes;
+            }
+            catch
             {
                 return false;
             }
-            return true;
         }
 
-        public CheckoutController(ICheckOutRepository checkParam, IFinanceRepository fParam, IUserRepository uRepo,IAdminRepository aRepo, IMaintenanceRepository mRepo)
+        public CheckoutController()
         {
-            repo = checkParam;
-            financeRepo = fParam;
-            userRepo = uRepo;
-            adminRepo = aRepo;
-            maintRepo = mRepo;
+            context = new BikesContext();
         }
 
         // GET: Checkout
@@ -40,43 +35,64 @@ namespace BikeShare.Controllers
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
             var model = new BikeShare.ViewModels.CheckoutViewModel();
-            model.availableBikes = repo.getAvailableBikesForRack(rackId);
-            model.checkedOutBikes = repo.getCheckedOutBikes();
-            model.unavailableBikes = repo.getUnavailableBikesForRack(rackId);
+            
+            model.currentRack = context.BikeRack.Find(rackId);
             model.errorMessage = message;
-
-            foreach(Bike bike in model.checkedOutBikes)
-            {
-                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
-                if (bike.checkOuts.Count < 1)
-                {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
-                }
-            }
-            foreach (Bike bike in model.availableBikes)
-            {
-                bike.checkOuts = adminRepo.getBikesCheckouts(bike.bikeId, 1, 0).ToList();
-                if (bike.checkOuts.Count < 1)
-                {
-                    CheckOut defaultCheckOut = new CheckOut();
-                    defaultCheckOut.user = new bikeUser();
-                    defaultCheckOut.user.userName = "none";
-                    bike.checkOuts.Add(defaultCheckOut);
-                }
-            }
-
-            model.currentRack = repo.getRackById(rackId);
+            model.userToCheckIn = null;
             model.checkOutPerson = User.Identity.Name;
+            var baseBikeList = context.Bike.Where(b => !b.isArchived).Where(r => r.bikeRackId.Value == rackId || !r.bikeRackId.HasValue).ToList();
+            model.availableBikes = baseBikeList.Where(i => i.isAvailable() && i.bikeRackId.HasValue);
+            model.unavailableBikes = baseBikeList.Where(i => !i.isAvailable());
+            model.checkedOutBikes = baseBikeList.Where(r => !r.bikeRackId.HasValue);
+            model.lastCheckoutUserForBike = new Dictionary<int, string>();
+            model.lastCheckoutTimeForBike = new Dictionary<int, string>();
+            var listBikeIds = baseBikeList.Select(i => i.bikeId).ToList();
+            var checkouts = context.CheckOut.Where(c=> listBikeIds.Contains(c.bike)).ToList().OrderByDescending(t => t.timeOut).ToList();
+            foreach(var bike in baseBikeList)
+            {
+                try
+                {
+                    var first = checkouts.Where(b => b.bike == bike.bikeId).First();
+                    checkouts = checkouts.Where(b => b.bike != bike.bikeId).ToList();
+                    checkouts.Add(first);
+                }
+                catch
+                {
+                    model.lastCheckoutTimeForBike.Add(bike.bikeId, "no data");
+                    model.lastCheckoutUserForBike.Add(bike.bikeId, "no data");
+                }
+            }
+            foreach(var checkout in checkouts)
+            {
+                int lastPerson = checkout.rider;
+                try
+                {
+
+
+                    model.lastCheckoutUserForBike.Add(checkout.bike, context.BikeUser.Find(lastPerson).userName);
+                    if (checkout.timeIn.HasValue)
+                    {
+                        model.lastCheckoutTimeForBike.Add(checkout.bike, checkout.timeIn.ToString());
+                    }
+                    else
+                    {
+                        model.lastCheckoutTimeForBike.Add(checkout.bike, checkout.timeOut.ToString());
+                    }
+                }
+                catch(NullReferenceException)
+                {
+                    model.lastCheckoutTimeForBike.Add(checkout.bike, "no data");
+                    model.lastCheckoutUserForBike.Add(checkout.bike, "no data");
+                }
+            }
+
             return View(model);
         }
 
         public ActionResult selectRack()
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            return View(repo.getAllRacks());
+            return View(context.BikeRack.Where(a => !a.isArchived));
         }
 
         [HttpPost]
@@ -84,8 +100,44 @@ namespace BikeShare.Controllers
         public ActionResult checkOutBike(int rackId, [Bind]BikeShare.ViewModels.CheckoutViewModel model)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            var errorMessage = repo.checkOutBike(model.selectedBikeForCheckout, model.userToCheckIn, User.Identity.Name, model.currentRack.bikeRackId);
-            return RedirectToAction("Index", new { rackId = rackId, message = errorMessage });
+            try
+            {
+                Bike bike = context.Bike.Find(model.selectedBikeForCheckout);
+                bike.lastCheckedOut = DateTime.Now;
+                CheckOut check = new CheckOut
+                {
+                    bike = bike.bikeId,
+                    isResolved = false,
+                    rackCheckedOut = rackId,
+                    timeOut = DateTime.Now,
+                };
+
+                bikeUser rider = context.BikeUser.Where(n => n.userName == model.userToCheckIn).First();
+                bikeUser dcheckOutPerson = context.BikeUser.Where(n => n.userName == User.Identity.Name).First();
+                if (!rider.canBorrowBikes)
+                {
+                    return RedirectToAction("Index", new { rackId = rackId, message = "The user doesn't have riding privileges." });
+                }
+                if (rider.lastRegistered.AddDays(context.settings.First().daysBetweenRegistrations) < DateTime.Now)
+                {
+                    return RedirectToAction("Index", new { rackId = rackId, message = "The user's registration is out of date. Please remind them to register." });
+                }
+                bike.bikeRackId = null;
+                check.rider = rider.bikeUserId;
+                check.checkOutPerson = dcheckOutPerson.bikeUserId;
+                context.CheckOut.Add(check);
+                context.SaveChanges();
+                Mailing.queueCheckoutNotice(rider.email, DateTime.Now.AddHours(24));
+            }
+            catch (System.InvalidOperationException)
+            {
+                return RedirectToAction("Index", new { rackId = rackId, message = "That user isn't in the system." });
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException)
+            {
+                return RedirectToAction("Index", new { rackId = rackId, message = "Checkout didn't validate. Sorry." });
+            }
+            return RedirectToAction("Index", new { rackId = rackId, message = "Checkout successful!" });
         }
 
         [HttpPost]
@@ -93,9 +145,20 @@ namespace BikeShare.Controllers
         public ActionResult checkInBike(int rackId, [Bind] BikeShare.ViewModels.CheckoutViewModel model)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            var newModel = new BikeShare.ViewModels.CheckoutViewModel();
-            var errorMessage = repo.checkInBike(model.selectedBikeForCheckout, User.Identity.Name, model.currentRack.bikeRackId);
-            return RedirectToAction("Index", new { rackId = rackId, message = errorMessage });
+            try
+            {
+                var checkout = context.CheckOut.Where(t => !t.timeIn.HasValue).Where(b => b.bike == model.selectedBikeForCheckout).First();
+                checkout.isResolved = true;
+                checkout.timeIn = DateTime.Now;
+                var bike = context.Bike.Find(model.selectedBikeForCheckout);
+                bike.bikeRackId = rackId;
+                context.SaveChanges();
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException)
+            {
+                return RedirectToAction("Index", new { rackId = rackId, message = "There was an issue checking the bike in." });
+            }
+            return RedirectToAction("Index", new { rackId = rackId, message = "Bike successfully checked in." });
         }
 
         [HttpPost]
@@ -103,7 +166,17 @@ namespace BikeShare.Controllers
         public ActionResult submitCharge(string userName, string chargeTitle, string chargeDetails, int rackId, decimal chargeAmount)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            financeRepo.addCharge(chargeAmount, userName, chargeTitle, chargeDetails);
+            Charge charge = new Charge
+            {
+                amountCharged = chargeAmount,
+                dateAssesed = DateTime.Now,
+                dateResolved = DateTime.Now,
+                title = chargeTitle,
+                description = chargeDetails,
+                user = context.BikeUser.Where(u => u.userName == userName).First()
+            };
+            context.Charge.Add(charge);
+            context.SaveChanges();
             return RedirectToAction("Index", new { rackId = rackId });
         }
 
@@ -112,9 +185,11 @@ namespace BikeShare.Controllers
         public ActionResult submitMaint(string maintTitle, string maintDetails, int rackId, int bikeId, string disableBike)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            bool bikeDisabled = true; if (String.IsNullOrEmpty(disableBike)) { bikeDisabled = false; }
-            maintRepo.newMaintenance(bikeId, maintTitle, maintDetails, User.Identity.Name, maintRepo.getAllWorkshops().First().workshopId, bikeDisabled);
-            return RedirectToAction("Index", new { rackId = rackId});
+            var maintenance = new MaintenanceEvent { timeAdded = DateTime.Now, timeResolved = DateTime.Now, title = maintTitle, details = maintDetails, disableBike = !String.IsNullOrEmpty(disableBike) };
+            maintenance.submittedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
+            context.MaintenanceEvent.Add(maintenance);
+            context.SaveChanges();
+            return RedirectToAction("Index", new { rackId = rackId });
         }
 
         [HttpPost]
@@ -122,22 +197,36 @@ namespace BikeShare.Controllers
         public ActionResult submitChargeAndMaint(string userName, string title, string details, int rackId, decimal chargeAmount, int bikeId, string disableBike)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            financeRepo.addCharge(chargeAmount, userName, title, details);
-            bool bikeDisabled = true; if (String.IsNullOrEmpty(disableBike)) { bikeDisabled = false; }
-            maintRepo.newMaintenance(bikeId, title, details, User.Identity.Name, maintRepo.getAllWorkshops().First().workshopId, bikeDisabled);
+            Charge charge = new Charge
+            {
+                amountCharged = chargeAmount,
+                dateAssesed = DateTime.Now,
+                dateResolved = DateTime.Now,
+                title = title,
+                description = details,
+                user = context.BikeUser.Where(u => u.userName == userName).First()
+            };
+            context.Charge.Add(charge);
+            var maintenance = new MaintenanceEvent { timeAdded = DateTime.Now, timeResolved = DateTime.Now, title = title, details = details, disableBike = !String.IsNullOrEmpty(disableBike) };
+            maintenance.submittedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
+            context.MaintenanceEvent.Add(maintenance);
+            context.SaveChanges();
             return RedirectToAction("Index", new { rackId = rackId });
         }
+
         public ActionResult doesUserExist(string validationName)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            return Json(userRepo.doesUserExist(validationName), JsonRequestBehavior.AllowGet);
+            return Json(context.BikeUser.Where(u => u.userName == validationName).Count() > 0, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult isUserValid(string validationName)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            if(userRepo.doesUserExist(validationName))
+            if (context.BikeUser.Where(u => u.userName == validationName).Where(i => !i.isArchived).Count() > 0)
             {
-                return Json(userRepo.isUserRegistrationValid(userRepo.getUserByName(validationName).bikeUserId), JsonRequestBehavior.AllowGet);
+                var user = context.BikeUser.Where(u => u.userName == validationName).First();
+                return Json(user.canBorrowBikes && user.lastRegistered.AddDays(context.settings.First().daysBetweenRegistrations) > DateTime.Now, JsonRequestBehavior.AllowGet);
             }
             else
             {

@@ -12,7 +12,7 @@
 <script type="text/javascript">
     $('#userName').change( function () {
         var serviceURL = "@Url.Action("doesUserExist")";
-        
+
         $.ajax({
             type: "GET",
             url: serviceURL,
@@ -52,7 +52,7 @@
 @using (Html.BeginForm())
 {
     <div class="modal-body">
-        <div class="alert alert-danger" id="userWarningAlert" onchange="" hidden="hidden"><span class="glyphicon glyphicon-warning-sign"></span> A user with this name already exists. You may not create multiple users with the same name.</div> 
+        <div class="alert alert-danger" id="userWarningAlert" onchange="" hidden="hidden"><span class="glyphicon glyphicon-warning-sign"></span> A user with this name already exists. You may not create multiple users with the same name.</div>
         @Html.AntiForgeryToken()
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
@@ -110,7 +110,6 @@
                     @Html.ValidationMessageFor(model => model.canManageApp)
                 </div>
             </div>
-
         </div>
     </div>
     <div role="navigation" class="modal-footer" id="formSubmitBtn">

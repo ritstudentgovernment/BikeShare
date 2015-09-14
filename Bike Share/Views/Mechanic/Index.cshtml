@@ -1,4 +1,5 @@
-﻿@model BikeShare.ViewModels.Maint.dashboardVM
+﻿@model List<BikeShare.Models.Bike>
+
 
 @{
     ViewBag.Title = "Mechanic's Dashboard";
@@ -11,110 +12,46 @@
 <hr />
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="glyphicon glyphicon-search"></span> Latest Inspections</h3>
+        <h3 class="panel-title"><span class="glyphicon glyphicon-search"></span> All Bikes</h3>
     </div>
-    <div class="table-responsive"><table class="table">
-    <thead>
-        <tr>
-            <td>Bike #</td>
-            <td>Date</td>
-            <td>Workshop</td>
-            <td>Comment</td>
-            <td></td>
-        </tr>
-    </thead>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Bike #</td>
+                    <td>Available?</td>
+                    <td>Last Checked Out</td>
+                    <td></td>
+                </tr>
+            </thead>
 
-    @foreach (var spec in Model.latestInspections)
-    {
-        if (spec.isPassed)
-        {
-            <tr class="bg-success">
-                <td>@spec.bike.bikeId</td>
-                <td>@spec.datePerformed.ToShortDateString()</td>
-                <td>@spec.placeInspected.name</td>
-                <td>@spec.comment</td>
-                <td><a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-            </tr>
-        }
-        else
-        {
-            <tr class="bg-danger">
-                <td>@spec.bike.bikeId</td>
-                <td>@spec.datePerformed.ToShortDateString()</td>
-                <td>@spec.placeInspected.name</td>
-                <td>@spec.comment</td>
-                <td><a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-            </tr>
-        }
-    }
-</table></div>
-    
-
+            @foreach (var bike in Model)
+            {
+                if (bike.isAvailable())
+                {
+                    <tr class="bg-success">
+                        <td>@bike.bikeNumber</td>
+                        <td>@bike.isAvailable()</td>
+                        <td>@bike.lastCheckedOut.ToString()</td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="@Url.Action(actionName: "bikeDetails", controllerName: "Mechanic", routeValues: new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-list-alt"></span>  Details</a> 
+                            <a class="btn btn-primary" href="@Url.Action("newInspection", new { bikeId = bike.bikeId})" data-toggle="modal" data-target="#siteModal"><span class="glyphicon glyphicon-search"></span>  Inspect</a>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="bg-danger">
+                        <td>@bike.bikeNumber</td>
+                        <td>@bike.isAvailable()</td>
+                        <td>@bike.lastCheckedOut.ToString()</td>
+                        <td class="text-right">
+                            <a class="btn btn-primary" href="@Url.Action(actionName: "bikeDetails", controllerName: "Mechanic", routeValues: new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-list-alt"></span>  Details</a> 
+                            <a class="btn btn-primary" href="@Url.Action("newInspection", new { bikeId = bike.bikeId})" data-toggle="modal" data-target="#siteModal"><span class="glyphicon glyphicon-search"></span>  Inspect</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
 </div>
-<div class="panel panel-warning">
-    <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Latest Maintenance</h4></div>
-    <div class="table-responsive"><table class="table">
-    <thead>
-        <tr>
-            <td>Bike #</td>
-            <td>Date</td>
-            <td>Title</td>
-            <td>Mechanic</td>
-            <td>Resolved?</td>
-            <td></td>
-        </tr>
-    </thead>
-
-    @foreach (var maint in Model.latestMaintenances)
-    {
-        if (maint.resolved)
-        {
-            <tr class="bg-success">
-                <td>@maint.bikeAffected.bikeNumber</td>
-                <td>@maint.timeAdded.ToShortDateString()</td>
-                <td>@maint.title</td>
-                <td>@maint.staffPerson.userName</td>
-                <td>@maint.timeResolved.ToShortDateString()</td>
-                <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-            </tr>
-        }
-        else
-        {
-            <tr class="bg-danger">
-                <td>@maint.bikeAffected.bikeNumber</td>
-                <td>@maint.timeAdded.ToShortDateString()</td>
-                <td>@maint.title</td>
-                <td>@maint.staffPerson.userName</td>
-                <td>Not yet. :(</td>
-                <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-wrench"></span>  Work</a></td>
-            </tr>
-        }
-    }
-</table></div>
-    
-
-</div>
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h4>Most Recently Used Bikes</h4>
-    </div>
-    <div class="table-responsive"><table class="table">
-    <thead>
-        <tr>
-            <td>Number</td>
-            <td>Name</td>
-            <td>Details?</td>
-        </tr>
-    </thead>
-    @foreach (var bike in Model.allBikes)
-    {
-        <tr>
-            <td>@bike.bikeNumber</td>
-            <td>@bike.bikeName</td>
-            <td><a class="btn btn-primary pull-right" href="@Url.Action(actionName: "bikeDetails", controllerName: "Mechanic", routeValues: new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-list-alt"></span>  Details</a></td>
-        </tr>
-    }
-</table></div>
-    
-
-    </div>

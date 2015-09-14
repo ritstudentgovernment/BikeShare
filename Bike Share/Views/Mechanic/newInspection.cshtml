@@ -1,7 +1,7 @@
 ﻿@model BikeShare.ViewModels.specWithMaint
 
 @{
-    ViewBag.Title = "New Inspection of Bike #" + Model.spec.bike.bikeNumber.ToString();
+    ViewBag.Title = "New Inspection";
     Layout = null;
 }
 <script>
@@ -36,14 +36,6 @@
                                 <div class="col-sm-8">
                                     @Html.CheckBoxFor(model => model.spec.isPassed)
                                     @Html.ValidationMessageFor(model => model.spec.isPassed)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-4">Workshop</label>
-                                <div class="col-sm-8">
-                                    @Html.DropDownListFor(m => m.spec.placeInspected.workshopId,
-                                    new SelectList(ViewBag.query, "workshopId", "name"), new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.spec.placeInspected.workshopId)
                                 </div>
                             </div>
                         </div>
@@ -82,8 +74,7 @@
                 </div>
             </div>
         </div>
-        @Html.HiddenFor(model => model.spec.bike.bikeId)
-        
+        @Html.HiddenFor(model => model.spec.bikeId)
     </div>
 
     <div class="modal-footer text-right">

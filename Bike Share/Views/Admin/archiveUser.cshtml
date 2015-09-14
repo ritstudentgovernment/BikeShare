@@ -10,20 +10,39 @@
 </div>
 
 @using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.bikeUserId)
+    if (Model.isArchived)
     {
         <div class="modal-body">
-            @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.bikeUserId)
-        <h3>Warning!</h3>
-        <p>Archiving user "@Model.userName" will have the following consequences:</p>
-        <ul>
-            <li>@Model.userName will not be able to interact with the site in ANY way.</li>
-            <li>You will not be able to assess fees for @Model.userName</li>
-            <li>@Model.userName can not do any work as a mechanic, checkout person, administrator, or user.</li>
-        </ul>
-        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> <em>Treat this action as if it were a deletion!</em></div>
-    </div>
-     <div class="modal-footer">
-        <button type="submit" value="Archive User" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
-    </div>
+            <h3>Warning!</h3>
+            <p>Restoring user "@Model.userName" will have the following consequences:</p>
+            <ul>
+                <li>@Model.userName will be able to interact with the site in ANY way.</li>
+                <li>You will be able to assess fees for @Model.userName</li>
+                <li>@Model.userName will immediately regain any permissions they had before they were archived.</li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" value="Archive User" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
+        </div>
+    }
+    else
+    {
+        <div class="modal-body">
+            <h3>Warning!</h3>
+            <p>Archiving user "@Model.userName" will have the following consequences:</p>
+            <ul>
+                <li>@Model.userName will not be able to interact with the site in ANY way.</li>
+                <li>You will not be able to assess fees for @Model.userName</li>
+                <li>@Model.userName can not do any work as a mechanic, checkout person, administrator, or user.</li>
+            </ul>
+            <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> <em>Treat this action as if it were a deletion!</em></div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" value="Archive User" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-save"></span> Save</button>
+        </div>
+    }
+
 }

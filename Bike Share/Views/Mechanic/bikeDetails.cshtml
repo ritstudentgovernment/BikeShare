@@ -1,6 +1,5 @@
 ﻿@model BikeShare.ViewModels.Maint.bikeDetailsVM
 
-
 @{
     ViewBag.Title = "Bike #" + Model.bikeNumber + " Details - " + Model.bikeName;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,7 +16,6 @@
             <thead>
                 <tr>
                     <td>Date</td>
-                    <td>Workshop</td>
                     <td>Comment</td>
                     <td></td>
                 </tr>
@@ -29,7 +27,6 @@
                 {
                     <tr class="bg-success">
                         <td>@spec.datePerformed.ToShortDateString()</td>
-                        <td>@spec.placeInspected.name</td>
                         <td>@spec.comment</td>
                         <td><a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
                     </tr>
@@ -38,7 +35,6 @@
                 {
                     <tr class="bg-danger">
                         <td>@spec.datePerformed.ToShortDateString()</td>
-                        <td>@spec.placeInspected.name</td>
                         <td>@spec.comment</td>
                         <td><a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
                     </tr>
@@ -46,7 +42,7 @@
             }
         </table>
     </div>
-    
+
     <div class="panel-footer text-right">
         @Html.ActionLink("All Inspections", "bikeInspections", new { bikeId = Model.bikeId}, new { @class = "btn btn-primary" })
         <a class="btn btn-primary" href="@Url.Action("newInspection", new { bikeId = Model.bikeId})" data-toggle="modal" data-target="#siteModal"><span class="glyphicon glyphicon-search"></span>  Inspect</a>
@@ -59,7 +55,6 @@
         <tr>
             <td>Date</td>
             <td>Title</td>
-            <td>Mechanic</td>
             <td>Resolved?</td>
             <td></td>
         </tr>
@@ -67,13 +62,12 @@
 
     @foreach (var maint in Model.maints)
     {
-        if (maint.resolved)
+        if (maint.timeResolved != null)
         {
             <tr class="bg-success">
                 <td>@maint.timeAdded.ToShortDateString()</td>
                 <td>@maint.title</td>
-                <td>@maint.staffPerson.userName</td>
-                <td>@maint.timeResolved.ToShortDateString()</td>
+                <td>@maint.timeResolved.GetValueOrDefault().ToString()</td>
                 <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
             </tr>
         }
@@ -82,14 +76,13 @@
             <tr class="bg-danger">
                 <td>@maint.timeAdded.ToShortDateString()</td>
                 <td>@maint.title</td>
-                <td>@maint.staffPerson.userName</td>
                 <td>Not yet. :(</td>
                 <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-wrench"></span>  Work</a></td>
             </tr>
         }
     }
 </table></div>
-    
+
     <div class="panel-footer text-right">
         @Html.ActionLink("All Maintenance", "bikeMaintenance", new { bikeId = Model.bikeId }, new { @class = "btn btn-primary" })
         <a class="btn btn-warning" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newMaintenance", new { bikeId = Model.bikeId})"><span class="glyphicon glyphicon-wrench"></span>  Maintain</a>

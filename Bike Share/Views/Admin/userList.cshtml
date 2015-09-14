@@ -8,39 +8,31 @@
 @section menuSection{
     @Html.Partial("_AdminMenuPartial")
 }
-<h2 class="text-center"><span class="glyphicon glyphicon-user pull-left"></span> Users <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newUser")"><span class="glyphicon glyphicon-user"></span>  New User</a></h2>
-<hr />
-@section filterSection{
-@using (Html.BeginForm(actionName: "userList", controllerName: "Admin"))
-{
-    <div class="panel panel-primary">
-        <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-filter"></span> Filters</h4></div>
-        <div class="panel-body">
-
-            <div class="col-md-12">
-                <h4>Status</h4>
-                <div class="form-inline">@Html.Label("Has Charged") @Html.CheckBox("hasCharges") </div>
-                <div class="form-inline">@Html.Label("Has a Bike") @Html.CheckBox("hasBike") </div>
+<h2 ><span class="glyphicon glyphicon-user pull-left"></span> Users <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newUser")"><span class="glyphicon glyphicon-user"></span>  New</a></h2>
+<div class="panel panel-default">
+    <div class="panel-heading">Find Users</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-9">
+                <h4>Who:</h4>
+                @Html.ActionLink("Have a Bike", "userList", new { hasBike=true}, new { @class = "btn btn-default" })
+                @Html.ActionLink("Are Mechanics", "userList", new { canMaintain=true}, new { @class = "btn btn-default" })
+                @Html.ActionLink("Are Admins", "userList", new { canAdmin=true}, new { @class = "btn btn-default" })
+                @Html.ActionLink("Are Cashiers", "userList", new { canCheckout=true}, new { @class = "btn btn-default" })
+                @Html.ActionLink("Can't Ride", "userList", new { canRide=false}, new { @class = "btn btn-default" })
             </div>
-
-            <div class="col-md-12">
-                <h4>Privilege</h4>
-                <div class="form-inline">@Html.Label("Mechanic") @Html.CheckBox("canMaintain") </div>
-                <div class="form-inline">@Html.Label("Admin") @Html.CheckBox("canAdmin") </div>
-                <div class="form-inline">@Html.Label("Rider") @Html.CheckBox("canRide") </div>
-                <div class="form-inline">@Html.Label("Checkout") @Html.CheckBox("canCheckout") </div>
+            <div class="col-md-3">
+                <h4>By Name:</h4>
+                @using (Html.BeginForm("userList", "Admin", FormMethod.Get))
+                {
+                    <div class="form-inline"> @Html.TextBox("name")</div>
+                    <input type="submit" value="Filter" class="btn btn-primary" role="button" />
+                }
+                
             </div>
-            <div class="col-md-12">
-                <h4>Name</h4>
-                <div class="form-inline">@Html.Label("Name") @Html.TextBox("name")</div>
-            </div>
-        </div>
-        <div class="panel-footer text-right">
-            <input type="submit" value="Filter" class="btn btn-primary" role="button" />
         </div>
     </div>
-}
-    }
+</div>
 <div class="row">
 @foreach (var user in Model.modelList)
 {
@@ -48,17 +40,15 @@
         <div class="panel panel-default">
             @if (user.isArchived)
             {
-                <div class="panel-heading"><h4 class="panel-title"><span><img src="@BikeShare.Views.Gravatar.url(user.email)?s=30&d=identicon" /></span> @user.userName <label class="label label-danger pull-right"> Archived</label></h4></div>
+                <div class="panel-heading"><h4 class="panel-title">@user.userName <label class="label label-danger pull-right"> Archived</label></h4></div>
             }
             else
             {
-                <div class="panel-heading"><h4 class="panel-title"><span><img src="@BikeShare.Views.Gravatar.url(user.email)?s=30&d=identicon" /></span> @user.userName</h4></div>
+                <div class="panel-heading"><h4 class="panel-title">@user.userName - @user.firstName @user.lastName</h4></div>
             }
-            <div class="panel-body"><p>@user.email - @user.checkOuts.Count() rentals</p></div>
+            <div class="panel-body"><p>@user.email</p><p>@user.phoneNumber</p><p>@user.lastRegistered.ToShortDateString()</p></div>
             <div class="text-right panel-footer">
                 <a class="btn btn-default" href="@Url.Action(actionName: "userDetails", controllerName: "Admin", routeValues: new { userId = @user.bikeUserId})"><span class="glyphicon glyphicon-user"></span>  Details</a>
-                <a class="btn btn-default" href="@Url.Action(actionName: "chargesForUser", controllerName: "Admin", routeValues: new { userId = @user.bikeUserId })"><span class="glyphicon glyphicon-shopping-cart"></span>  Charges</a>
-                <a class="btn btn-default" href="@Url.Action(actionName: "bikeCheckouts", controllerName: "Admin", routeValues: new { userId = @user.bikeUserId })"><span class="glyphicon glyphicon-time"></span>  Rentals</a>
                 <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = user.bikeUserId})"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
             </div>
         </div>

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Bike Rack: " + Model.name;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_wide.cshtml";
     @section mapsSection {
         <style type="text/css">
             #map-canvas {
@@ -27,8 +27,6 @@
             title:"Drag me!"
         })
 
-
-
         google.maps.event.addListener(marker, 'dragend', function(e) {
             moveMarker(e.latLng, map)})
         function moveMarker(position, map) {
@@ -43,87 +41,26 @@
         </script>
 
     }
-    @section menuSection{
-    @Html.Partial("_ExploreMenuPartial")
-    }
 }
-<h2 class="text-center"><i class="fa fa-exchange pull-left"></i>Rack Details</h2>
-<hr />
 <div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h4 class="panel-title">Information for @Model.name</h4></div>
-            <div style="height:150px; background-size: cover; background-position-x:center; background-position-y:center; background-image: url('@Url.Content("~/Content/Images/Racks/" + Model.bikeRackId.ToString() + ".jpg")')"></div>
-            <div class="panel-body" style="background-position-x:center; background-position-y: center">
-                <p>Description:</p>
-                <p>@Model.description</p>
+    <div style="background-image: url(@Url.Content("~/Content/Images/Racks/" + Model.bikeRackId.ToString() + ".jpg")); background-position: center; background-size: cover; padding: 50px 0px 50px 0px; height: 300px;">
+        <div class="container" style="position: relative; top: 25%; color: white;">
+            <div class="row" style="font-size: 200%;">
+                <div class="col-xs-12 col-sm-6 col-xs-push-1 col-sm-push-0">
+                    <h2 style="text-shadow:1px 1px 1px black; background-color: rgba(55,55,55,.6); padding: 5px 5px 5px 5px;">
+                        @Model.name<br />
+                        @Model.availableBikes.Count() Bikes Available
+                    </h2>
+                    <h3 style="text-shadow:1px 1px 1px black; background-color: rgba(55,55,55,.6); padding: 5px 5px 5px 5px;">@Model.description</h3> 
+                </div>
+                @if(!String.IsNullOrWhiteSpace(Model.hours)){
+                    <div class="col-xs-12 col-sm-6 col-xs-push-1 col-sm-push-0">
+                        @Model.hours
+                    </div>
+                }
             </div>
         </div>
-    </div>
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h4 class="panel-title">Map</h4></div>
-            <div id="map-canvas" style="height: 400px"></div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h4 class="panel-title">Hours</h4></div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Days</th>
-                        <th>Hours</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.hours != null)
-                    {
-                        foreach (var hour in Model.hours)
-                        {
-                            <tr>
-                                <td>
-                                    @if (hour.dayStart == hour.dayEnd)
-                                    {
-                                        @hour.dayStart.ToString()
-                                    }
-                                    else
-                                    {
-                                        <text>@hour.dayStart.ToString() - @hour.dayEnd.ToString()</text>
-                                    }
-                                </td>
-                                <td>@hour.hourStart.ToString():@hour.minuteStart.ToString() - @hour.hourEnd.ToString():@hour.minuteEnd.ToString()</td>
-                                <td>@hour.comment</td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-success">
-            <div class="panel-heading"><h4 class="panel-title">Available Bikes</h4></div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Bike #</th>
-                        <th>Bike Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var bike in Model.bikes)
-                    {
-                        <tr>
-                            <td>@bike.bikeNumber</td>
-                            <td>@bike.bikeName</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+
     </div>
 </div>
-
-        
+<div id="map-canvas" style="height: 400px"></div>

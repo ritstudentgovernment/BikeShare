@@ -19,7 +19,6 @@
             <tr>
                 <td>Date</td>
                 <td>Comment</td>
-                <td>Performed By</td>
                 <td>Details</td>
             </tr>
         </thead>
@@ -31,7 +30,6 @@
                 <tr class="bg-success">
                     <td>@spec.datePerformed.ToShortDateString()</td>
                     <td>@spec.comment</td>
-                    <td>@spec.inspector.userName</td>
                     <td><a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
                 </tr>
             }
@@ -40,7 +38,6 @@
                 <tr class="bg-danger">
                     <td>@spec.datePerformed.ToShortDateString()</td>
                     <td>@spec.comment</td>
-                    <td>@spec.inspector.userName</td>
                     <td><a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
                 </tr>
             }

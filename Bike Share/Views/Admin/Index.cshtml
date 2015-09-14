@@ -11,53 +11,42 @@
 <hr />
 
 <div class="row">
-    <div class="col-md-8">
-        <div class="panel panel-danger">
+    <div class="col-md-6">
+        <div class="panel panel-default">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-road"></span> Bikes</h4></div>
             <div class="panel-body">
-                <p class="pull-right">Total: @Model.countBikes</p>
-                <p class="pull-left">Available: @Model.countAvailableBikes</p>
-                
+                Total: @Model.countBikes, Available: @Model.countAvailableBikes
             </div>
             <div class="panel-footer text-right">
-                @Html.ActionLink("See all Bikes", "bikeList", new { }, new { @class = "btn btn-default" })
-                <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newBike")"><span class="glyphicon glyphicon-asterisk"></span>  New</a>
+                @using (Html.BeginForm("bikeReport", "Admin", FormMethod.Post))
+                {
+                    <input class="btn-success btn" type="submit" value="Get Report" />
+                
+                    @Html.ActionLink("See All", "bikeList", new { }, new { @class = "btn btn-default" })
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newBike")">  New</a>
+                }
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-align-right"></span> Bike Racks</h4></div>
             <div class="panel-body">
-                <p class="pull-left">Total Racks: @Model.countRacks</p>
-                <p class="pull-right">Total Checkouts: @Model.countCheckouts</p>
+                Total Racks: @Model.countRacks
             </div>
             <div class="panel-footer text-right">
-                @Html.ActionLink("See all Bike Racks", "bikeRackList", new { }, new { @class = "btn btn-default" })
-                <a class="btn btn-primary" href="@Url.Action("newRack")"><span class="glyphicon glyphicon-asterisk"></span>  New</a>
+                @using (Html.BeginForm("rackReport", "Admin", FormMethod.Post))
+                {
+                    <input class="btn-success btn" type="submit" value="Get Report" />
+                    @Html.ActionLink("See All", "bikeRackList", new { }, new { @class = "btn btn-default" })
+                    <a class="btn btn-primary" href="@Url.Action("newRack")">  New</a>
+                }
+                
             </div>
         </div>
     </div>
-
-    
-    <div class="col-md-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Maintenance + Compliance</h4></div>
-            <div class="panel-body">
-                <p>Total Maintenance Perfmormed: @Model.countMaintenance</p>
-                <p>Maintenance Ongoing: @Model.countOngoingMaintenance</p>
-                <p class="pull-right">Total Inspections: @Model.countInspections</p>
-            </div>
-            <div class="panel-footer text-right">
-                @Html.ActionLink("See all Maintenance", "maintenanceList", new { }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("See all Inspections", "inspectionList", new { }, new { @class = "btn btn-danger" })
-                @Html.ActionLink("See all Workshops", "workshopList", new { }, new { @class = "btn btn-info" })
-            </div>
-        </div>
-    </div>
-
     <div class="col-md-6">
-        <div class="panel panel-success">
+        <div class="panel panel-default">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-cog"></span> App Settings</h4></div>
             <div class="panel-body">Current App information</div>
             <div class="panel-footer text-right">
@@ -66,23 +55,63 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="panel panel-warning">
+        <div class="panel panel-default">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-user"></span> Users</h4></div>
             <div class="panel-body">
                 <p>Total Users: @Model.countUsers</p>
             </div>
             <div class="panel-footer text-right">
-                @Html.ActionLink("See all Users", "userList", new { }, new { @class = "btn btn-default" })
-                <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newUser")"><span class="glyphicon glyphicon-asterisk"></span>  New</a>
+                @using (Html.BeginForm("userReport", "Admin", FormMethod.Post))
+                {
+                    <input class="btn-success btn" type="submit" value="Get Report" />
+                    @Html.ActionLink("See All", "userList", new { }, new { @class = "btn btn-default" })
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newUser")">  New</a>
+                }
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="panel panel-info">
+    <div class="col-md-6">
+        <div class="panel panel-default">
             <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-usd"></span> Charges and Financial</h4></div>
             <div class="panel-body"><p>Total Charges: @Model.countCharges</p></div>
             <div class="panel-footer text-right">
                 @Html.ActionLink("See All", "chargesList", new { }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-circle-arrow-down"></span> Reports</h4></div>
+            <div class="panel-body">Download system data</div>
+            <div class="panel-footer text-right">
+                @Html.ActionLink("See All", "reports", new { }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4 class="panel-title">Bulk Actions &amp; Schedules</h4></div>
+            <div class="panel-body">
+                @using (Html.BeginForm("bulkOfflineBikes", "admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label>Bikes</label>
+                            <input type="number" id="start" name="start" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>through</label>
+                            <input type="number" id="end" name="end" class="form-control" />
+
+                        </div>
+                        <button type="submit" value="Confirm" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-warning-sign"></span> Take Offline</button>
+                    </div>
+                }
+            </div>
+            <div class="panel-footer text-right">
+                <a href="@Url.Action("resetRegistrations")" class="btn btn-default">Reset Registrations</a>
+                <a href="@Url.Action("schedules")"  class="btn btn-default">Manage Schedules</a>
             </div>
         </div>
     </div>
