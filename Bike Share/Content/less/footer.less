@@ -1,10 +1,21 @@
-﻿@import "variables.less";
+﻿@import "variables";
 
 html, body {
   height: 100%;
 }
 
 @footer-height: 340px;
+
+.footer-left, .footer-right {
+  padding: 30px 0;
+  height: 275px;
+  @media (min-width: 768) { 
+    height: 320px;
+  }
+  @media (min-width: 992) { 
+    height: 340px;
+  }
+}
 
 .wrapper {
   min-height: 100%;
@@ -34,20 +45,20 @@ html, body {
 }
 
 .footer-count {
-  @media(max-width: @screen-lg-min) {
+  @media(max-width: 1200) {
     text-align: left;
   }
-  @media(min-width: @screen-lg-min) {
+  @media(min-width: 1200) {
     text-align: right;
   }
 }
 
 .footer-left, .footer-right {
   padding: 30px 0;
-  @media (min-width: @screen-sm-min) { 
+  @media (min-width: 768) { 
     height: 320px;
   }
-  @media (min-width: @screen-md-min) { 
+  @media (min-width: 992) { 
     height: 340px;
   }
 }
@@ -61,10 +72,10 @@ html, body {
 }
 
 .footer-social {
-  @media(max-width: @screen-lg-min) {
+  @media(max-width: 1200) {
     margin-left: -10px;
   }
-  @media(min-width: @screen-lg-min) {
+  @media(min-width: 1200) {
     margin-right: -7px;
   }
 }
