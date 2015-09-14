@@ -7,7 +7,7 @@ namespace BikeShare.Code
     /// <summary>
     /// Filter for inserting userName into views. This helps to enable unit testing when the action would otherwise directly depend on the roleManager.
     /// </summary>
-    public class UserNameFilter : ActionFilterAttribute
+    public sealed class UserNameFilter : ActionFilterAttribute
     {
         /// <summary>
         /// Called when executing the action. Inserts the correct userName into the arguments.
@@ -28,9 +28,9 @@ namespace BikeShare.Code
         }
     }
 
-    public static class roleCheck
+    public static class RoleCheck
     {
-        public static bool isUserAdmin(string userName)
+        public static bool IsUserAdmin(string userName)
         {
             using (var context = new BikesContext())
             {
@@ -38,7 +38,7 @@ namespace BikeShare.Code
             }
         }
 
-        public static bool isUserMechanic(string userName)
+        public static bool IsUserMechanic(string userName)
         {
             using (var context = new BikesContext())
             {
@@ -46,7 +46,7 @@ namespace BikeShare.Code
             }
         }
 
-        public static bool isUserCashier(string userName)
+        public static bool IsUserCashier(string userName)
         {
             using (var context = new BikesContext())
             {

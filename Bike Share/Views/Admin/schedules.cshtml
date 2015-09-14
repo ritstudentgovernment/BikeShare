@@ -78,9 +78,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h4 class="panel-title">@item.name</h4></div>
                 <div class="panel-body">
-                    <p>Every @item.day at @item.hour</p>
+                    <p>Every @item.day at @item.hour:00</p>
                     <p>Bikes @item.affectedBikes</p>
                     <p>Starting @item.start.ToShortDateString() until @item.end.ToShortDateString()</p>
+                    <p>Last Run: @item.lastRun.ToShortDateString()</p>
                 </div>
                 <div class="panel-footer text-right">
                     @using (Html.BeginForm("deleteSchedule", "admin", FormMethod.Post))

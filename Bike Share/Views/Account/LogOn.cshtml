@@ -13,7 +13,7 @@
     {
         @Html.AntiForgeryToken()
 
-        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control input-lg full-width", @placeholder = "RIT Username" })
-        @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg full-width", @placeholder = "Password" })
-        <input type="submit" value="Log In" role="button" class="btn btn-primary btn-lg full-width form-control" />
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control input-lg", @placeholder = "RIT Username" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg", @placeholder = "Password" })
+        <input type="submit" value="Log In" role="button" class="input-lg btn-lg full-width form-control btn-primary" />
     }

@@ -23,8 +23,12 @@
             </div>
             <div class="col-md-3">
                 <h4>By Name:</h4>
-                <div class="form-inline"> @Html.TextBox("name")</div>
-                <input type="submit" value="Filter" class="btn btn-primary" role="button" />
+                @using (Html.BeginForm("userList", "Admin", FormMethod.Get))
+                {
+                    <div class="form-inline"> @Html.TextBox("name")</div>
+                    <input type="submit" value="Filter" class="btn btn-primary" role="button" />
+                }
+                
             </div>
         </div>
     </div>

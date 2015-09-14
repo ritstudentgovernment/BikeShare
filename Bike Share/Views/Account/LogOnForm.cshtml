@@ -6,15 +6,15 @@
 @section lateScripts{
     <script type="text/javascript">
         $(window).load(function () {
-            $('#loginModal').modal('show');
+            $('#loginModal2').modal('show');
 
         });
-</script>
+    </script>
 }
 
 <h2 class="text-center">Log In</h2>
-<div class="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="siteModalLabel" data-remote="@Url.Action("LogOn")">
-    <div class="modal-dialog">
+<div class="modal" id="loginModal2" tabindex="-1" role="dialog" data-remote="@Url.Action("LogOn")">
+    <div class="modal-dialog modal-login">
         <div class="modal-content">
             <div class="modal-body">
                 Loading...

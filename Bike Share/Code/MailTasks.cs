@@ -15,8 +15,8 @@ namespace BikeShare.Code.ScheduledTasks
                 var set = context.settings.First();
                 string appName = set.appName;
                 int rentDays = set.maxRentDays;
-                //TODO - this now fails
-                List<CheckOut> checks = context.CheckOut.Where(i => !i.isResolved).Where(m => m.timeOut.AddDays(rentDays) < DateTime.Now).ToList();
+                DateTime threshold = DateTime.Now.Subtract(new TimeSpan(rentDays, 0, 0, 0));
+                List<CheckOut> checks = context.CheckOut.Where(i => !i.isResolved).Where(m => m.timeOut < threshold).ToList();
 
                 var mail = new MailItem();
                 foreach (var s in set.adminEmailList.Split(','))

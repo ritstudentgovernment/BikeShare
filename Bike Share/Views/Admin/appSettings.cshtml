@@ -9,7 +9,15 @@
 }
 @using (Html.BeginForm())
 {
-<h2><span class="glyphicon glyphicon-cog pull-left"></span>@ViewBag.Title<a class="btn btn-success pull-right">Export</a><input type="submit" value="Save" class="btn btn-primary pull-right" role="button" /></h2>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2><span class="glyphicon glyphicon-cog pull-left"></span>@ViewBag.Title</h2>
+        </div>
+        <div class="col-sm-6">
+            <input type="submit" value="Save" class="btn btn-primary pull-right btn-lg" role="button" />
+        </div>
+    </div>
+
 <hr />
     @Html.AntiForgeryToken()
     <div class="form-horizontal">

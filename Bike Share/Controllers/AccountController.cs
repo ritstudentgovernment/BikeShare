@@ -51,9 +51,26 @@ namespace BikeShare.Controllers
 #if DEBUG
             if (context.BikeUser.Where(u => u.userName == model.UserName).Count() < 1)
             {
-                context.BikeUser.Add(new bikeUser { userName = model.UserName, canBorrowBikes = true, isArchived = false, email = User.Identity.Name + context.settings.First().expectedEmail });
-                context.SaveChanges();
+                context.BikeUser.Add(new bikeUser
+                {
+                    userName = model.UserName,
+                    canBorrowBikes = true,
+                    email = model.UserName + context.settings.First().expectedEmail,
+                    lastRegistered = new DateTime(2000, 01, 01)
+                });
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException)
+                {
+                    throw;
+                }
                 FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                if (!String.IsNullOrWhiteSpace(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Register", "Explore");
             }
             FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
@@ -63,9 +80,16 @@ namespace BikeShare.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    if (context.BikeUser.Where(u => u.userName == User.Identity.Name).Count() < 1)
+                    if (context.BikeUser.Where(u => u.userName == model.UserName).Count() < 1)
                     {
-                        context.BikeUser.Add(new bikeUser { userName = User.Identity.Name, canBorrowBikes = true, isArchived = false, email = User.Identity.Name + context.settings.First().expectedEmail });
+                        context.BikeUser.Add(new bikeUser
+                        {
+                            userName = model.UserName,
+                            canBorrowBikes = true,
+                            email = model.UserName + context.settings.First().expectedEmail,
+                            lastRegistered = new DateTime(2000, 01, 01)
+                        }); 
+                        context.SaveChanges();
                         FormsAuthentication.SetAuthCookie(model.UserName, true);
                         return RedirectToAction("Register", "Explore");
                     }
@@ -73,7 +97,7 @@ namespace BikeShare.Controllers
                 }
                 ModelState.AddModelError("", "Incorrect username and/or password");
             }
-            return View(model);
+            return View("LogOnForm", model);
         }
 
         public ActionResult LogOnForm()

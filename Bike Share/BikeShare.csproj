@@ -30,7 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -257,17 +257,8 @@
     <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
     <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
     <Content Include="bin\Microsoft.AspNet.Identity.Owin.dll" />
-    <Content Include="bin\Microsoft.Owin.dll" />
-    <Content Include="bin\Microsoft.Owin.Host.SystemWeb.dll" />
-    <Content Include="bin\Microsoft.Owin.Security.Cookies.dll" />
     <Content Include="bin\Microsoft.Owin.Security.dll" />
-    <Content Include="bin\Microsoft.Owin.Security.MicrosoftAccount.dll" />
     <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
-    <Content Include="bin\Models.dll" />
-    <Content Include="bin\Models.pdb" />
-    <Content Include="bin\Mvc.Mailer.dll" />
-    <Content Include="bin\Ninject.dll" />
-    <Content Include="bin\Ninject.Web.Common.dll" />
     <Content Include="bin\nJupiter.Abstraction.Logging.dll" />
     <Content Include="bin\nJupiter.DataAccess.Ldap.dll" />
     <Content Include="bin\Owin.dll" />
@@ -281,7 +272,6 @@
     <Content Include="bin\System.Web.WebPages.Deployment.dll" />
     <Content Include="bin\System.Web.WebPages.dll" />
     <Content Include="bin\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\WebActivatorEx.dll" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -353,6 +343,14 @@
     <Compile Include="Migrations\201507051655013_registrationEnhancement.Designer.cs">
       <DependentUpon>201507051655013_registrationEnhancement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508302101011_AddUserNotes.cs" />
+    <Compile Include="Migrations\201508302101011_AddUserNotes.Designer.cs">
+      <DependentUpon>201508302101011_AddUserNotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509140237452_minorChangePrePublish.cs" />
+    <Compile Include="Migrations\201509140237452_minorChangePrePublish.Designer.cs">
+      <DependentUpon>201509140237452_minorChangePrePublish.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\appSetting.cs" />
     <Compile Include="Models\Bike.cs" />
@@ -411,6 +409,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507051655013_registrationEnhancement.resx">
       <DependentUpon>201507051655013_registrationEnhancement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508302101011_AddUserNotes.resx">
+      <DependentUpon>201508302101011_AddUserNotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509140237452_minorChangePrePublish.resx">
+      <DependentUpon>201509140237452_minorChangePrePublish.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

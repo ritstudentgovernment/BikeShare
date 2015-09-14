@@ -30,7 +30,6 @@ namespace BikeShare.Models
         [Display(Name = "Email")]
         public string email { get; set; }
 
-        [Phone]
         [Display(Name = "Phone Number")]
         public string phoneNumber { get; set; }
 
@@ -54,5 +53,7 @@ namespace BikeShare.Models
         public bool canCheckOutBikes { get; set; }
 
         public int registrationPDFNumber { get; set; }
+
+        public string Notes { get; set; }
     }
 }

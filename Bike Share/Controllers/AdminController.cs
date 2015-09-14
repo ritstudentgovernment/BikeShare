@@ -188,6 +188,7 @@ namespace BikeShare.Controllers
         public ActionResult appSettings([Bind] appSetting settings)
         {
             if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            settings.latestPDFNumber = context.settings.First().latestPDFNumber;
             context.settings.Remove(context.settings.First());
             context.settings.Add(settings);
             context.SaveChanges();
@@ -400,7 +401,8 @@ namespace BikeShare.Controllers
                 canMaintainBikes = user.canMaintainBikes,
                 canCheckOutBikes = user.canCheckOutBikes,
                 canAdministerSite = user.canManageApp,
-                canBorrowBikes = user.canBorrowBikes
+                canBorrowBikes = user.canBorrowBikes,
+                lastRegistered = new DateTime(2000,1,1)
             });
             context.SaveChanges();
 
@@ -436,6 +438,7 @@ namespace BikeShare.Controllers
             dUser.lastName = user.lastName;
             dUser.isArchived = user.isArchived;
             dUser.phoneNumber = user.phoneNumber;
+            context.SaveChanges();
             return RedirectToAction("userDetails", new { userId = user.bikeUserId });
         }
 
@@ -572,6 +575,7 @@ namespace BikeShare.Controllers
         public ActionResult newSchedule(ScheduledInspection sched)
         {
             if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            sched.lastRun = new DateTime(2000, 1, 1);
             context.schedules.Add(sched);
             context.SaveChanges();
             return RedirectToAction("schedules");
@@ -595,15 +599,19 @@ namespace BikeShare.Controllers
         }
 
         [HttpPost]
-        public ActionResult resetRegistrations(bool notify)
+        public ActionResult resetRegistrations(bool notify = false)
         {
-            //TODO - implement notification functionality
             if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
+            var appName = context.settings.First().appName;
             foreach(var user in context.BikeUser)
             {
-                user.lastRegistered = DateTime.MinValue;
+                user.lastRegistered = new DateTime(2000, 1, 1);// DateTime.MinValue; - This doesn't work because it is out of range of what sql server allows
+                if(notify)
+                {
+                    BikeShare.Code.Mailing.queueRegistrationTerminationNotice(user.email, appName);
+                }
             }
-            context.SaveChangesAsync();
+            context.SaveChanges();
             return RedirectToAction("index");
         }
 

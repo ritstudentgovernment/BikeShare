@@ -4,7 +4,7 @@ namespace BikeShare.ViewModels
 {
     public class ActivityCard : IComparable
     {
-        public cardStatus status;
+        public cardStatus status { get; set; }
 
         public string title { get; set; }
 
@@ -62,7 +62,7 @@ namespace BikeShare.ViewModels
 
     public class bikeCard
     {
-        public cardStatus status;
+        public cardStatus status {get; set;}
 
         public string bikeName { get; set; }
 

@@ -9,6 +9,12 @@ namespace BikeShare.Code
 {
     public class MailItem
     {
+        public MailItem()
+        {
+            To = new List<string>();
+            Cc = new List<string>();
+            Bcc = new List<string>();
+        }
         public List<String> To { get; set; }
         public List<String> Cc { get; set; }
         public List<String> Bcc { get; set; }
@@ -17,8 +23,13 @@ namespace BikeShare.Code
         public bool isHtml { get; set; }
         public string attachmentPath { get; set; }
     }
-    public class Mailing
+    public static class Mailing
     {
+
+        static Mailing()
+        {
+            mailQueue = new Queue<MailItem>();
+        }
         private static Queue<MailItem> mailQueue {get; set;}
         public static void queueMail(MailItem mail)
         {
@@ -43,7 +54,7 @@ namespace BikeShare.Code
         {
             var mail = new MailItem();
             mail.To.Add(emailTo);
-            mail.Subject = "Registration Confirmation";
+            mail.Subject = appName + " Registration Confirmation";
             mail.isHtml = true;
             mail.Body += "<div style=\"text-align: center; font-size: 24pt\">" + appName + " Registration Confirmation</div>";
             mail.Body += "<div style=\"font-size: 14pt\">This email serves as confirmation of your registration with this bike sharing program and your agreement to the terms and conditions of the service.</div>";
@@ -62,10 +73,23 @@ namespace BikeShare.Code
             mail.attachmentPath = legalPDFPath;
             queueMail(mail);
         }
+
+        public static void queueRegistrationTerminationNotice(string emailTo, string appName)
+        {
+            var mail = new MailItem();
+            mail.To.Add(emailTo);
+            mail.Subject = appName + " Registration Expiration";
+            mail.isHtml = true;
+            mail.Body += "<div style=\"text-align: center; font-size: 24pt\">" + appName + " Registration Expiration Notice</div>";
+            mail.Body += "<div style=\"font-size: 14pt\">Your registration has expired. Please use the website to renew your registration. You will not be able to borrow bikes until you renew your registration.</div>";
+            mail.Body += "<hr />";
+            mail.Body += "<p>Thanks, and have many safe and enjoyable rides!</p>";
+            queueMail(mail);
+        }
+
         /// <summary>
         /// 
         /// </summary>
-        /// <returns>true if there is more mail to send</returns>
         public static void sendMail()
         {
             
@@ -81,6 +105,7 @@ namespace BikeShare.Code
                     message.IsBodyHtml = mail.isHtml;
                     mail.Cc.ForEach(m => message.CC.Add(m));
                     mail.Bcc.ForEach(m => message.Bcc.Add(m));
+                    message.From = new MailAddress("sgnoreply@rit.edu");
                     if (!String.IsNullOrWhiteSpace(mail.attachmentPath))
                     {
                         Attachment attach = new Attachment(mail.attachmentPath);

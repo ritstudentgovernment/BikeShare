@@ -104,7 +104,6 @@ namespace BikeShare.Controllers
             {
                 rack.availableBikes = context.Bike.Where(r => r.bikeRackId == rack.bikeRackId).ToList().Where(b => b.isAvailable()).ToList();
             }
-            DateTime dateFloor = DateTime.Now.Subtract(new TimeSpan(context.settings.First().DaysBetweenInspections));
             
             model.pagingInfo = new PageInfo(model.modelList.Count(), model.modelList.Count(), page);
             var images = new Dictionary<int, string>();

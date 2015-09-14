@@ -1,14 +1,14 @@
 ﻿@import "variables.less";
 
 #carousel {
-  @media (max-width: @screen-sm-max) { height: 250px; }
-  @media (min-width: @screen-sm-min) { height: 300px; }
-  @media (min-width: @screen-md-min) { height: 350px; }
-  @media (min-width: @screen-lg-min) { height: 400px; }
+  @media (max-width: 767) { height: 250px; }
+  @media (min-width: 768) { height: 300px; }
+  @media (min-width: 991) { height: 350px; }
+  @media (min-width: 1200) { height: 400px; }
 }
 
 .carousel-content {
-  @media (min-width: @screen-sm-min) {
+  @media (min-width: 768) {
     position: absolute;
     top: 25%;
   }

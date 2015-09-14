@@ -53,7 +53,7 @@ namespace BikeShare.Models
         [AllowHtml]
         public string programHTML { get; set; }
 
-        [AllowHtml]
+        
         public int? latestPDFNumber { get; set; }
     }
 }
