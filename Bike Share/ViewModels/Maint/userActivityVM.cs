@@ -9,8 +9,6 @@ namespace BikeShare.ViewModels.Maint
 
         public PageInfo hoursPage { get; set; }
 
-        public List<WorkHour> hours { get; set; }
-
         public List<ActivityCard> cards { get; set; }
     }
 }
