@@ -21,8 +21,6 @@ namespace BikeShare.Models
 
         public DbSet<Charge> Charge { get; set; }
 
-        public DbSet<WorkHour> workHours { get; set; }
-
         public DbSet<appSetting> settings { get; set; }
         public DbSet<ScheduledInspection> schedules { get; set; }
 

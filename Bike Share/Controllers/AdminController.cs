@@ -195,40 +195,34 @@ namespace BikeShare.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult bikeList(int? rackId, int page = 1, bool incMissing = true, bool incOverdue = true, bool incCheckedOut = true, bool incCheckedIn = true, bool incCurrent = true, bool incArchived = false)
+        public ActionResult bikeList()
         {
             if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
-            var model = new ViewModels.FilteredBikeViewModel();
-            var all = new List<Bike>();
-            if (incCurrent)
+            var model = new List<ViewModels.Admin.AdminBikeVM>();
+            foreach(var bike in context.Bike.OrderBy(i => i.isArchived).ThenBy(n => n.bikeNumber))
             {
-                all.AddRange(context.Bike.Where(a => !a.isArchived).ToList());
+                var vm = new ViewModels.Admin.AdminBikeVM { Id = bike.bikeId, IsArchived = bike.isArchived, 
+                    IsAvailable = bike.isAvailable(), Name = bike.bikeName, Number = bike.bikeNumber, 
+                    LastBorrowed = bike.lastCheckedOut };
+                if (bike.onInspectionHold) { vm.Notes += "On inspection hold. "; }
+                if (bike.onMaintenanceHold) { vm.Notes += "On maintenance hold. "; }
+                if (bike.lastCheckedOut.Year < 2014) //necessary because of messy db model
+                {
+                    vm.LastBorrowed = null;
+                    vm.LastCheckedOutTo = null;
+                }
+                try
+                {
+                    int lastUserId = context.CheckOut.Where(b => b.bike == bike.bikeId).OrderByDescending(d => d.timeOut).First().rider;
+                    vm.LastCheckedOutTo = context.BikeUser.Find(lastUserId).userName;
+                }
+                catch
+                {
+                    vm.LastCheckedOutTo = null;
+                }
+                
+                model.Add(vm);
             }
-            if (incArchived)
-            {
-                all.AddRange(context.Bike.Where(a => a.isArchived).ToList());
-            }
-            if (!incCheckedIn)
-            {
-                all = all.Where(r => r.bikeRackId == null).ToList();
-            }
-            if (!incCheckedOut)
-            {
-                all = all.Where(r => r.bikeRackId != null).ToList();
-            }
-            if (rackId != null)
-            {
-                all = all.Where(r => r.bikeRackId == rackId).ToList();
-            }
-            model.modelList = all;
-            model.pagingInfo = new ViewModels.PageInfo(all.Count(), pageSize, page);
-            model.modelList = all.OrderByDescending(d => d.bikeId).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            model.includeArchived = incArchived;
-            model.includeCheckedIn = incCheckedIn;
-            model.includeCheckedOut = incCheckedOut;
-            model.includeCurrent = incCurrent;
-            model.includeMissing = incMissing;
-            model.includeOverdue = incOverdue;
             return View(model);
         }
 
@@ -343,11 +337,63 @@ namespace BikeShare.Controllers
         public ActionResult infoBike(int bikeID)
         {
             if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
-            var model = new BikeShare.ViewModels.superBike();
+            var dbBike = context.Bike.Find(bikeID);
+            var model = new ViewModels.Admin.AdminBikeDetailsVM
+            {
+                Id = bikeID,
+                IsArchived = dbBike.isArchived,
+                IsAvailable = dbBike.isAvailable(),
+                Name = dbBike.bikeName,
+                Number = dbBike.bikeNumber,
+                LastBorrowed = dbBike.lastCheckedOut
+            };
+            if (dbBike.onInspectionHold) { model.Notes += "On inspection hold. "; }
+            if (dbBike.onMaintenanceHold) { model.Notes += "On maintenance hold. "; }
+            if (dbBike.lastCheckedOut.Year < 2014) //necessary because of messy db model
+            {
+                model.LastBorrowed = null;
+                model.LastCheckedOutTo = null;
+            }
+            try
+            {
+                int lastUserId = context.CheckOut.Where(b => b.bike == bikeID).OrderByDescending(d => d.timeOut).First().rider;
+                model.LastCheckedOutTo = context.BikeUser.Find(lastUserId).userName;
+            }
+            catch
+            {
+                model.LastCheckedOutTo = null;
+            }
 
-            model.bike = context.Bike.Find(bikeID);
-            model.inspections = context.Inspection.Where(b => b.bikeId == bikeID).OrderByDescending(d => d.datePerformed).Take(25).ToList();
-            model.maintenance = context.MaintenanceEvent.Where(b => b.bikeId == bikeID).OrderByDescending(d => d.timeAdded).Take(25).ToList();
+
+            model.CountOfRentals = context.CheckOut.Where(b => b.bike == bikeID).Count();
+            model.Inspections = new List<ViewModels.Admin.AdminBikeDetailsVM.inspection>();
+            context.Inspection.Where(b => b.bikeId == bikeID).ToList().ForEach(spec => {
+                model.Inspections.Add(new ViewModels.Admin.AdminBikeDetailsVM.inspection {
+                    Comment = spec.comment, Performed = spec.datePerformed, Passed = spec.isPassed 
+                });
+            });
+            model.Inspections =  model.Inspections.OrderByDescending(d => d.Performed).ToList();
+
+            model.Maintenance = new List<ViewModels.Admin.AdminBikeDetailsVM.maintenance>();
+            context.MaintenanceEvent.Where(b => b.bikeId == bikeID).ToList().ForEach(maint => {
+                model.Maintenance.Add(new ViewModels.Admin.AdminBikeDetailsVM.maintenance { Date = maint.timeAdded, Resolved = maint.timeResolved.HasValue, Title = maint.title });
+            });
+
+            model.Maintenance = model.Maintenance.OrderByDescending(d => d.Date).ToList();
+
+            model.CountOfInspections = model.Inspections.Count();
+            model.CountOfMaintenance = model.Maintenance.Count();
+
+            if (dbBike.bikeRackId != null)
+            {
+                model.RackLastSeen = context.BikeRack.Find(dbBike.bikeRackId).name;
+            }
+            else
+            {
+                model.RackLastSeen = "none";
+            }
+            
+
             return View(model);
         }
 

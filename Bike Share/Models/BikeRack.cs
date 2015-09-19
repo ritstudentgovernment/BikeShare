@@ -31,6 +31,7 @@ namespace BikeShare.Models
 
         public string hours { get; set; }
 
+        [NotMapped]
         public IEnumerable<Bike> availableBikes { get; set; }
     }
 }
