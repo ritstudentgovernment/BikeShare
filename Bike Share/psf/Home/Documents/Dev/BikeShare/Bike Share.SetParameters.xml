@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <setParameter name="IIS Web Application Name" value="Bikeshare" />
-  <setParameter name="BikesDatabase-Web.config Connection String" value="Data Source=SGVSRV07-DB03.rit.edu;Initial Catalog=SGVSRV10-APP02-Bikeshare-Development;Persist Security Info=True;User ID=SGVSRV10-APP02-Bikeshare-Development;Password=APz4skr9!!3abK8Tfwp#^%Ux2dG7y67tc32eMRHtCuHUmpdhNTAzN@@p!!!" />
-  <setParameter name="BikesDatabase_DatabasePublish-Web.config Connection String" value="Data Source=SGVSRV07-DB03.rit.edu;Initial Catalog=SGVSRV10-APP02-Bikeshare-Development;Persist Security Info=True;User ID=SGVSRV10-APP02-Bikeshare-Development;Password=APz4skr9!!3abK8Tfwp#^%Ux2dG7y67tc32eMRHtCuHUmpdhNTAzN@@p!!!" />
-</parameters>
