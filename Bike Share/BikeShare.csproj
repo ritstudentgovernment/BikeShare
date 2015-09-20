@@ -371,23 +371,15 @@
     <Compile Include="ViewModels\Admin\AdminUserVM.cs" />
     <Compile Include="ViewModels\PageInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\Cards.cs" />
-    <Compile Include="ViewModels\appSettingsViewModel.cs" />
-    <Compile Include="ViewModels\bikeUserPermissionViewModel.cs" />
-    <Compile Include="ViewModels\CheckoutViewModel.cs" />
-    <Compile Include="ViewModels\dashViewModel.cs" />
-    <Compile Include="ViewModels\FilteredBikeViewModel.cs" />
-    <Compile Include="ViewModels\inspectionListViewModel.cs" />
-    <Compile Include="ViewModels\Maint\bikeDetailsVM.cs" />
-    <Compile Include="ViewModels\Maint\dashboardVM.cs" />
-    <Compile Include="ViewModels\Maint\userActivityVM.cs" />
-    <Compile Include="ViewModels\newBikeViewModel.cs" />
+    <Compile Include="ViewModels\Admin\bikeUserPermissionViewModel.cs" />
+    <Compile Include="ViewModels\Checkout\CheckoutViewModel.cs" />
+    <Compile Include="ViewModels\Admin\dashViewModel.cs" />
+    <Compile Include="ViewModels\Mechanic\bikeDetailsVM.cs" />
+    <Compile Include="ViewModels\Admin\newBikeViewModel.cs" />
     <Compile Include="ViewModels\PaginatedViewModel.cs" />
-    <Compile Include="ViewModels\profileViewModel.cs" />
-    <Compile Include="ViewModels\rackListingViewModel.cs" />
-    <Compile Include="ViewModels\bikeListingViewModel.cs" />
-    <Compile Include="ViewModels\specWithMaint.cs" />
-    <Compile Include="ViewModels\superBike.cs" />
+    <Compile Include="ViewModels\Explore\profileViewModel.cs" />
+    <Compile Include="ViewModels\Explore\rackListingViewModel.cs" />
+    <Compile Include="ViewModels\Mechanic\specWithMaint.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

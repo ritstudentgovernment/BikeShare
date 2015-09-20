@@ -83,7 +83,6 @@ namespace BikeShare.Controllers
             var model = new BikeShare.ViewModels.profileViewModel();
             model.user = user;
             model.pagingInfo = new PageInfo(0, 25, 1);
-            model.cards = new List<ActivityCard>();
             if (context.CheckOut.Where(c => c.rider == user.bikeUserId).Where(i => !i.isResolved).Count() > 0)
             {
                 model.hasRental = true;
