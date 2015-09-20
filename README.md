@@ -12,7 +12,7 @@ This application was developed by Nathan Castle and released under the MIT licen
 
 About
 =====
-This Bike Share application is developed using ASP.NET MVC, with a PostgreSQL database and Bootstrap for styling. SG specific customizations and branding are in the SG-branding branch. To use MSSQL, just change the connection string to point to a MSSQL database.
+This Bike Share application is developed using ASP.NET MVC, with a MSSQL database and Bootstrap for styling.
 
 Installation/Deployment
 =======================
