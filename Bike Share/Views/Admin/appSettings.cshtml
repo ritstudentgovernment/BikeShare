@@ -9,170 +9,191 @@
 }
 @using (Html.BeginForm())
 {
-    <div class="row">
-        <div class="col-sm-6">
-            <h2><span class="glyphicon glyphicon-cog pull-left"></span>@ViewBag.Title</h2>
-        </div>
-        <div class="col-sm-6">
-            <input type="submit" value="Save" class="btn btn-primary pull-right btn-lg" role="button" />
-        </div>
+<div class="row">
+    <div class="col-sm-6">
+        <h2><span class="glyphicon glyphicon-cog pull-left"></span>@ViewBag.Title</h2>
     </div>
+    <div class="col-sm-6">
+        <input type="submit" value="Save" class="btn btn-primary pull-right btn-lg" role="button" />
+    </div>
+</div>
 
 <hr />
-    @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true)
-        <div class="form-group">
-            <label class="control-label col-sm-4">Name of the application. Changes to this setting will automatically affect all emails, pages, and content. This will not affect the URL.</label>
-            <div class="col-sm-8">
-                @Html.TextBoxFor(model => model.appName, new { @class="form-control"})
-                @Html.ValidationMessageFor(model => model.appName)
-            </div>
+@Html.AntiForgeryToken()
+<div class="form-horizontal">
+    @Html.ValidationSummary(true)
+    <div class="form-group">
+        <label class="control-label col-sm-4">Name of the application. Changes to this setting will automatically affect all emails, pages, and content. This will not affect the URL.</label>
+        <div class="col-sm-8">
+            @Html.TextBoxFor(model => model.appName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.appName)
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading"><h3 class="panel-title">Policy Settings</h3></div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label col-sm-4">How many days can a bike be rented for?</label>
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.maxRentDays, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.maxRentDays)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">How many days can a bike go before being inspected?</label>
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.DaysBetweenInspections, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.DaysBetweenInspections)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">How long does a user registration last (days)?</label>
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.daysBetweenRegistrations, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.daysBetweenRegistrations)
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading"><h3 class="panel-title">Email Settings</h3></div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label col-sm-4">What is the default email ending?</label>
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.expectedEmail, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.expectedEmail)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">Emails about overdue bikes should be sent every _ hours.</label>
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.overdueBikeMailingIntervalHours, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.overdueBikeMailingIntervalHours)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">All emails will be copied to this list of comma-separated emails.</label>
-                    <div class="col-sm-8">
-                        @Html.TextBoxFor(model => model.adminEmailList, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.adminEmailList)
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading"><h3 class="panel-title">User Registration Settings</h3></div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be inserted into the top of the registration page.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.registerHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.registerHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be inserted into the legal section of the registration page. It should be the same or similar text to what is presented in the waiver document.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.legalHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.legalHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be inserted into the program expectations section of the registration page. It should identify any procedures or non-legal requirements of the program.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.programHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.programHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">Legal/Liability Waiver</label>
-                    @if(Model.latestPDFNumber.HasValue){
-                        <div class="col-sm-4"><a href="@Url.Content("~/Content/waivers/" + Model.latestPDFNumber.Value + ".pdf")">view</a></div>
-                    }else {
-                        <div class="col-sm-4">No Waiver Set</div>
-                    }
-                    <div class="col-sm-4">
-                        <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("uploadWaiver")"><span class="glyphicon glyphicon-upload"></span>  Upload New</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading"><h3 class="panel-title">Content Settings</h3></div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be injected into the footer on every page.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.footerHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.footerHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be injected into the home page.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.homeHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.homeHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be injected into the top of every page. use for announcements.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.announcementHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.announcementHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be injected into the FAQ page.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.FAQHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.FAQHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be injected into the contact page.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.contactHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.contactHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be injected into the safety info page.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.safetyHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.safetyHTML)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">This HTML will be injected into the about page.</label>
-                    <div class="col-sm-8">
-                        @Html.TextAreaFor(model => model.aboutHTML, new { @class = "form-control", @style = "height:200px" })
-                        @Html.ValidationMessageFor(model => model.aboutHTML)
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Service Integrations</h3></div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="control-label col-sm-4">Google Analytics ID (optional)</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.GoogleAnalyticsId, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GoogleAnalyticsId)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">Google Maps Key (not optional)</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.GoogleMapsKey, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GoogleMapsKey)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Policy Settings</h3></div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="control-label col-sm-4">How many days can a bike be rented for?</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.maxRentDays, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.maxRentDays)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">How many days can a bike go before being inspected?</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.DaysBetweenInspections, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DaysBetweenInspections)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">How long does a user registration last (days)?</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.daysBetweenRegistrations, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.daysBetweenRegistrations)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Email Settings</h3></div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="control-label col-sm-4">What is the default email ending?</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.expectedEmail, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.expectedEmail)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">Emails about overdue bikes should be sent every _ hours.</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.overdueBikeMailingIntervalHours, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.overdueBikeMailingIntervalHours)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">All emails will be copied to this list of comma-separated emails.</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(model => model.adminEmailList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.adminEmailList)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">User Registration Settings</h3></div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be inserted into the top of the registration page.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.registerHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.registerHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be inserted into the legal section of the registration page. It should be the same or similar text to what is presented in the waiver document.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.legalHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.legalHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be inserted into the program expectations section of the registration page. It should identify any procedures or non-legal requirements of the program.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.programHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.programHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">Legal/Liability Waiver</label>
+                @if (Model.latestPDFNumber.HasValue)
+                {
+                    <div class="col-sm-4"><a href="@Url.Content("~/Content/waivers/" + Model.latestPDFNumber.Value + ".pdf")">view</a></div>
+                }
+                else
+                {
+                    <div class="col-sm-4">No Waiver Set</div>
+                }
+                <div class="col-sm-4">
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("uploadWaiver")"><span class="glyphicon glyphicon-upload"></span>  Upload New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Content Settings</h3></div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be injected into the footer on every page.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.footerHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.footerHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be injected into the home page.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.homeHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.homeHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be injected into the top of every page. use for announcements.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.announcementHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.announcementHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be injected into the FAQ page.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.FAQHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.FAQHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be injected into the contact page.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.contactHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.contactHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be injected into the safety info page.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.safetyHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.safetyHTML)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-4">This HTML will be injected into the about page.</label>
+                <div class="col-sm-8">
+                    @Html.TextAreaFor(model => model.aboutHTML, new { @class = "form-control", @style = "height:200px" })
+                    @Html.ValidationMessageFor(model => model.aboutHTML)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 }

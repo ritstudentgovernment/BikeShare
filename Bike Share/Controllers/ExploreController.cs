@@ -142,6 +142,7 @@ namespace BikeShare.Controllers
         {
             var rack = context.BikeRack.Find(rackId);
             rack.availableBikes = context.Bike.ToList().Where(r => r.bikeRackId == rackId).Where(b => b.isAvailable()).ToList();
+            ViewBag.GoogleMapsKey = context.settings.First().GoogleMapsKey;
             return View(rack);
         }
 

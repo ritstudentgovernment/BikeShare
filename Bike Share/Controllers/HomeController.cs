@@ -58,6 +58,7 @@ namespace BikeShare.Controllers
         public ActionResult FooterPartial()
         {
             ViewBag.FooterHTML = context.settings.First().footerHTML;
+            ViewBag.GoogleAnalyticsId = context.settings.First().GoogleAnalyticsId;
             return PartialView();
         }
 
@@ -65,6 +66,7 @@ namespace BikeShare.Controllers
         public ActionResult HeaderPartial()
         {
             ViewBag.appName = context.settings.First().appName;
+            
             return PartialView();
         }
 

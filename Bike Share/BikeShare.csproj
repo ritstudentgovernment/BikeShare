@@ -173,6 +173,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\footer.css" />
     <Content Include="Content\Images\bike_logo_web.png" />
     <Content Include="Content\Images\icon_79.png" />
     <Content Include="Content\Images\IMAG0060.jpg" />
@@ -186,11 +187,6 @@
     <Content Include="Content\less\carousel.less" />
     <Content Include="Content\less\util.less" />
     <Content Include="Content\less\variables.less" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\default.pubxml" />
     <None Include="Properties\PublishProfiles\dev-pub.pubxml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
@@ -303,7 +299,6 @@
     <Compile Include="Code\MailTasks.cs" />
     <Compile Include="Code\PagingHelpers.cs" />
     <Compile Include="Code\ScheduledTasks.cs" />
-    <Compile Include="Code\Secrets.cs" />
     <Compile Include="Code\UserNameFilter.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -348,10 +343,18 @@
     <Compile Include="Migrations\201509140237452_minorChangePrePublish.Designer.cs">
       <DependentUpon>201509140237452_minorChangePrePublish.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201509191527228_pre-bug-bash=-sept-19-2015.cs" />
-    <Compile Include="Migrations\201509191527228_pre-bug-bash=-sept-19-2015.Designer.cs" />
+    <Compile Include="Migrations\201509191527228_pre-bug-bash-sept-19-2015.cs" />
+    <Compile Include="Migrations\201509191527228_pre-bug-bash-sept-19-2015.Designer.cs">
+      <DependentUpon>201509191527228_pre-bug-bash-sept-19-2015.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201509191649524_remove-stray-workhour-model.cs" />
-    <Compile Include="Migrations\201509191649524_remove-stray-workhour-model.Designer.cs" />
+    <Compile Include="Migrations\201509191649524_remove-stray-workhour-model.Designer.cs">
+      <DependentUpon>201509191649524_remove-stray-workhour-model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509200221301_Google-Maps-Analytics-At-Runtime.cs" />
+    <Compile Include="Migrations\201509200221301_Google-Maps-Analytics-At-Runtime.Designer.cs">
+      <DependentUpon>201509200221301_Google-Maps-Analytics-At-Runtime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\appSetting.cs" />
     <Compile Include="Models\Bike.cs" />
@@ -412,8 +415,15 @@
     <EmbeddedResource Include="Migrations\201509140237452_minorChangePrePublish.resx">
       <DependentUpon>201509140237452_minorChangePrePublish.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201509191527228_pre-bug-bash=-sept-19-2015.resx" />
-    <EmbeddedResource Include="Migrations\201509191649524_remove-stray-workhour-model.resx" />
+    <EmbeddedResource Include="Migrations\201509191527228_pre-bug-bash-sept-19-2015.resx">
+      <DependentUpon>201509191527228_pre-bug-bash-sept-19-2015.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509191649524_remove-stray-workhour-model.resx">
+      <DependentUpon>201509191649524_remove-stray-workhour-model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509200221301_Google-Maps-Analytics-At-Runtime.resx">
+      <DependentUpon>201509200221301_Google-Maps-Analytics-At-Runtime.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -447,7 +457,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

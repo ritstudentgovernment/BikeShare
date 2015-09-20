@@ -55,5 +55,8 @@ namespace BikeShare.Models
 
         
         public int? latestPDFNumber { get; set; }
+        public string GoogleAnalyticsId { get; set; }
+
+        public string GoogleMapsKey { get; set; }
     }
 }
