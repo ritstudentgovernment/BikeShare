@@ -111,20 +111,3 @@
         </div>
     </div>
 </div>
-
-<div class="row">
-    @foreach (var card in Model.cards)
-    {
-        <div class="col-lg-6">
-            <div class="panel panel-@card.getStatusStyle()">
-                <div class="panel-heading"><h4 class="panel-title">@card.title</h4></div>
-                <div class="panel-body">
-                    @card.date
-                    @card.type.ToString()
-                </div>
-            </div>
-        </div>
-    }
-</div>
-
-        <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("Index", new { page = x }))</div>
