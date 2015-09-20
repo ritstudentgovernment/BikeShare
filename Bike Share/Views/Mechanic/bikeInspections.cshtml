@@ -25,22 +25,11 @@
 
         @foreach (var spec in Model.modelList)
         {
-            if (spec.isPassed)
-            {
-                <tr class="bg-success">
-                    <td>@spec.datePerformed.ToShortDateString()</td>
-                    <td>@spec.comment</td>
-                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-                </tr>
-            }
-            else
-            {
-                <tr class="bg-danger">
-                    <td>@spec.datePerformed.ToShortDateString()</td>
-                    <td>@spec.comment</td>
-                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-                </tr>
-            }
+            <tr class="bg-@(spec.isPassed ? "success" : "danger")">
+                <td>@spec.datePerformed.ToShortDateString()</td>
+                <td>@spec.comment</td>
+                <td><a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
+            </tr>
         }
     </table>
     <div class="panel-footer">

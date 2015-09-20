@@ -12,9 +12,9 @@
 <div class="panel panel-primary">
     <div class="panel-heading"><h4 class="panel-title">Details</h4></div>
     <div class="panel-body">
-        @if (Model.resolved)
+        @if (Model.timeResolved.HasValue)
         {
-            <div class="alert alert-success">Succesfully closed at @Model.timeResolved.ToShortTimeString() on @Model.timeResolved.ToShortDateString().</div>
+            <div class="alert alert-success">Successfully  closed at @Model.timeResolved.Value.ToShortTimeString() on @Model.timeResolved.Value.ToShortDateString().</div>
         }
         else
         {
@@ -24,14 +24,10 @@
                 <div class="alert alert-danger">Users can't use this bike until it is repaired.</div>
             }
         }
-        <h2>Bike #@Model.bikeAffected.bikeNumber - @Model.bikeAffected.bikeName</h2>
         <h4>Problem</h4>
         <div>@Model.details</div>
-        <h4>Maintenance Details</h4>
-        <div>Reported by @Model.staffPerson.userName.</div>
-        <div>Maintenance will take place at @Model.workshop.name</div>
     </div>
-    @if(!Model.resolved){
+    @if(!Model.timeResolved.HasValue){
     <div class="panel-footer text-right">
         @using (Html.BeginForm("closeMaintenance", "Mechanic", new { maintId = Model.MaintenanceEventId }, FormMethod.Post, new { }))
         {
@@ -40,23 +36,4 @@
         }
     </div>
     }
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Comments <a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newComment", new { maintId = Model.MaintenanceEventId})"><span class="glyphicon glyphicon-plus-sign"></span>  Comment</a></h4>
-</div>
-    <div class="panel-body">
-        <ul class="media-list">
-            @foreach (var comment in Model.updates)
-            {
-                <li class="media">
-                    <div class="media-body">
-                        <h4 class="media-heading">@comment.title<span class="pull-right">Posted by @comment.postedBy.userName at @comment.timePosted.ToShortTimeString() on @comment.timePosted.ToShortDateString()</span></h4>
-                        <div class="bg-info">
-                            <p class="well well-sm">@comment.body</p>
-                        </div>
-                    </div>
-                </li>
-            }
-        </ul>
-    </div>
 </div>

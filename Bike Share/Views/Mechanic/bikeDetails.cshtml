@@ -10,79 +10,65 @@
 <h2 class="text-center"><span class="glyphicon glyphicon-info-sign pull-left"></span>@ViewBag.Title</h2>
 <hr />
 <div class="panel panel-default">
-    <div class="panel-heading"><h4 class="panel-title">Last Ten Inspections</h4></div>
+    <div class="panel-heading">
+        <h4 class="panel-title">Last Ten Inspections</h4>
+    </div>
     <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
                     <td>Date</td>
                     <td>Comment</td>
+                    <td>Status</td>
                     <td></td>
                 </tr>
             </thead>
-
-            @foreach (var spec in Model.inspections)
-            {
-                if (spec.isPassed)
+            <tbody>
+                @foreach (var spec in Model.inspections)
                 {
-                    <tr class="bg-success">
+                    <tr class="@(spec.isPassed ? "success" : "danger")">
                         <td>@spec.datePerformed.ToShortDateString()</td>
                         <td>@spec.comment</td>
+                        <td>@(spec.isPassed ? "Passed" : "Failed")</td>
                         <td><a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
                     </tr>
                 }
-                else
-                {
-                    <tr class="bg-danger">
-                        <td>@spec.datePerformed.ToShortDateString()</td>
-                        <td>@spec.comment</td>
-                        <td><a class="btn btn-primary pull-right" data-toggle="modal" data-target="#siteModal" href="@Url.Action("inspectionDetails", new { specId = spec.inspectionId})"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-                    </tr>
-                }
-            }
+            </tbody>
         </table>
     </div>
-
     <div class="panel-footer text-right">
         @Html.ActionLink("All Inspections", "bikeInspections", new { bikeId = Model.bikeId}, new { @class = "btn btn-primary" })
         <a class="btn btn-primary" href="@Url.Action("newInspection", new { bikeId = Model.bikeId})" data-toggle="modal" data-target="#siteModal"><span class="glyphicon glyphicon-search"></span>  Inspect</a>
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><h4 class="panel-title">Last Ten Maintenances</h4></div>
-    <div class="table-responsive"><table class="table">
-    <thead>
-        <tr>
-            <td>Date</td>
-            <td>Title</td>
-            <td>Resolved?</td>
-            <td></td>
-        </tr>
-    </thead>
+    <div class="panel-heading">
+        <h4 class="panel-title">Last Ten Maintenances</h4>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Date</td>
+                    <td>Title</td>
+                    <td>Resolved?</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            @foreach (var maint in Model.maints)
+            {
 
-    @foreach (var maint in Model.maints)
-    {
-        if (maint.timeResolved != null)
-        {
-            <tr class="bg-success">
-                <td>@maint.timeAdded.ToShortDateString()</td>
-                <td>@maint.title</td>
-                <td>@maint.timeResolved.GetValueOrDefault().ToString()</td>
-                <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-            </tr>
-        }
-        else
-        {
-            <tr class="bg-danger">
-                <td>@maint.timeAdded.ToShortDateString()</td>
-                <td>@maint.title</td>
-                <td>Not yet. :(</td>
-                <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-wrench"></span>  Work</a></td>
-            </tr>
-        }
-    }
-</table></div>
+                <tr class="@(maint.timeResolved.HasValue ? "success" : "danger")">
+                    <td>@maint.timeAdded.ToShortDateString()</td>
+                    <td>@maint.title</td>
+                    <td>@(maint.timeResolved.HasValue ? "Resolved " + maint.timeResolved.Value.ToShortDateString() : "Not Resolved")</td>
+                    <td><a class="btn btn-warning pull-right" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
+                </tr>
 
+            }
+        </table>
+    </div>
     <div class="panel-footer text-right">
         @Html.ActionLink("All Maintenance", "bikeMaintenance", new { bikeId = Model.bikeId }, new { @class = "btn btn-primary" })
         <a class="btn btn-warning" data-toggle="modal" data-target="#siteModal" href="@Url.Action("newMaintenance", new { bikeId = Model.bikeId})"><span class="glyphicon glyphicon-wrench"></span>  Maintain</a>

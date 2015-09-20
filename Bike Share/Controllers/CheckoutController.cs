@@ -114,7 +114,7 @@ namespace BikeShare.Controllers
 
                 bikeUser rider = context.BikeUser.Where(n => n.userName == model.userToCheckIn).First();
                 bikeUser dcheckOutPerson = context.BikeUser.Where(n => n.userName == User.Identity.Name).First();
-                if (!rider.canBorrowBikes)
+                if (!rider.canBorrowBikes || context.CheckOut.Where( u => u.rider == rider.bikeUserId).Where(u => !u.timeIn.HasValue).Count() > 0)
                 {
                     return RedirectToAction("Index", new { rackId = rackId, message = "The user doesn't have riding privileges." });
                 }
@@ -185,7 +185,9 @@ namespace BikeShare.Controllers
         public ActionResult submitMaint(string maintTitle, string maintDetails, int rackId, int bikeId, string disableBike)
         {
             if (!authorize()) { return RedirectToAction("authError", "Error"); }
-            var maintenance = new MaintenanceEvent { timeAdded = DateTime.Now, timeResolved = DateTime.Now, title = maintTitle, details = maintDetails, disableBike = !String.IsNullOrEmpty(disableBike) };
+            var maintenance = new MaintenanceEvent { timeAdded = DateTime.Now, bikeId = bikeId, timeResolved = null, title = maintTitle, details = maintDetails, disableBike = !String.IsNullOrEmpty(disableBike) };
+            if(maintenance.disableBike)
+                context.Bike.Find(bikeId).onMaintenanceHold = true;
             maintenance.submittedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
             context.MaintenanceEvent.Add(maintenance);
             context.SaveChanges();
@@ -207,8 +209,10 @@ namespace BikeShare.Controllers
                 user = context.BikeUser.Where(u => u.userName == userName).First()
             };
             context.Charge.Add(charge);
-            var maintenance = new MaintenanceEvent { timeAdded = DateTime.Now, timeResolved = DateTime.Now, title = title, details = details, disableBike = !String.IsNullOrEmpty(disableBike) };
+            var maintenance = new MaintenanceEvent { timeAdded = DateTime.Now, bikeId = bikeId, timeResolved = null, title = title, details = details, disableBike = !String.IsNullOrEmpty(disableBike) };
             maintenance.submittedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
+            if (maintenance.disableBike)
+                context.Bike.Find(bikeId).onMaintenanceHold = true;
             context.MaintenanceEvent.Add(maintenance);
             context.SaveChanges();
             return RedirectToAction("Index", new { rackId = rackId });

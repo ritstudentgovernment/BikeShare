@@ -13,7 +13,7 @@
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     <h4 class="modal-title" id="siteModalLabel"><span class="glyphicon glyphicon-comment"></span> @ViewBag.Title</h4>
 </div>
-@using (Html.BeginForm("newComment", "Mechanic", new { maintenanceId = Model.associatedEvent.MaintenanceEventId }, FormMethod.Post, new { }))
+@using (Html.BeginForm("newComment", "Mechanic", new { maintenanceId = Model.associatedEventId }, FormMethod.Post, new { }))
 {
     <div class="modal-body">
         @Html.AntiForgeryToken()

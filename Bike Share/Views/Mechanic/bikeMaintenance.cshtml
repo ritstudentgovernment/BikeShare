@@ -11,8 +11,7 @@
 <h2 class="text-center"><span class="glyphicon glyphicon-time pull-left"></span>@ViewBag.Title</h2>
 <hr />
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4 class="panel-title">History</h4>
-    </div>
+    <div class="panel-heading"><h4 class="panel-title">History</h4></div>
     <table class="table">
         <thead>
             <tr>
@@ -25,24 +24,12 @@
 
         @foreach (var maint in Model.modelList)
         {
-            if (maint.resolved)
-            {
-                <tr class="bg-success">
-                    <td>@maint.timeAdded.ToShortDateString()</td>
-                    <td>@maint.title</td>
-                    <td>@maint.timeResolved.ToShortDateString()</td>
-                    <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-                </tr>
-            }
-            else
-            {
-                <tr class="bg-danger">
-                    <td>@maint.timeAdded.ToShortDateString()</td>
-                    <td>@maint.title</td>
-                    <td>Not yet. :(</td>
-                    <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
-                </tr>
-            }
+            <tr class="bg-@(maint.timeResolved.HasValue ? "success" : "danger")">
+                <td>@maint.timeAdded.ToShortDateString()</td>
+                <td>@maint.title</td>
+                <td>@(maint.timeResolved.HasValue ? maint.timeResolved.Value.ToShortDateString() : "Not yet")</td>
+                <td><a class="btn btn-warning" href="@Url.Action(actionName: "maintenanceDetails", controllerName: "Mechanic", routeValues: new { maintId = maint.MaintenanceEventId })"><span class="glyphicon glyphicon-info-sign"></span>  Details</a></td>
+            </tr>
         }
     </table>
     <div class="panel-footer">

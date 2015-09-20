@@ -1,7 +1,6 @@
 ﻿@model BikeShare.Models.MaintenanceEvent
 
 @{
-    ViewBag.Title = "Starting Maintenance on Bike #" + Model.bikeAffected.bikeNumber;
     Layout = null;
 }
 <script>
@@ -16,7 +15,7 @@
 @using (Html.BeginForm())
 {
 <div class="modal-body">
-    @Html.HiddenFor(model => model.bikeAffected.bikeId)
+    @Html.HiddenFor(model => model.bikeId)
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
         @Html.ValidationSummary(true)
@@ -38,14 +37,6 @@
             @Html.LabelFor(model => model.disableBike, htmlAttributes: new { @class = "control-label col-sm-4" })
             <div class="col-sm-8">
                 @Html.EditorFor(model => model.disableBike)
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-4">Workshop</label>
-            <div class="col-sm-8">
-                @Html.DropDownListFor(m => m.workshop.workshopId,
-                    new SelectList(ViewBag.query, "workshopId", "name"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.workshop.workshopId)
             </div>
         </div>
     </div>

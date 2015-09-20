@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <td>Bike #</td>
-                    <td>Available?</td>
+                    <td>Availability</td>
                     <td>Last Checked Out</td>
                     <td></td>
                 </tr>
@@ -27,30 +27,15 @@
 
             @foreach (var bike in Model)
             {
-                if (bike.isAvailable())
-                {
-                    <tr class="bg-success">
-                        <td>@bike.bikeNumber</td>
-                        <td>@bike.isAvailable()</td>
-                        <td>@bike.lastCheckedOut.ToString()</td>
-                        <td class="text-right">
-                            <a class="btn btn-primary" href="@Url.Action(actionName: "bikeDetails", controllerName: "Mechanic", routeValues: new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-list-alt"></span>  Details</a> 
-                            <a class="btn btn-primary" href="@Url.Action("newInspection", new { bikeId = bike.bikeId})" data-toggle="modal" data-target="#siteModal"><span class="glyphicon glyphicon-search"></span>  Inspect</a>
-                        </td>
-                    </tr>
-                }
-                else
-                {
-                    <tr class="bg-danger">
-                        <td>@bike.bikeNumber</td>
-                        <td>@bike.isAvailable()</td>
-                        <td>@bike.lastCheckedOut.ToString()</td>
-                        <td class="text-right">
-                            <a class="btn btn-primary" href="@Url.Action(actionName: "bikeDetails", controllerName: "Mechanic", routeValues: new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-list-alt"></span>  Details</a> 
-                            <a class="btn btn-primary" href="@Url.Action("newInspection", new { bikeId = bike.bikeId})" data-toggle="modal" data-target="#siteModal"><span class="glyphicon glyphicon-search"></span>  Inspect</a>
-                        </td>
-                    </tr>
-                }
+                <tr class="bg-@(bike.isAvailable() ? "success" : "danger")">
+                    <td>@bike.bikeNumber</td>
+                    <td>@(bike.isAvailable() ? "Available" : "Unavailable")</td>
+                    <td>@bike.lastCheckedOut.ToString()</td>
+                    <td class="text-right">
+                        <a class="btn btn-primary" href="@Url.Action(actionName: "bikeDetails", controllerName: "Mechanic", routeValues: new { bikeId = bike.bikeId})"><span class="glyphicon glyphicon-list-alt"></span>  Details</a>
+                        <a class="btn btn-primary" href="@Url.Action("newInspection", new { bikeId = bike.bikeId})" data-toggle="modal" data-target="#siteModal"><span class="glyphicon glyphicon-search"></span>  Inspect</a>
+                    </td>
+                </tr>
             }
         </table>
     </div>

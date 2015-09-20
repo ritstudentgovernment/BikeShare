@@ -122,6 +122,7 @@ namespace BikeShare.Controllers
             var maint = context.MaintenanceEvent.Where(m => m.MaintenanceEventId == maintId).First();
             maint.timeResolved = DateTime.Now;
             maint.maintainedById = context.BikeUser.Where(u => u.userName == User.Identity.Name).First().bikeUserId;
+            context.Bike.Find(maint.bikeId).makeAvailable();
             context.SaveChanges();
             return RedirectToAction("maintenanceDetails", new { maintId = maintId });
         }
