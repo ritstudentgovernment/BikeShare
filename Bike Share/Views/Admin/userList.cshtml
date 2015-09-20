@@ -1,5 +1,5 @@
 ﻿@using BikeShare.Views
-@model BikeShare.ViewModels.PaginatedViewModel<BikeShare.Models.bikeUser>
+@model BikeShare.ViewModels.PaginatedViewModel<BikeShare.ViewModels.Admin.AdminUserVM>
 
 @{
     ViewBag.Title = "All Users";
@@ -38,22 +38,49 @@
 {
     <div class="col-md-6">
         <div class="panel panel-default">
-            @if (user.isArchived)
-            {
-                <div class="panel-heading"><h4 class="panel-title">@user.userName <label class="label label-danger pull-right"> Archived</label></h4></div>
-            }
-            else
-            {
-                <div class="panel-heading"><h4 class="panel-title">@user.userName - @user.firstName @user.lastName</h4></div>
-            }
-            <div class="panel-body"><p>@user.email</p><p>@user.phoneNumber</p><p>@user.lastRegistered.ToShortDateString()</p></div>
-            <div class="text-right panel-footer">
-                <a class="btn btn-default" href="@Url.Action(actionName: "userDetails", controllerName: "Admin", routeValues: new { userId = @user.bikeUserId})"><span class="glyphicon glyphicon-user"></span>  Details</a>
-                <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = user.bikeUserId})"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    @user.UserName - @user.FirstName @user.LastName
+                    @if (user.IsArchived)
+                    { <span class="label label-danger pull-right">Archived</span>}
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="control-label col-sm-6">Phone:</div>
+                        <div class="col-sm-6 form-control-static">
+                            <span>@user.Phone</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label col-sm-6">Email:</div>
+                        <div class="col-sm-6 form-control-static">
+                            <span>@user.Email</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label col-sm-6">Registration Date:</div>
+                        <div class="col-sm-6 form-control-static">
+                            <span>@(user.LastRegistered.HasValue ? user.LastRegistered.Value.ToShortDateString() : "not registered")</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label col-sm-6">Registration PDF:</div>
+                        <div class="col-sm-6 form-control-static">
+                            <span>@(user.RegistrationPDFNumber.HasValue ? user.RegistrationPDFNumber.Value.ToString() : "not registered")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-right">
+                <a class="btn btn-default" href="@Url.Action(actionName: "userDetails", controllerName: "Admin", routeValues: new { userId = @user.Id})"><span class="glyphicon glyphicon-user"></span>  Details</a>
+                <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = user.Id})"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
             </div>
         </div>
     </div>
 }
+
 </div>
 <hr />
 <div>@Html.PageLinks(Model.pagingInfo, x => Url.Action("userList", new { page = x, canAdmin = ViewBag.canAdmin, canCheckout = ViewBag.canCheckout, canRide = ViewBag.canRide, canMaintain = ViewBag.canMaintain }))</div>

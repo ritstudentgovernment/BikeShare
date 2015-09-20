@@ -12,5 +12,11 @@ namespace BikeShare.ViewModels
         {
             this.modelList = new List<T>();
         }
+
+        public PaginatedViewModel(int totalItems, int itemsPerPage)
+        {
+            this.modelList = new List<T>();
+            this.pagingInfo = new PageInfo { TotalItems = totalItems, ItemsPerPage = itemsPerPage };
+        }
     }
 }

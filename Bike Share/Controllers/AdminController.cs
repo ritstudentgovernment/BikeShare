@@ -239,45 +239,52 @@ namespace BikeShare.Controllers
         public ActionResult userList(string name = "", int page = 1, bool? hasCharges = null, bool? hasBike = null, bool? canMaintain = null, bool? canAdmin = null, bool? canRide = null, bool? canCheckout = null)
         {
             if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); } 
-           
-            var model = new ViewModels.PaginatedViewModel<bikeUser>();
-            model.modelList = new List<bikeUser>();
+
+            List<bikeUser> baseList = new List<bikeUser>();
             if(hasCharges.HasValue && hasCharges.Value)
             {
-                model.modelList = context.Charge.Where(r => !r.isResolved).Select(u => u.user).ToList();
+                baseList = context.Charge.Where(r => !r.isResolved).Select(u => u.user).ToList();
             }
             if(hasBike.HasValue && hasBike.Value)
             {
                 var userIds = context.CheckOut.Where(r => !r.isResolved).Select(u => u.rider).ToList();
-                userIds.ForEach(u => model.modelList.Add(context.BikeUser.Find(u)));
+                userIds.ForEach(u => baseList.Add(context.BikeUser.Find(u)));
             }
             
             if(canMaintain.HasValue && canMaintain.Value)
             {
-                model.modelList = context.BikeUser.Where(c => c.canMaintainBikes).ToList();
+                baseList = context.BikeUser.Where(c => c.canMaintainBikes).ToList();
             }
             if(canAdmin.HasValue && canAdmin.Value)
             {
-                model.modelList = context.BikeUser.Where(c => c.canAdministerSite).ToList();
+                baseList = context.BikeUser.Where(c => c.canAdministerSite).ToList();
             }
             if(canRide.HasValue && canRide.Value)
             {
-                model.modelList = context.BikeUser.Where(c => !c.canBorrowBikes).ToList();
+                baseList = context.BikeUser.Where(c => !c.canBorrowBikes).ToList();
             }
             if(canCheckout.HasValue && canCheckout.Value)
             {
-                model.modelList = context.BikeUser.Where(c => c.canCheckOutBikes).ToList();
+                baseList = context.BikeUser.Where(c => c.canCheckOutBikes).ToList();
             }
             if(!String.IsNullOrWhiteSpace(name))
             {
-                model.modelList = context.BikeUser.Where(c => c.userName.Contains(name)).ToList();
-                model.modelList.AddRange(context.BikeUser.Where(c => c.firstName.Contains(name)).ToList());
-                model.modelList.AddRange(context.BikeUser.Where(c => c.lastName.Contains(name)).ToList());
+                baseList = context.BikeUser.Where(c => c.userName.Contains(name)).ToList();
+                baseList.AddRange(context.BikeUser.Where(c => c.firstName.Contains(name)).ToList());
+                baseList.AddRange(context.BikeUser.Where(c => c.lastName.Contains(name)).ToList());
             }
-            int totalResults = model.modelList.Count();
-            model.modelList = model.modelList.OrderByDescending(d => d.userName).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            //ViewBag.canRide = canRide; ViewBag.canMaintain = canMaintain; ViewBag.canAdmin = canAdmin; ViewBag.canCheckout = canCheckout;
-            model.pagingInfo = new ViewModels.PageInfo(totalResults, pageSize, page);
+            int totalResults = baseList.Count();
+            var model = new ViewModels.PaginatedViewModel<ViewModels.Admin.AdminUserVM>(totalResults, 25);
+            baseList = baseList.OrderByDescending(d => d.userName).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            model.modelList = new List<ViewModels.Admin.AdminUserVM>();
+            foreach (var user in baseList)
+            {
+                model.modelList.Add(new ViewModels.Admin.AdminUserVM { Email = user.email, FirstName = user.firstName,
+                    LastName = user.lastName, IsArchived = user.isArchived, UserName = user.userName, Id = user.bikeUserId, 
+                    RegistrationPDFNumber = user.registrationPDFNumber, Phone = user.phoneNumber, 
+                    LastRegistered = user.lastRegistered.Year < 2014 ? null : (System.Nullable<DateTime>)user.lastRegistered });
+            }
             return View(model);
         }
 
@@ -460,7 +467,30 @@ namespace BikeShare.Controllers
         public ActionResult userDetails(int userId)
         {
             if (!authorize()) { return new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized); }
-            return View(context.BikeUser.Find(userId));
+            
+            var dbUser = context.BikeUser.Find(userId);
+            var model = new ViewModels.Admin.AdminUserDetailsVM
+            {
+                Email = dbUser.email,
+                UserName = dbUser.userName,
+                FirstName = dbUser.firstName,
+                LastName = dbUser.lastName,
+                RegistrationPDFNumber = dbUser.registrationPDFNumber,
+                Phone = dbUser.phoneNumber,
+                Id = userId,
+                IsAdmin = dbUser.canAdministerSite,
+                IsArchived = dbUser.isArchived,
+                IsCheckout = dbUser.canCheckOutBikes,
+                IsRider = dbUser.canBorrowBikes,
+                IsMechanic = dbUser.canMaintainBikes,
+                LastRegistered = dbUser.lastRegistered.Year < 2014 ? null : (Nullable<DateTime>)dbUser.lastRegistered
+            };
+            model.Rentals = new List<ViewModels.Admin.AdminUserDetailsVM.rental>();
+            context.CheckOut.Where(u => u.rider == userId).OrderByDescending(t => t.timeOut).ToList().ForEach((x) =>
+            {
+                model.Rentals.Add(new ViewModels.Admin.AdminUserDetailsVM.rental { BikeNumber = context.Bike.Find(x.bike).bikeNumber, End = x.timeIn, Start = x.timeOut });
+            });
+            return View(model);
         }
 
         public ActionResult userEdit(int userId)

@@ -1,78 +1,109 @@
-﻿@model BikeShare.Models.bikeUser
+﻿@model BikeShare.ViewModels.Admin.AdminUserDetailsVM
 
 @{
-    ViewBag.Title = Model.userName + "'s Details";
+    ViewBag.Title = Model.UserName + "'s Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section menuSection{
     @Html.Partial("_AdminMenuPartial")
 }
-<h2 class="text-center"><span class="pull-left glyphicon glyphicon-user"></span> User Details</h2>
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Details: @Model.UserName - @Model.FirstName @Model.LastName</h2>
+    </div>
+    <div class="col-sm-6 text-right">
+        <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = @Model.Id })"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
+        <a class="btn btn-danger btn-lg" data-toggle="modal" data-target="#siteModal" href="@Url.Action("archiveUser", new { userId = @Model.Id })"><span class="glyphicon glyphicon-trash"></span>  @(Model.IsArchived ? "Unarchive" : "Archive")</a>
+    </div>
+</div>
 <hr />
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading"><h4 class="panel-title">User Details</h4></div>
+            <div class="panel-heading">
+                <h4 class="panel-title"> User Information 
+                    @if (Model.IsArchived)
+                    { <span class="label label-danger pull-right">Archived</span>}
+                </h4>
+            </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><h4 class="panel-title"> @Model.userName</h4></div>
-                            <div class="panel-body">
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"><span class="glyphicon glyphicon-user"></span> First Name</label>
-                                        <span class="col-md-8">@Model.firstName</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"><span class="glyphicon glyphicon-user"></span> Last Name</label>
-                                        <span class="col-md-8">@Model.lastName</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"><span class="glyphicon glyphicon-phone"></span> Phone</label>
-                                        <span class="col-md-8">@Model.phoneNumber</span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4"><span class="glyphicon glyphicon-envelope"></span> Email</label>
-                                        <span class="col-md-8">@Model.email</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">First Name:</label>
+                        <span class="col-sm-6 form-control-static">@Model.FirstName</span>
                     </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-danger">
-                            <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-lock"></span> Permissions</h4></div>
-                            <div class="panel-body">
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-6">Administer Site</label>
-                                        @Html.DisplayFor(model => model.canAdministerSite)
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-6">Borrow Bikes</label>
-                                        @Html.DisplayFor(model => model.canBorrowBikes)
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-6">Maintain Bikes</label>
-                                        @Html.DisplayFor(model => model.canMaintainBikes)
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-6">Check out Bikes</label>
-                                        @Html.DisplayFor(model => model.canCheckOutBikes)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Last Name:</label>
+                        <span class="col-sm-6 form-control-static">@Model.LastName</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Phone:</label>
+                        <span class="col-sm-6 form-control-static">@Model.Phone</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Email:</label>
+                        <span class="col-sm-6 form-control-static">@Model.Email</span>
                     </div>
                 </div>
             </div>
-            <div class="panel-footer text-right">
-                <a class="btn btn-primary" data-toggle="modal" data-target="#siteModal" href="@Url.Action("userEdit", new { userId = @Model.bikeUserId })"><span class="glyphicon glyphicon-pencil"></span>  Edit</a>
-                <a class="btn btn-danger" data-toggle="modal" data-target="#siteModal" href="@Url.Action("archiveUser", new { userId = @Model.bikeUserId })"><span class="glyphicon glyphicon-trash"></span>  Archive</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4 class="panel-title">Permissions</h4></div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Administer Site:</label>
+                        <span class="col-sm-6 form-control-static">@(Model.IsAdmin ? "Yes" : "No")</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Borrow Bikes:</label>
+                        <span class="col-sm-6 form-control-static">@(Model.IsRider ? "Yes" : "No")</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Maintain Bikes:</label>
+                        <span class="col-sm-6 form-control-static">@(Model.IsMechanic ? "Yes" : "No")</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Check out Bikes:</label>
+                        <span class="col-sm-6 form-control-static">@(Model.IsCheckout ? "Yes" : "No")</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Registration Date:</label>
+                        <span class="col-sm-6 form-control-static">@(Model.LastRegistered.HasValue ? Model.LastRegistered.Value.ToShortDateString() : "Not Registered")</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-6">Registration PDF Number:</label>
+                        <span class="col-sm-6 form-control-static">@(Model.RegistrationPDFNumber.HasValue ? Model.RegistrationPDFNumber.ToString() : "No Registration PDF")</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="row">
+    <h3>User's Rentals</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Day/Time Out</td>
+                <td>Day/Time In</td>
+                <td>Bike</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rental in Model.Rentals)
+            {
+                <tr class="@(rental.End.HasValue ? "success" : "danger")">
+                    <td>@rental.Start.ToString()</td>
+                    <td>@(rental.End.HasValue ? rental.End.Value.ToString() : "Still Out")</td>
+                    <td>@rental.BikeNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
          
